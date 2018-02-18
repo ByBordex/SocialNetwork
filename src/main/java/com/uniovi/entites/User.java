@@ -49,7 +49,7 @@ public class User {
 
 	@Override
 	public String toString() {
-		return "Mark [id=" + id + ", description=" + description + ", score=" + score + "]";
+		return "User [id=" + id + ", description=" + description + ", score=" + score + "]";
 	}
 
 }
