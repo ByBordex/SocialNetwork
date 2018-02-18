@@ -5,7 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Mark {
+public class User {
 	@Id
 	@GeneratedValue
 	private Long id;
@@ -13,10 +13,10 @@ public class Mark {
 	private Double score;
 	
 
-	public Mark() {
+	public User() {
 	}
 
-	public Mark(Long id, String description, Double score) {
+	public User(Long id, String description, Double score) {
 		super();
 		this.id = id;
 		this.description = description;
