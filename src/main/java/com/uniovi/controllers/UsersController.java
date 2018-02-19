@@ -20,8 +20,8 @@ public class UsersController {
 
 	@RequestMapping("/user/list")
 	public String getList(Model model) {
-		model.addAttribute("userList", usersService.getMarks());
-		return usersService.getMarks().toString();
+		model.addAttribute("userList", usersService.getUsers());
+		return usersService.getUsers().toString();
 	}
 
 	@RequestMapping(value = "/user/add")

@@ -13,23 +13,23 @@ import com.uniovi.repositories.UsersRepository;
 public class UsersService {
 
 	@Autowired
-	private UsersRepository marksRepository;
+	private UsersRepository usersRepository;
 
-	public List<User> getMarks() {
-		List<User> marks = new ArrayList<User>();
-		marksRepository.findAll().forEach(marks::add);
-		return marks;
+	public List<User> getUsers() {
+		List<User> users = new ArrayList<User>();
+		usersRepository.findAll().forEach(users::add);
+		return users;
 	}
 
 	public User getMark(Long id) {
-		return marksRepository.findOne(id);
+		return usersRepository.findOne(id);
 	}
 
-	public void addMark(User mark) {
-		 marksRepository.save(mark);
+	public void addMark(User user) {
+		 usersRepository.save(user);
 	}
 
 	public void deleteMark(Long id) {
-		marksRepository.delete(id);
+		usersRepository.delete(id);
 	}
 }
