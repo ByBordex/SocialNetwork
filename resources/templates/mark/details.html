@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head" />
+<body>
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2 th:text='#{marks.details.title}'>Detalles de la nota</h2>
+		<div class="panel panel-default">
+			<div class="panel-heading">DNI</div>
+			<div class="panel-body" th:text="${mark.user.dni}">28276</div>
+		</div>
+
+		<div class="panel panel-default">
+			<div class="panel-heading" th:text='#{marks.list.description}'>Descripción</div>
+			<div class="panel-body" th:text="${mark.description}">
+				Descripción</div>
+		</div>
+		<div class="panel panel-default">
+			<div class="panel-heading" th:text='#{marks.list.score}'>Puntuación</div>
+			<div class="panel-body" th:text="${mark.score}">100</div>
+		</div>
+	</div>
+
+	<footer th:replace="fragments/footer" />
+
+</body>
+</html>

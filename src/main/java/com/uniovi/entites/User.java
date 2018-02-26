@@ -1,55 +1,94 @@
 package com.uniovi.entites;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany; //A collection that contains no duplicate elements @Entity
+import javax.persistence.Transient;
 
 @Entity
 public class User {
 	@Id
 	@GeneratedValue
-	private Long id;
-	private String description;
-	private Double score;
-	
+	private long id;
+	@Column(unique = true)
+	private String dni;
+	private String name;
+	private String lastName;
+	private String role;
+
+	private String password;
+	@Transient // propiedad que no se almacena e la tabla.
+	private String passwordConfirm;
+
+	public User(String dni, String name, String lastName) {
+		super();
+		this.dni = dni;
+		this.name = name;
+		this.lastName = lastName;
+	}
 
 	public User() {
 	}
 
-	public User(Long id, String description, Double score) {
-		super();
-		this.id = id;
-		this.description = description;
-		this.score = score;
-	}
-
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public Double getScore() {
-		return score;
-	}
-
-	public void setScore(Double score) {
-		this.score = score;
-	}
-
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", description=" + description + ", score=" + score + "]";
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFullName() {
+		return this.name + " " + this.lastName;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
+	public String getRole() {
+		return role;
 	}
 
 }
