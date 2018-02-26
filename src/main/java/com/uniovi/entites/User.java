@@ -1,35 +1,54 @@
 package com.uniovi.entites;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany; //A collection that contains no duplicate elements @Entity
+import javax.persistence.Transient;
 
-import org.neo4j.ogm.annotation.NodeEntity;
-import org.springframework.data.annotation.Id;
-
-@NodeEntity
+@Entity
 public class User {
-	@Id @GeneratedValue
-	private Long id;
+	@Id
+	@GeneratedValue
+	private long id;
+	@Column(unique = true)
+	private String dni;
 	private String name;
-	private String email;
+	private String lastName;
+	private String role;
+
 	private String password;
+	@Transient // propiedad que no se almacena e la tabla.
+	private String passwordConfirm;
+
+	public User(String dni, String name, String lastName) {
+		super();
+		this.dni = dni;
+		this.name = name;
+		this.lastName = lastName;
+	}
 
 	public User() {
 	}
 
-	public User(Long id, String email, String name, String password) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.password = password;
-		this.email = email;
-	}
-
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
-	
-	public void setId(Long id) {
+
+	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 	public String getName() {
@@ -40,12 +59,16 @@ public class User {
 		this.name = name;
 	}
 
-	public String getEmail() {
-		return email;
+	public String getLastName() {
+		return lastName;
 	}
 
-	public void setEmail(String email) {
-		this.email = email;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getFullName() {
+		return this.name + " " + this.lastName;
 	}
 
 	public String getPassword() {
@@ -56,9 +79,16 @@ public class User {
 		this.password = password;
 	}
 
-	@Override
-	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", email=" + email + "]";
+	public String getPasswordConfirm() {
+		return passwordConfirm;
+	}
+
+	public void setPasswordConfirm(String passwordConfirm) {
+		this.passwordConfirm = passwordConfirm;
+	}
+
+	public String getRole() {
+		return role;
 	}
 
 }

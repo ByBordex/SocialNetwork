@@ -1,9 +1,9 @@
 package com.uniovi.repositories;
 
-import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.data.repository.CrudRepository;
 
 import com.uniovi.entites.User;
 
-public interface UsersRepository extends Neo4jRepository<User, Long> {
-
+public interface UsersRepository extends CrudRepository<User, Long> {
+	User findByDni(String dni);
 }
