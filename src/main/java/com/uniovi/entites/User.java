@@ -1,13 +1,9 @@
 package com.uniovi.entites;
 
-import java.util.Set;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany; //A collection that contains no duplicate elements @Entity
 import javax.persistence.Transient;
 
 @Entity

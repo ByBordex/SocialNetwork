@@ -4,12 +4,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.uniovi</groupId>
-	<artifactId>SocialNetwork</artifactId>
+	<artifactId>Facelog</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>SocialNetwork</name>
-	<description>RedSocial</description>
+	<name>Facelog</name>
+	<description>Red social Facelog</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -64,29 +64,11 @@
 			<artifactId>thymeleaf-extras-springsecurity4</artifactId>
 		</dependency>
 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-data-neo4j</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.data</groupId>
-			<artifactId>spring-data-neo4j</artifactId>
-			<version>5.0.4.RELEASE</version>
-		</dependency>
-
 
 	</dependencies>
 
 	<repositories>
-		<repository>
-			<id>spring-libs-release</id>
-			<name>Spring Releases</name>
-			<url>https://repo.spring.io/libs-release</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
+
 	</repositories>
 
 	<build>

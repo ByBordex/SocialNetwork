@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class NotaneitorApplication {
+public class Facelog {
 
 	public static void main(String[] args) {
-		SpringApplication.run(NotaneitorApplication.class, args);
+		SpringApplication.run(Facelog.class, args);
 	}
 }
