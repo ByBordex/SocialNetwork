@@ -1,11 +1,15 @@
 package com.uniovi.controllers;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -15,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.uniovi.entites.FriendshipRequest;
 import com.uniovi.entites.User;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -33,12 +38,24 @@ public class UsersController {
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable) {
-		model.addAttribute("usersList", usersService.getUsers(pageable));
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
+		
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-
+		
+		Set<User> usersRequestedFriendship = new HashSet<User>();
+		for(FriendshipRequest fr: activeUser.getRequestSended())
+		{
+			usersRequestedFriendship.add( fr.getReceiver() );
+		}
+		
 		users = usersService.getUsers(pageable);
-
+		
+		model.addAttribute("usersList", usersService.getUsers(pageable));
 		model.addAttribute("page", users);
+		model.addAttribute("sendedRequest", usersRequestedFriendship);
+		
 		return "user/list";
 	}
 
@@ -46,7 +63,6 @@ public class UsersController {
 	public String getUser(Model model, Pageable pageable) {
 		model.addAttribute("usersList", usersService.getUsers(pageable));
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-
 		users = usersService.getUsers(pageable);
 		return "user/add";
 	}
