@@ -1,9 +1,13 @@
 package com.uniovi.entites;
 
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -16,19 +20,23 @@ public class User {
 	@Column(unique = true)
 	private String email;
 	private String name;
-	private String lastName;
 	private String role;
 
 	private String password;
 	
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
+	
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<FriendshipRequest> requestSended;
+	
+	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
+	private Set<FriendshipRequest> requestReceived;
 
-	public User(String email, String name, String lastName) {
+	public User(String email, String name) {
 		super();
 		this.email = email;
 		this.name = name;
-		this.lastName = lastName;
 	}
 
 	public User() {
@@ -58,18 +66,6 @@ public class User {
 		this.name = name;
 	}
 
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getFullName() {
-		return this.name + " " + this.lastName;
-	}
-
 	public String getPassword() {
 		return password;
 	}
@@ -89,5 +85,14 @@ public class User {
 	public String getRole() {
 		return role;
 	}
+
+	public Set<FriendshipRequest> getRequestSended() {
+		return requestSended;
+	}
+
+	public Set<FriendshipRequest> getRequestReceived() {
+		return requestReceived;
+	}
+	
 
 }

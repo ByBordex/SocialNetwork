@@ -1,8 +1,11 @@
 package com.uniovi.controllers;
 
+import java.util.LinkedList;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -29,14 +32,22 @@ public class UsersController {
 	private SignUpFormValidator signUpFormValidator;
 
 	@RequestMapping("/user/list")
-	public String getListado(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+	public String getListado(Model model, Pageable pageable) {
+		model.addAttribute("usersList", usersService.getUsers(pageable));
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+
+		users = usersService.getUsers(pageable);
+
+		model.addAttribute("page", users);
 		return "user/list";
 	}
 
 	@RequestMapping(value = "/user/add")
-	public String getUser(Model model) {
-		model.addAttribute("usersList", usersService.getUsers());
+	public String getUser(Model model, Pageable pageable) {
+		model.addAttribute("usersList", usersService.getUsers(pageable));
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+
+		users = usersService.getUsers(pageable);
 		return "user/add";
 	}
 
@@ -101,10 +112,10 @@ public class UsersController {
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
-//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//		String dni = auth.getName();
-//		User activeUser = usersService.getUserByDni(dni);
-//		model.addAttribute("markList", activeUser.getMarks());
+		// Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		// String dni = auth.getName();
+		// User activeUser = usersService.getUserByDni(dni);
+		// model.addAttribute("markList", activeUser.getMarks());
 		return "home";
 	}
 
