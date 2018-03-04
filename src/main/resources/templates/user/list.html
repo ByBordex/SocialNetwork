@@ -27,9 +27,16 @@
 						<td th:text="${user.email}">mail@mail</td>
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td>
-							<button type="button" th:id="${'sendButton' + user.id}"
-								class="btn btn-info" th:text='#{users.list.requestFriendship}'>Solicitar
-								Amistad</button> <script th:inline="javascript">
+							<div th:if='${#bools.isTrue(#lists.contains(sendedRequest, user))} '>
+								<button disabled type="button" th:id="${'sendButton' + user.id}"
+									class="btn btn-warning" th:text='#{users.list.requestFriendship.pending}'>Pendiente</button>
+							</div>
+							<div
+								th:if='${#bools.isFalse(#lists.contains(sendedRequest, user))} '>
+								<button type="button" th:id="${'sendButton' + user.id}"
+									class="btn btn-info" th:text='#{users.list.requestFriendship}'>Solicitar
+									Amistad</button>
+								<script th:inline="javascript">
 										/*<![CDATA[*/$(
 												"#sendButton[[${user.id}]]")
 												.click(
@@ -43,6 +50,7 @@
 																	});
 														}); /*]]>*/
 									</script>
+							</div>
 						</td>
 					</tr>
 				</tbody>
