@@ -40,7 +40,7 @@ public class UsersService {
 	}
 
 	public User getUserByDni(String dni) {
-		return usersRepository.findByDni(dni);
+		return usersRepository.findByEmail(dni);
 	}
 
 	public void deleteUser(Long id) {
