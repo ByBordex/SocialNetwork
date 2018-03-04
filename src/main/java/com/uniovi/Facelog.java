@@ -9,4 +9,5 @@ public class Facelog {
 	public static void main(String[] args) {
 		SpringApplication.run(Facelog.class, args);
 	}
+	
 }
