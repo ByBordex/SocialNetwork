@@ -16,7 +16,6 @@ public class User {
 	@Column(unique = true)
 	private String email;
 	private String name;
-	private String lastName;
 	private String role;
 
 	private String password;
@@ -24,11 +23,10 @@ public class User {
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 
-	public User(String email, String name, String lastName) {
+	public User(String email, String name) {
 		super();
 		this.email = email;
 		this.name = name;
-		this.lastName = lastName;
 	}
 
 	public User() {
@@ -56,18 +54,6 @@ public class User {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getFullName() {
-		return this.name + " " + this.lastName;
 	}
 
 	public String getPassword() {
