@@ -6,9 +6,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "TFriendshipRequest")
+@Table(name = "TFriendshipRequest", 
+uniqueConstraints = { @UniqueConstraint(columnNames = 
+					{ "sender_id", "receiver_id" }) 
+})
 public class FriendshipRequest {
 	
 	@Id

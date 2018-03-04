@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.uniovi.entites.FriendshipRequest;
 import com.uniovi.entites.User;
 import com.uniovi.repositories.FriendshipRequestRepository;
+import com.uniovi.repositories.UsersRepository;
 
 @Service
 public class FriendshipRequestService {
@@ -16,13 +17,12 @@ public class FriendshipRequestService {
 	FriendshipRequestRepository friendshipRequestRepo;
 	
 	@Autowired
-	UsersService userService;
+	UsersRepository usersRepository;
 	
-	public void sendRequest(Long senderId, Long receiverId){
-		User sender =  userService.getUser(senderId);
-		User receiver = userService.getUser(receiverId);
+	public void sendRequest(String senderMail, Long receiverID){
+		User sender =  usersRepository.findByEmail(senderMail);
+		User receiver = usersRepository.findOne(receiverID);
 		FriendshipRequest fr = new FriendshipRequest( sender, receiver );
-		
 		friendshipRequestRepo.save( fr );
 	}
 	

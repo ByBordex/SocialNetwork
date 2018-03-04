@@ -7,8 +7,8 @@
 	<div class="container">
 
 		<h2 th:text="#{users}">Usuarios</h2>
-		<p th:text="#{users.list.subtitle}">Los usuarios que actualmente figuran en el sistema son los
-			siguientes:</p>
+		<p th:text="#{users.list.subtitle}">Los usuarios que actualmente
+			figuran en el sistema son los siguientes:</p>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
@@ -26,14 +26,29 @@
 					<tr th:each="user : ${usersList}">
 						<td th:text="${user.email}">mail@mail</td>
 						<td th:text="${user.name}">Nombre del usuario</td>
-						<td><a th:href="${' L' + user.id}">detalles</a></td>
-						<td><a th:href="${'/user/edit/' + user.id}">modificar</a></td>
-						<td><a th:href="${'/user/delete/' + user.id}">eliminar</a></td>
+						<td>
+							<button type="button" th:id="${'sendButton' + user.id}"
+								class="btn btn-info" th:text='#{users.list.requestFriendship}'>Solicitar
+								Amistad</button> <script th:inline="javascript">
+										/*<![CDATA[*/$(
+												"#sendButton[[${user.id}]]")
+												.click(
+														function() {
+															var senderMail = /*[[${#authentication.principal.username}]]*/"";
+															var receiver = [[${user.id}]];
+															$.post("/sendRequest", 
+																	{
+																	"sender": senderMail, 
+																	"receiver" : receiver
+																	});
+														}); /*]]>*/
+									</script>
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<footer th:replace="fragments/pagination"/>
+		<footer th:replace="fragments/pagination" />
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>
