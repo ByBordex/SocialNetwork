@@ -5,8 +5,29 @@
 	<nav th:replace="fragments/nav" />
 	<div class="container" style="text-align: center">
 		<h2 th:text="#{welcome.message}"></h2>
-		<p th:text="#{home.unregistered.message}">Lorem ipsum dolor sit amet, consectetur adipiscing</p>
+		<p th:text="#{home.unregistered.message}">Lorem ipsum dolor sit
+			amet, consectetur adipiscing</p>
 	</div>
+
+	<div class='container'>
+		<div class='row justify-content-md-center row-align-items-center'>
+			<button id="btnLogin" class="btn btn-info col-3" th:text="#{login.message}">Iniciar sesión</button>
+
+			<script type="text/javascript">
+				document.getElementById("btnLogin").onclick = function() {
+					location.href = "/user/login";
+				};
+			</script>
+			<button id="btnSignup" class="btn btn-info col-3" th:text="#{signup.message}">Registrarse</button>
+
+			<script type="text/javascript">
+				document.getElementById("btnSignup").onclick = function() {
+					location.href = "/user/signup";
+				};
+			</script>
+		</div>
+	</div>
+
 	<footer th:replace="fragments/footer" />
 </body>
 </html>
