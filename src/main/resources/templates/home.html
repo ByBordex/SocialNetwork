@@ -5,15 +5,10 @@
 	<nav th:replace="fragments/nav" />
 	<div class="container" style="text-align: center">
 		<h2 th:text="#{welcome.message}"></h2>
-		<h3>Esta es una zona privada la web</h3>
+		<p th:text="| #{home.registered.message} ${#authentication.getPrincipal().getUsername()} |">
+			Usuario Autenticado como : usuario</p>
 		<p>
-			Usuario Autenticado como : <span th:inline="text" 
-			sec:authentication="principal.username" >
-			 </span>
-		</p>
 
-		<p></p>
-		
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>

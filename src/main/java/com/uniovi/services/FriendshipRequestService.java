@@ -1,8 +1,8 @@
 package com.uniovi.services;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entites.FriendshipRequest;
@@ -34,15 +34,9 @@ public class FriendshipRequestService {
 		//TODO
 	}
 	
-	/** Return the list of request received for a given userID.
-	 * 
-	 * @param The id of the receiver of the request.
-	 * @return The list a request an user has.
-	 */
-	public List<FriendshipRequest> getRequestToUser(Long receiverId)
+	public Page<FriendshipRequest> getPendingRequestToUser(Pageable pageable, User receiver)
 	{
-		//TODO
-		return null;
+		return friendshipRequestRepo.findPendingRequestToUser(pageable, receiver);
 	}
 	
 }
