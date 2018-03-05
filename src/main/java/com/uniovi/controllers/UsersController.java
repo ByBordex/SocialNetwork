@@ -57,8 +57,6 @@ public class UsersController {
 			usersRequestedFriendship.add(fr.getReceiver());
 		}
 
-		users = usersService.getUsers(pageable);
-
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		model.addAttribute("sendedRequest", usersRequestedFriendship);
