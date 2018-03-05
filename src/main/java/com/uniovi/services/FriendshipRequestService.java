@@ -1,5 +1,8 @@
 package com.uniovi.services;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,24 +22,28 @@ public class FriendshipRequestService {
 	@Autowired
 	UsersRepository usersRepository;
 	
-	public void sendRequest(String senderMail, Long receiverID){
-		User sender =  usersRepository.findByEmail(senderMail);
+	public void sendRequest(User sender, Long receiverID){
 		User receiver = usersRepository.findOne(receiverID);
 		FriendshipRequest fr = new FriendshipRequest( sender, receiver );
 		friendshipRequestRepo.save( fr );
 	}
 	
-	/** Accept a given FriendshipRequest ID
-	 * 
-	 * @param id
-	 */
-	public void acceptRequest(Long id) {
-		//TODO
+	public void acceptRequest(Long id, User receiver) {
+		friendshipRequestRepo.acceptRequest(id, receiver);	
 	}
 	
 	public Page<FriendshipRequest> getPendingRequestToUser(Pageable pageable, User receiver)
 	{
 		return friendshipRequestRepo.findPendingRequestToUser(pageable, receiver);
+	}
+
+	public Set<User> getUsersFromSendedRequest(User activeUser) {
+		Set<User> usersRequestedFriendship = new HashSet<User>();
+		for (FriendshipRequest fr : friendshipRequestRepo.findPendingRequestFromUser(activeUser)) {
+			usersRequestedFriendship.add(fr.getReceiver());
+		}
+		return usersRequestedFriendship;
+		
 	}
 	
 }

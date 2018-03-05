@@ -31,6 +31,7 @@ public class FriendshipRequest {
 	private FriendshipRequest(){}
 	
 	public FriendshipRequest(User sender, User receiver) {
+		super();
 		this.sender = sender;
 		this.receiver = receiver;
 		accepted = false;

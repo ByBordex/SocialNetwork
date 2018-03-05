@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entites.FriendshipRequest;
 import com.uniovi.entites.User;
+import com.uniovi.services.FriendshipRequestService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
@@ -31,6 +30,9 @@ import com.uniovi.validators.SignUpFormValidator;
 public class UsersController {
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private FriendshipRequestService requestService;
 
 	@Autowired
 	private SecurityService securityService;
@@ -39,28 +41,25 @@ public class UsersController {
 	private SignUpFormValidator signUpFormValidator;
 
 	@RequestMapping("/user/list")
-	public String getListado(Model model, Pageable pageable,
+	public String getListado(Model model, Pageable pageable, Principal principal,
 			@RequestParam(value = "", required = false) String searchText) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String email = auth.getName();
+		
+		String email = principal.getName();
 		User activeUser = usersService.getUserByEmail(email);
 
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-
 		if (searchText != null && !searchText.isEmpty()) {
+			searchText+="%"+searchText+"%";
 			users = usersService.searchByNameOrEmail(pageable, searchText);
 		} else {
 			users = usersService.getUsers(pageable);
 		}
 
-		Set<User> usersRequestedFriendship = new HashSet<User>();
-		for (FriendshipRequest fr : activeUser.getRequestSended()) {
-			usersRequestedFriendship.add(fr.getReceiver());
-		}
+		Set<User> usersRequested = requestService.getUsersFromSendedRequest(activeUser);
 
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
-		model.addAttribute("sendedRequest", usersRequestedFriendship);
+		model.addAttribute("sendedRequest", usersRequested);
 
 		return "user/list";
 	}

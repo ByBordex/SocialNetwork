@@ -43,11 +43,19 @@ public class FriendshipRequestController {
 	
 	
 	@RequestMapping(value="/sendRequest", method = RequestMethod.POST)
-	public String sendRequest(Model model, @RequestParam String sender, @RequestParam Long receiver)
+	public String sendRequest(Model model, Principal principal, @RequestParam Long receiver)
 	{
-
-		friendshipRequestService.sendRequest(sender, receiver);
-		
+		User sender = userService.getUserByEmail( principal.getName() );
+		friendshipRequestService.sendRequest(sender, receiver);	
 		return "redirect:/user/list";
+	}
+	
+	@RequestMapping(value="/acceptRequest", method = RequestMethod.POST)
+	public String acceptRequest(Model model, Principal principal,@RequestParam Long request)
+	{
+		User receiver = userService.getUserByEmail( principal.getName() );
+		//We give the receiver user to avoid accepting frinedship request of other users (ex: Intercept post and modify body)
+		friendshipRequestService.acceptRequest(request, receiver);	
+		return "redirect:/friendshipRequest/list";
 	}
 }
