@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,26 @@ public class FriendshipRequestController {
 		return "friendshipRequest/list";
 	}
 	
+	@RequestMapping("/friendshipRequest/listFriends")
+	public String getListFriends(Model model, Pageable pageable,
+			@RequestParam(value = "", required = false) String searchText) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = userService.getUserByEmail(email);
+
+		Page<User> friends = new PageImpl<User>(new LinkedList<User>());
+
+//		if (searchText != null && !searchText.isEmpty()) {
+//			users = usersService.searchByNameOrEmail(pageable, searchText, activeUser);
+//		} else {
+			friends = friendshipRequestService.getFriends(pageable, activeUser);
+//		}
+		
+		model.addAttribute("friendsList", friends.getContent());
+		model.addAttribute("page", friends);
+
+		return "friendshipRequest/listFriends";
+	}
 	
 	@RequestMapping(value="/sendRequest", method = RequestMethod.POST)
 	public String sendRequest(Model model, Principal principal, @RequestParam Long receiver)

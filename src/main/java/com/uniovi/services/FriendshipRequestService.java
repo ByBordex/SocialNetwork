@@ -46,4 +46,9 @@ public class FriendshipRequestService {
 		
 	}
 	
+	public Page<User> getFriends(Pageable pageable, User user) {
+		Page<User> friends = friendshipRequestRepo.getFriends(pageable, user);
+		return friends;
+	}
+	
 }
