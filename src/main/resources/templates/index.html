@@ -10,15 +10,19 @@
 	</div>
 
 	<div class='container'>
-		<div class='row justify-content-md-center row-align-items-center'>
-			<button id="btnLogin" class="btn btn-info col-3" th:text="#{login.message}">Iniciar sesión</button>
+		<div class='row justify-content-center center-block form-group'>
+			<button id="btnLogin" class="btn btn-info col-5 center-block"
+				th:text="#{login.message}">Iniciar sesión</button>
 
 			<script type="text/javascript">
 				document.getElementById("btnLogin").onclick = function() {
 					location.href = "/user/login";
 				};
 			</script>
-			<button id="btnSignup" class="btn btn-info col-3" th:text="#{signup.message}">Registrarse</button>
+		</div>
+		<div>
+			<button id="btnSignup" class="btn btn-info col-5 center-block form-group"
+				th:text="#{signup.message}">Registrarse</button>
 
 			<script type="text/javascript">
 				document.getElementById("btnSignup").onclick = function() {
@@ -26,6 +30,7 @@
 				};
 			</script>
 		</div>
+
 	</div>
 
 	<footer th:replace="fragments/footer" />
