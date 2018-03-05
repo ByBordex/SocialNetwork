@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entites.FriendshipRequest;
 import com.uniovi.entites.User;
@@ -36,24 +37,29 @@ public class UsersController {
 	private SignUpFormValidator signUpFormValidator;
 
 	@RequestMapping("/user/list")
-	public String getListado(Model model, Principal principal, Pageable pageable) {
-		String email = principal.getName();
+	public String getListado(Model model, Pageable pageable,
+			@RequestParam(value = "", required = false) String searchText) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		
+
 		Page<User> users = new PageImpl<User>(new LinkedList<User>());
-		
-		Set<User> usersRequestedFriendship = new HashSet<User>();
-		for(FriendshipRequest fr: activeUser.getRequestSended())
-		{
-			usersRequestedFriendship.add( fr.getReceiver() );
+
+		if (searchText != null && !searchText.isEmpty()) {
+			users = usersService.searchByNameOrEmail(pageable, searchText);
+		} else {
+			users = usersService.getUsers(pageable);
 		}
-		
-		users = usersService.getUsers(pageable);
-		
-		model.addAttribute("usersList", usersService.getUsers(pageable));
+
+		Set<User> usersRequestedFriendship = new HashSet<User>();
+		for (FriendshipRequest fr : activeUser.getRequestSended()) {
+			usersRequestedFriendship.add(fr.getReceiver());
+		}
+
+		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		model.addAttribute("sendedRequest", usersRequestedFriendship);
-		
+
 		return "user/list";
 	}
 
