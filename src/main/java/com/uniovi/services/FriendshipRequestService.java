@@ -26,12 +26,8 @@ public class FriendshipRequestService {
 		friendshipRequestRepo.save( fr );
 	}
 	
-	/** Accept a given FriendshipRequest ID
-	 * 
-	 * @param id
-	 */
-	public void acceptRequest(Long id) {
-		//TODO
+	public void acceptRequest(Long id, User receiver) {
+		friendshipRequestRepo.acceptRequest(id, receiver  );
 	}
 	
 	public Page<FriendshipRequest> getPendingRequestToUser(Pageable pageable, User receiver)

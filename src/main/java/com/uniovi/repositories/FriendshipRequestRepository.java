@@ -15,4 +15,6 @@ public interface FriendshipRequestRepository extends CrudRepository<FriendshipRe
 	@Query("SELECT r FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = false ORDER BY r.id ASC")
 	Page<FriendshipRequest> findPendingRequestToUser(Pageable pageable, User receiver);
 
+	@Query("UPDATE FriendshipRequest SET accept = 1 WHERE id=?1 and receiver=?2")
+	void acceptRequest(Long id,User receiver  );
 }

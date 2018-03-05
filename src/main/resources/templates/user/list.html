@@ -32,10 +32,9 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user : ${usersList}"
-						th:object="${user}"
+					<tr th:each="user : ${usersList}" th:object="${user}"
 						th:if="${user.email} != ${#authentication.getPrincipal().getUsername()}">
-						
+
 						<td th:text="${user.email}">mail@mail</td>
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td>
@@ -54,12 +53,10 @@
 										/*<![CDATA[*/$(
 												"#sendButton[[${user.id}]]")
 												.click(
-														function() {
-															var senderMail = /*[[${#authentication.principal.username}]]*/"";
+														function() {												
 															var receiver = [[${user.id}]];
 															$.post("/sendRequest", 
-																	{
-																	"sender": senderMail, 
+																	{						 
 																	"receiver" : receiver
 																	});
 														}); /*]]>*/
