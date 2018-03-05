@@ -11,7 +11,7 @@
 				<label class="control-label col-sm-2" for="email">Email:</label>
 				<div class="col-sm-10">
 					<input type="text" class="form-control" name="email"
-						placeholder="example@gmail.com" required="true" /> <span
+						placeholder="example@mail.com" required="true" /> <span
 						class="text-danger" th:if="${#fields.hasErrors('email')}"
 						th:errors="*{email}">
 				</div>
@@ -33,8 +33,7 @@
 						th:errors="*{password}" />
 				</div>
 				<div class="form-group"></div>
-				<label class="control-label col-sm-2" for="passwordConfirm">el
-					Confirmar clave de acceso:</label>
+				<label class="control-label col-sm-2" for="passwordConfirm">Confirmar clave de acceso:</label>
 				<div class='col-sm-10'>
 					<input type="password" class="form-control" name="passwordConfirm"
 					/> <span class="text-danger"

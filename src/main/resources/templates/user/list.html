@@ -7,6 +7,15 @@
 	<div class="container">
 
 		<h2 th:text="#{users}">Usuarios</h2>
+
+		<form class="navbar-form" action="/mark/list">
+			<div class="form-group">
+				<input name="searchText" type="text" class="form-control" size="50"
+					placeholder="Buscar por descripción o nombre del alumno">
+			</div>
+			<button type="submit" class="btn btn-default">Buscar</button>
+		</form>
+
 		<p th:text="#{users.list.subtitle}">Los usuarios que actualmente
 			figuran en el sistema son los siguientes:</p>
 		<div class="table-responsive">
@@ -27,9 +36,11 @@
 						<td th:text="${user.email}">mail@mail</td>
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td>
-							<div th:if='${#bools.isTrue(#lists.contains(sendedRequest, user))} '>
+							<div
+								th:if='${#bools.isTrue(#lists.contains(sendedRequest, user))} '>
 								<button disabled type="button" th:id="${'sendButton' + user.id}"
-									class="btn btn-warning" th:text='#{users.list.requestFriendship.pending}'>Pendiente</button>
+									class="btn btn-warning"
+									th:text='#{users.list.requestFriendship.pending}'>Pendiente</button>
 							</div>
 							<div
 								th:if='${#bools.isFalse(#lists.contains(sendedRequest, user))} '>
