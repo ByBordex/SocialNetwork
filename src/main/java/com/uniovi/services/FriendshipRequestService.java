@@ -34,9 +34,9 @@ public class FriendshipRequestService {
 		//TODO
 	}
 	
-	public Page<FriendshipRequest> getRequestToUser(Pageable pageable, Long receiverID)
+	public Page<FriendshipRequest> getPendingRequestToUser(Pageable pageable, User receiver)
 	{
-		return friendshipRequestRepo.findRequestToUser(pageable, receiverID);
+		return friendshipRequestRepo.findPendingRequestToUser(pageable, receiver);
 	}
 	
 }

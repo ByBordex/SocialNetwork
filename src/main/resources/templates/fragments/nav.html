@@ -12,16 +12,14 @@
 
 		<div class="collapse navbar-collapse" id="myNavbar">
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="/mark/list"
-					th:text='#{viewMarks.message}'> </a></li>
 				<li><a href="/">Home</a></li>
 				<li id="users-menu" class="dropdown"><a class="dropdown-toggle"
 					data-toggle="dropdown" href="#" th:text='#{users.management}'>
 						Gestión de Usuarios <span class="caret"></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li><a href="/user/add" th:text='#{users.add}'>Agregar
-								usuario</a></li>
+						<li><a href="/friendshipRequest/list"
+							th:text='#{users.friendshipRequest}'>Peticiones de amistad</a></li>
 						<li><a href="/user/list" th:text='#{users.view}'>Ver
 								Usuarios</a></li>
 					</ul></li>

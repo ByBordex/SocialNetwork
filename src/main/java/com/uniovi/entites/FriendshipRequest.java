@@ -18,7 +18,7 @@ public class FriendshipRequest {
 	@Id
 	@GeneratedValue
 	Long id;
-	boolean state;
+	boolean accepted;
 
 	@ManyToOne
 	@JoinColumn(name = "sender_id")
@@ -33,15 +33,15 @@ public class FriendshipRequest {
 	public FriendshipRequest(User sender, User receiver) {
 		this.sender = sender;
 		this.receiver = receiver;
-		state = false;
+		accepted = false;
 	}
 
-	public boolean isState() {
-		return state;
+	public boolean isAccepted() {
+		return accepted;
 	}
 
-	public void setState(boolean state) {
-		this.state = state;
+	public void setAccepted(boolean accepted) {
+		this.accepted = accepted;
 	}
 
 	public User getSender() {
@@ -66,7 +66,7 @@ public class FriendshipRequest {
 
 	@Override
 	public String toString() {
-		return "FriendshipRequest [state=" + state + ", sender=" + sender + ", receiver=" + receiver + "]";
+		return "FriendshipRequest [accepted=" + accepted + ", sender=" + sender + ", receiver=" + receiver + "]";
 	}
 	
 }

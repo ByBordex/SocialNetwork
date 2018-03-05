@@ -7,11 +7,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import com.uniovi.entites.FriendshipRequest;
+import com.uniovi.entites.User;
 
 @Repository
 public interface FriendshipRequestRepository extends CrudRepository<FriendshipRequest, Long> {
 
-	@Query("SELECT r FROM TFriendshipRequest WHERE receiver_id = ?1 ")
-	Page<FriendshipRequest> findRequestToUser(Pageable pageable, Long receiverID);
+	@Query("SELECT r FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = false ORDER BY r.id ASC")
+	Page<FriendshipRequest> findPendingRequestToUser(Pageable pageable, User receiver);
 
 }
