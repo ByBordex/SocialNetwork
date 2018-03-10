@@ -1,10 +1,12 @@
 package com.uniovi.services;
 
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -43,7 +45,18 @@ public class FriendshipRequestService {
 			usersRequestedFriendship.add(fr.getReceiver());
 		}
 		return usersRequestedFriendship;
-		
+	}
+	
+	public Page<User> getFriends(Pageable pageable, User user) {
+		Page<User> friends = friendshipRequestRepo.getFriends(pageable, user);
+		return friends;
+	}
+	
+	public Page<User> searchFriendsByNameOrEmail(Pageable pageable, User user, String searchText) {
+		Page<User> users = new PageImpl<User>(new LinkedList<User>());
+		searchText = "%" + searchText + "%";
+		users = friendshipRequestRepo.searchFriendsByNameOrEmail(pageable, user, searchText);
+		return users;
 	}
 	
 }

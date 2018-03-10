@@ -41,6 +41,24 @@ public class FriendshipRequestController {
 		return "friendshipRequest/list";
 	}
 	
+	@RequestMapping("/friendshipRequest/listFriends")
+	public String getListFriends(Model model, Principal principal, Pageable pageable,
+			@RequestParam(value = "", required = false) String searchText) {
+		
+		User user = userService.getUserByEmail( principal.getName() );
+		Page<User> friends = new PageImpl<User>(new LinkedList<User>());
+
+		if (searchText != null && !searchText.isEmpty()) {
+			friends = friendshipRequestService.searchFriendsByNameOrEmail(pageable, user, searchText);
+		} else {
+			friends = friendshipRequestService.getFriends(pageable, user);
+		}
+		
+		model.addAttribute("friendsList", friends.getContent());
+		model.addAttribute("page", friends);
+
+		return "friendshipRequest/listFriends";
+	}
 	
 	@RequestMapping(value="/sendRequest", method = RequestMethod.POST)
 	public String sendRequest(Model model, Principal principal, @RequestParam Long receiver)

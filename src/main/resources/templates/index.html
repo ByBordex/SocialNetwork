@@ -5,28 +5,27 @@
 	<nav th:replace="fragments/nav" />
 	<div class="container" style="text-align: center">
 		<h2 th:text="#{welcome.message}"></h2>
-		<p th:text="#{home.unregistered.message}">Lorem ipsum dolor sit
-			amet, consectetur adipiscing</p>
+		<p th:text="#{home.unregistered.message}"></p>
 	</div>
 
 	<div class='container'>
 		<div class='row justify-content-center center-block form-group'>
 			<button id="btnLogin" class="btn btn-info col-5 center-block"
-				th:text="#{login.message}">Iniciar sesión</button>
+				th:text="#{login.message}"></button>
 
 			<script type="text/javascript">
 				document.getElementById("btnLogin").onclick = function() {
-					location.href = "/user/login";
+					location.href = "/login";
 				};
 			</script>
 		</div>
 		<div>
 			<button id="btnSignup" class="btn btn-info col-5 center-block form-group"
-				th:text="#{signup.message}">Registrarse</button>
+				th:text="#{signup.message}"></button>
 
 			<script type="text/javascript">
 				document.getElementById("btnSignup").onclick = function() {
-					location.href = "/user/signup";
+					location.href = "/signup";
 				};
 			</script>
 		</div>
