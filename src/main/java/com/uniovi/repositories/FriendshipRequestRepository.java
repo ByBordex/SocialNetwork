@@ -27,6 +27,17 @@ public interface FriendshipRequestRepository extends CrudRepository<FriendshipRe
 	@Query("UPDATE FriendshipRequest SET accepted = true WHERE id=?1 AND receiver = ?2")
 	void acceptRequest(Long id, User receiver);
 	
-	@Query("SELECT DISTINCT r FROM FriendshipRequest r WHERE r.sender = ?1 OR r.receiver = ?1 AND r.accepted = true")
+	@Query("SELECT DISTINCT u FROM User u WHERE u IN "
+			+ "	(SELECT DISTINCT r.sender FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = true)"
+			+ " OR u IN"
+			+ " (SELECT DISTINCT r.receiver FROM FriendshipRequest r WHERE r.sender = ?1 AND r.accepted = true)")
 	Page<User> getFriends(Pageable pageable, User user);
+	
+	@Query("SELECT DISTINCT u FROM User u WHERE (LOWER(u.name) LIKE LOWER(?2) OR" 
+			+ " LOWER(u.email) LIKE LOWER(?2))"
+			+ " AND u IN"
+			+ " (SELECT DISTINCT r.sender FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = true)"
+			+ " OR u IN"
+			+ " (SELECT DISTINCT r.receiver FROM FriendshipRequest r WHERE r.sender = ?1 AND r.accepted = true)")
+	Page<User> searchFriendsByNameOrEmail(Pageable pageable, User user, String searchText);
 }

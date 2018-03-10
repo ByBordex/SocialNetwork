@@ -9,8 +9,12 @@ import com.uniovi.entites.User;
 
 @Service
 public class InsertSampleDataService {
+	
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private FriendshipRequestService friendshipRequestService;
 
 	@PostConstruct
 	public void init() { 
@@ -39,7 +43,13 @@ public class InsertSampleDataService {
 		user11.setPassword("123456");
 		User user12 = new User("12@mail.com", "Alejandra Pérez");
 		user12.setPassword("123456");
-
+		User user13 = new User("13@mail.com", "Carlos Vega");
+		user13.setPassword("123456");
+		User user14 = new User("14@mail.com", "Caridad Meana");
+		user14.setPassword("123456");
+		User user15 = new User("15@mail.com", "Sergio Miranda");
+		user15.setPassword("123456");
+		
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
@@ -52,5 +62,13 @@ public class InsertSampleDataService {
 		usersService.addUser(user10);
 		usersService.addUser(user11);
 		usersService.addUser(user12);
+		usersService.addUser(user13);
+		usersService.addUser(user14);
+		usersService.addUser(user15);
+		
+		friendshipRequestService.sendRequest(user1, user2.getId());
+		friendshipRequestService.sendRequest(user1, user4.getId());
+		friendshipRequestService.sendRequest(user1, user6.getId());
+		friendshipRequestService.sendRequest(user1, user8.getId());
 	}
 }
