@@ -29,6 +29,7 @@ public class PostController {
 	public String getList(Model model, Principal principal) {
 		User author = usersService.getUserByEmail( principal.getName() );
 		List<Post> posts = postService.findPostsFromUser( author );
+		System.out.println(posts.size());
 		model.addAttribute("postsList", posts);
 		return "post/list";
 	}

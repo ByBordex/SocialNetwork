@@ -1,5 +1,6 @@
 package com.uniovi.entites;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import javax.persistence.Entity;
@@ -19,7 +20,7 @@ public class Post {
 	private String title;
 	private String content;
 	
-	private Date date;
+	private String date;
 	
 	@ManyToOne
 	private User user;
@@ -30,7 +31,10 @@ public class Post {
 		super();
 		this.title = title;
 		this.content = content;
-		this.date = new Date();
+		Calendar calendar = Calendar.getInstance();
+		this.date = String.valueOf(calendar.get( Calendar.DATE )) 
+				+ "/" + String.valueOf(calendar.get( Calendar.MONTH )) 
+				+ "/" + String.valueOf(calendar.get( Calendar.YEAR ));
 	}
 
 	public Long getId() { return id; }
@@ -43,9 +47,9 @@ public class Post {
 	
 	public void setContent(String content) { this.content = content; }
 	
-	public Date getDate() { return date; }
+	public String getDate() { return date; }
 	
-	public void setDate(Date date) { this.date = date; }
+	public void setDate(String date) { this.date = date; }
 	
 	public User getUser() { return user; }
 	

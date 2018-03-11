@@ -81,15 +81,16 @@ public class InsertSampleDataService {
 		Post post1 = new Post("Post 1", "Esto es una prueba");
 		post1.setUser(user1);
 		Post post2 = new Post("Post 2", "Esto es una prueba");
-		post1.setUser(user1);
+		post2.setUser(user1);
 		Post post3 = new Post("Post 3", "Esto es una prueba");
-		post1.setUser(user1);
+		post3.setUser(user1);
 		Post post4 = new Post("Post 4", "Esto es una prueba");
-		post1.setUser(user1);
+		post4.setUser(user1);
 
 		postService.addPost(post1);
 		postService.addPost(post2);
 		postService.addPost(post3);
 		postService.addPost(post4);
+		
 	}
 }
