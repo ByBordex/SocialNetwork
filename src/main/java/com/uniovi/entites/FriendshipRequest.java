@@ -27,9 +27,9 @@ public class FriendshipRequest {
 	@ManyToOne
 	@JoinColumn(name = "receiver_id")
 	User receiver;
-
-	private FriendshipRequest(){}
 	
+	public FriendshipRequest() { }
+
 	public FriendshipRequest(User sender, User receiver) {
 		super();
 		this.sender = sender;
@@ -37,37 +37,24 @@ public class FriendshipRequest {
 		accepted = false;
 	}
 
-	public boolean isAccepted() {
-		return accepted;
-	}
+	public Long getId() { return id; }
+	
+	public boolean isAccepted() { return accepted; }
 
-	public void setAccepted(boolean accepted) {
-		this.accepted = accepted;
-	}
+	public void setAccepted(boolean accepted) { this.accepted = accepted; }
 
-	public User getSender() {
-		return sender;
-	}
+	public User getSender() { return sender; }
 
-	public void setSender(User sender) {
-		this.sender = sender;
-	}
+	public void setSender(User sender) { this.sender = sender; }
 
-	public User getReceiver() {
-		return receiver;
-	}
+	public User getReceiver() { return receiver; }
 
-	public void setReceiver(User receiver) {
-		this.receiver = receiver;
-	}
-
-	public Long getId() {
-		return id;
-	}
+	public void setReceiver(User receiver) { this.receiver = receiver; }
 
 	@Override
 	public String toString() {
-		return "FriendshipRequest [accepted=" + accepted + ", sender=" + sender + ", receiver=" + receiver + "]";
+		return "FriendshipRequest [id=" + id + ", accepted=" + accepted + ", sender=" + sender + ", receiver="
+				+ receiver + "]";
 	}
-	
+
 }

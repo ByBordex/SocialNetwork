@@ -14,6 +14,7 @@ import javax.persistence.Transient;
 @Entity
 @Table(name="TUsers")
 public class User {
+	
 	@Id
 	@GeneratedValue
 	private long id;
@@ -29,70 +30,49 @@ public class User {
 	
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
 	private Set<FriendshipRequest> requestSended;
-	
 	@OneToMany(mappedBy = "receiver", cascade = CascadeType.ALL)
 	private Set<FriendshipRequest> requestReceived;
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	private Set<Post> posts;
 
+	public User() {}
+	
 	public User(String email, String name) {
 		super();
 		this.email = email;
 		this.name = name;
 	}
 
-	public User() {
-	}
+	public Long getId() { return id; }
 
-	public long getId() {
-		return id;
-	}
+//	public void setId(long id) { this.id = id; } 
 
-	public void setId(long id) {
-		this.id = id;
-	}
+	public String getEmail() { return email; }
 
-	public String getEmail() {
-		return email;
-	}
+	public void setEmail(String email) { this.email = email; }
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
+	public String getName() { return name; }
 
-	public String getName() {
-		return name;
-	}
+	public void setName(String name) { this.name = name; }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	public String getPassword() { return password; }
 
-	public String getPassword() {
-		return password;
-	}
+	public void setPassword(String password) { this.password = password; }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+	public String getPasswordConfirm() { return passwordConfirm; }
 
-	public String getPasswordConfirm() {
-		return passwordConfirm;
-	}
+	public void setPasswordConfirm(String passwordConfirm) { this.passwordConfirm = passwordConfirm; }
 
-	public void setPasswordConfirm(String passwordConfirm) {
-		this.passwordConfirm = passwordConfirm;
-	}
+	public String getRole() { return role; }
 
-	public String getRole() {
-		return role;
-	}
+	public Set<FriendshipRequest> getRequestSended() { return requestSended; }
 
-	public Set<FriendshipRequest> getRequestSended() {
-		return requestSended;
-	}
+	public Set<FriendshipRequest> getRequestReceived() { return requestReceived; }
 
-	public Set<FriendshipRequest> getRequestReceived() {
-		return requestReceived;
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + ", name=" + name + ", role=" + role + ", password=" + password
+				+ "]";
 	}
 	
-
 }
