@@ -34,8 +34,7 @@ public class FriendshipRequestService {
 		friendshipRequestRepo.acceptRequest(id, receiver);	
 	}
 	
-	public Page<FriendshipRequest> getPendingRequestToUser(Pageable pageable, User receiver)
-	{
+	public Page<FriendshipRequest> getPendingRequestToUser(Pageable pageable, User receiver) {
 		return friendshipRequestRepo.findPendingRequestToUser(pageable, receiver);
 	}
 
@@ -48,8 +47,7 @@ public class FriendshipRequestService {
 	}
 	
 	public Page<User> getFriends(Pageable pageable, User user) {
-		Page<User> friends = friendshipRequestRepo.getFriends(pageable, user);
-		return friends;
+		return friendshipRequestRepo.getFriends(pageable, user);
 	}
 	
 	public Page<User> searchFriendsByNameOrEmail(Pageable pageable, User user, String searchText) {

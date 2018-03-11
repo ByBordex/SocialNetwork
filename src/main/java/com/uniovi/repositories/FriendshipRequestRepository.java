@@ -7,13 +7,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.uniovi.entites.FriendshipRequest;
 import com.uniovi.entites.User;
 
-@Repository
 public interface FriendshipRequestRepository extends CrudRepository<FriendshipRequest, Long> {
 
 	@Query("SELECT r FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = false ORDER BY r.id ASC")
@@ -40,4 +38,5 @@ public interface FriendshipRequestRepository extends CrudRepository<FriendshipRe
 			+ " OR u IN"
 			+ " (SELECT DISTINCT r.receiver FROM FriendshipRequest r WHERE r.sender = ?1 AND r.accepted = true)")
 	Page<User> searchFriendsByNameOrEmail(Pageable pageable, User user, String searchText);
+	
 }

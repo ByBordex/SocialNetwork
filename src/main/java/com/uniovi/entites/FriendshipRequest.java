@@ -27,9 +27,9 @@ public class FriendshipRequest {
 	@ManyToOne
 	@JoinColumn(name = "receiver_id")
 	User receiver;
-
-	private FriendshipRequest(){}
 	
+	public FriendshipRequest() { }
+
 	public FriendshipRequest(User sender, User receiver) {
 		super();
 		this.sender = sender;

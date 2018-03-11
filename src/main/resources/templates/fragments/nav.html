@@ -25,6 +25,15 @@
 					<ul class="dropdown-menu">
 						<li><a href="/friendshipRequest/listFriends"
 							th:text='#{friends.view}'></a></li>
+						<li><a href="/friendshipRequest/list"
+							th:text='#{friendshipRequest}'></a></li>
+					</ul></li>
+				<li id="users-menu" class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#" th:text='#{posts}'><span
+						class="caret"></span> </a>
+					<ul class="dropdown-menu">
+						<li><a href="/posts/list" th:text='#{posts.view}'></a></li>
+						<li><a href="/posts/post" th:text='#{posts.newone}'></a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

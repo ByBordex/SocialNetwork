@@ -2,8 +2,6 @@ package com.uniovi.services;
 
 import java.util.LinkedList;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -23,13 +21,8 @@ public class UsersService {
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-	@PostConstruct
-	public void init() {
-	}
-
 	public Page<User> getUsers(Pageable pageable) {
-		Page<User> users = usersRepository.findAll(pageable);
-		return users;
+		return usersRepository.findAll(pageable);
 	}
 	
 	public User getUser(Long id) {

@@ -27,6 +27,7 @@ import com.uniovi.validators.SignUpFormValidator;
 
 @Controller
 public class UsersController {
+	
 	@Autowired
 	private UsersService usersService;
 
@@ -98,10 +99,6 @@ public class UsersController {
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
-		// Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		// String dni = auth.getName();
-		// User activeUser = usersService.getUserByDni(dni);
-		// model.addAttribute("markList", activeUser.getMarks());
 		return "home";
 	}
 

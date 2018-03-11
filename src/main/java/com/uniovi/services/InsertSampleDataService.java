@@ -5,6 +5,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.uniovi.entites.Post;
 import com.uniovi.entites.User;
 
 @Service
@@ -15,6 +16,9 @@ public class InsertSampleDataService {
 	
 	@Autowired
 	private FriendshipRequestService friendshipRequestService;
+	
+	@Autowired
+	private PostService postService;
 
 	@PostConstruct
 	public void init() { 
@@ -66,9 +70,26 @@ public class InsertSampleDataService {
 		usersService.addUser(user14);
 		usersService.addUser(user15);
 		
-		friendshipRequestService.sendRequest(user1, user2.getId());
-		friendshipRequestService.sendRequest(user1, user4.getId());
-		friendshipRequestService.sendRequest(user1, user6.getId());
-		friendshipRequestService.sendRequest(user1, user8.getId());
+		friendshipRequestService.sendRequest(user2, user1.getId());
+		friendshipRequestService.sendRequest(user3, user1.getId());
+		friendshipRequestService.sendRequest(user4, user1.getId());
+		friendshipRequestService.sendRequest(user5, user1.getId());
+		friendshipRequestService.sendRequest(user6, user1.getId());
+		friendshipRequestService.sendRequest(user7, user1.getId());
+		friendshipRequestService.sendRequest(user8, user1.getId());
+		
+		Post post1 = new Post("Post 1", "Esto es una prueba");
+		post1.setUser(user1);
+		Post post2 = new Post("Post 2", "Esto es una prueba");
+		post1.setUser(user1);
+		Post post3 = new Post("Post 3", "Esto es una prueba");
+		post1.setUser(user1);
+		Post post4 = new Post("Post 4", "Esto es una prueba");
+		post1.setUser(user1);
+
+		postService.addPost(post1);
+		postService.addPost(post2);
+		postService.addPost(post3);
+		postService.addPost(post4);
 	}
 }

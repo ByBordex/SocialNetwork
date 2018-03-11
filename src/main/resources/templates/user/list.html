@@ -6,24 +6,23 @@
 	<nav th:replace="fragments/nav" />
 	<div class="container">
 
-		<h2 th:text="#{users}">Usuarios</h2>
+		<h2 th:text="#{users}"></h2>
 
 		<form class="navbar-form" action="/user/list">
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
 					placeholder="Buscar por nombre o email de usuario">
 			</div>
-			<button type="submit" class="btn btn-default">Buscar</button>
+			<button type="submit" class="btn btn-default"></button>
 		</form>
 
-		<p th:text="#{users.list.subtitle}">Los usuarios que actualmente
-			figuran en el sistema son los siguientes:</p>
+		<p th:text="#{users.list.subtitle}"></p>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>Email</th>
-						<th th:text="#{users.list.name}">Nombre</th>
+						<th th:text="#{users.list.email}"></th>
+						<th th:text="#{users.list.name}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -35,20 +34,19 @@
 					<tr th:each="user : ${usersList}" th:object="${user}"
 						th:if="${user.email} != ${#authentication.getPrincipal().getUsername()}">
 
-						<td th:text="${user.email}">mail@mail</td>
-						<td th:text="${user.name}">Nombre del usuario</td>
+						<td th:text="${user.email}"></td>
+						<td th:text="${user.name}"></td>
 						<td>
 							<div
 								th:if='${#bools.isTrue(#lists.contains(sendedRequest, user))} '>
 								<button disabled type="button" th:id="${'sendButton' + user.id}"
 									class="btn btn-warning"
-									th:text='#{users.list.requestFriendship.pending}'>Pendiente</button>
+									th:text='#{users.list.requestFriendship.pending}'></button>
 							</div>
 							<div
 								th:if='${#bools.isFalse(#lists.contains(sendedRequest, user))} '>
 								<button type="button" th:id="${'sendButton' + user.id}"
-									class="btn btn-info" th:text='#{users.list.requestFriendship}'>Solicitar
-									Amistad</button>
+									class="btn btn-info" th:text='#{users.list.requestFriendship}'></button>
 								<script th:inline="javascript">
 										/*<![CDATA[*/$(
 												"#sendButton[[${user.id}]]")
