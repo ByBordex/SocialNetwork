@@ -28,6 +28,18 @@
 				<tr th:each="friend : ${friendsList}">
 					<td th:text="${friend.email}">Mail</td>
 					<td th:text="${friend.name}">Nombre</td>
+					<td>
+						<button type="button" th:id="${'postButton' + friend.id}"
+							class="btn btn-info" th:text='#{friends.list.profile}'></button> <script
+							th:inline="javascript">
+										/*<![CDATA[*/$(
+												"#postButton[[${friend.id}]]")
+												.click(
+														function() {
+															location.href = '/friendshipRequest/listFriends/' + [[${friend.id}]];
+														}); /*]]>*/
+									</script>
+					</td>
 				</tr>
 			</tbody>
 
