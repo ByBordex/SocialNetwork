@@ -18,6 +18,7 @@ public class Post {
 	
 	private String title;
 	private String content;
+	private boolean photo;
 	
 	private String date;
 	
@@ -45,6 +46,10 @@ public class Post {
 	public String getContent() { return content; }
 	
 	public void setContent(String content) { this.content = content; }
+	
+	public Boolean getPhoto() { return photo; }
+	
+	public void setPhoto(Boolean photo) { this.photo = photo; }
 	
 	public String getDate() { return date; }
 	

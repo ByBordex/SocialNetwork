@@ -16,6 +16,7 @@
 						<th th:text="#{post.list.date}"></th>
 						<th th:text="#{post.list.title2}"></th>
 						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
 
 					</tr>
 				</thead>
@@ -24,6 +25,9 @@
 
 						<td th:text="${post.date}"></td>
 						<td th:text="${post.title}"></td>
+						<td th:if="${post.photo}"><img
+								th:src="@{'/img/posts/' + post.id}"
+								style="border: 0; float: left; margin-right: 15px; heigh: 15px; widht: 15px" /></td>
 						<td>
 							<button type="button" th:id="${'seeButton' + post.id}"
 								class="btn btn-info" th:text='#{post.list.see}'></button> <script
