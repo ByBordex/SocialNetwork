@@ -64,7 +64,7 @@ public class FacelogTests {
 	// PR01. Acceder a la página principal
 
 	@Test
-	public void MainPageTest() {
+	public void mainPageTest() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
 	}
 
@@ -72,7 +72,7 @@ public class FacelogTests {
 	// home
 
 	@Test
-	public void NavToRegisterTest() {
+	public void navToRegisterTest() {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 	}
 
@@ -80,7 +80,7 @@ public class FacelogTests {
 	// home
 
 	@Test
-	public void NavToLoginTest() {
+	public void navToLoginTest() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 	}
 
@@ -88,7 +88,7 @@ public class FacelogTests {
 	// Español
 
 	@Test
-	public void ChangeLanguageTest() {
+	public void changeLanguageTest() {
 		PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
 				PO_Properties.getENGLISH());
 		SeleniumUtils.esperarSegundos(driver, 2);
@@ -97,10 +97,10 @@ public class FacelogTests {
 	// PR05. Prueba del formulario de registro. registro con datos correctos
 
 	@Test
-	public void RegisterValidData() { // Vamos al formulario de registro
+	public void registerValidData() { // Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary"); //
 		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "prueba3@mail.com", "Josefo Perez" , "77777", "77777");
+		PO_RegisterView.fillForm(driver, "prueba3@mail.com", "Josefo Perez", "77777", "77777");
 		SeleniumUtils.esperarSegundos(driver, 2); // Comprobamos que entramos en la sección privada
 		PO_View.checkElement(driver, "text", "Perfil");
 	}
@@ -108,7 +108,7 @@ public class FacelogTests {
 	// PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto,
 	// .... pagination
 	@Test
-	public void RegisterInvalidData() { // Vamos al formulario de registro
+	public void registerInvalidDataTest() { // Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "1@mail.com", "Josefo Perez", "77777", "77777");
@@ -132,7 +132,7 @@ public class FacelogTests {
 	// PRN. Loguearse con exito desde el ROl de Usuario, 1@mail.com, 123456
 
 	@Test
-	public void LoginValid() { // Vamos al formulario de logueo.
+	public void loginValiTestd() { // Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
@@ -140,16 +140,36 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "Perfil");
 	}
 
-
-	//Comprobamos login erroneo
+	// Comprobamos login erroneo
 	@Test
-	public void LoginError() {
+	public void loginErrorTest() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "noexiste@mail.com", "123456");
 		// COmprobamos que entramos en la pagina privada de profesor
 		PO_View.checkElement(driver, "text", "La combinacion usuario/password no coincide");
+	}
+
+	@Test
+	public void listAllUsersTest() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "Perfil");
+
+		// Pinchamos en la opción de menu de Gestionar usuarios:
+		// li[contains(@id, 'users-menu')]/a
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elementos.get(0).click();
+		// Esperamos a aparezca la opción de listar usuarios:
+		// a[contains(@href, '/user/list')]
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'user/list')]");
+		// Pinchamos en agregar Nota.
+		elementos.get(0).click();
+		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes");
+		
 	}
 
 }
