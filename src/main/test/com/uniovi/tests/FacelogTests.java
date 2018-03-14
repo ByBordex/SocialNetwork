@@ -152,13 +152,12 @@ public class FacelogTests {
 	}
 
 	@Test
-	public void listAllUsersTest() {
+	public void listAUsersTest() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
 		// COmprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
-
 		// Pinchamos en la opción de menu de Gestionar usuarios:
 		// li[contains(@id, 'users-menu')]/a
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
@@ -166,10 +165,11 @@ public class FacelogTests {
 		// Esperamos a aparezca la opción de listar usuarios:
 		// a[contains(@href, '/user/list')]
 		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'user/list')]");
-		// Pinchamos en agregar Nota.
+		// Comprobamos que entramos en la lista de usuarios.
 		elementos.get(0).click();
 		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes");
-		
+		//Comprobar que se nos muestran usuarios
+		elementos = PO_View.checkElement(driver, "free", "//td[contains(text(), '@')]");
 	}
 
 }
