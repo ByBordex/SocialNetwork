@@ -51,23 +51,23 @@ public class PostController {
 	}
 
 	@RequestMapping(value="/posts/post", method = RequestMethod.POST)
-	public String sendPost(@ModelAttribute Post post, Principal principal, @RequestParam("photo") MultipartFile photo) 
+	public String sendPost(@ModelAttribute Post post, Principal principal, @RequestParam(value="photo", required=false) MultipartFile photo) 
 	{
 		User author = usersService.getUserByEmail( principal.getName() );
 
-
-		System.out.println("llega aqui 1");
 		try {
 			System.out.println("llega aqui");
 			post.setUser( author );
 			postService.addPost( post );
-			InputStream is = photo.getInputStream();
-			Files.copy(is, Paths.get("src/main/resources/static/img/posts/" + post.getId()),
-					StandardCopyOption.REPLACE_EXISTING);
-			post.setPhoto( true );
+			if (photo != null) {
+				InputStream is = photo.getInputStream();
+				Files.copy(is, Paths.get("src/main/resources/static/img/posts/" + post.getId()),
+						StandardCopyOption.REPLACE_EXISTING);
+				post.setPhoto( true );
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "redirect:/posts/post";
+			return "redirect:/posts/list";
 		}
 		return "redirect:/posts/list";
 	}

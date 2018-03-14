@@ -35,6 +35,7 @@ public class Post {
 		this.date = String.valueOf(calendar.get( Calendar.DATE )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.MONTH )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.YEAR ));
+		this.photo = false;
 	}
 
 	public Long getId() { return id; }
