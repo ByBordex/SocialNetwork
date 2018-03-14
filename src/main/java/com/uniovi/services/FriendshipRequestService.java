@@ -2,6 +2,7 @@ package com.uniovi.services;
 
 import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +49,10 @@ public class FriendshipRequestService {
 	
 	public Page<User> getFriends(Pageable pageable, User user) {
 		return friendshipRequestRepo.getFriends(pageable, user);
+	}
+	
+	public List<User> getFriends(User user) {
+		return friendshipRequestRepo.getFriends( user );
 	}
 	
 	public Page<User> searchFriendsByNameOrEmail(Pageable pageable, User user, String searchText) {
