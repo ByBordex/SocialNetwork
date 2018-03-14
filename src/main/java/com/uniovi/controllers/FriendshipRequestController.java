@@ -71,14 +71,19 @@ public class FriendshipRequestController {
 	}
 	
 	@RequestMapping("/friendshipRequest/listFriends/{id}")
-	public String getFriendProfile(Model model, @PathVariable Long id) 
+	public String getFriendProfile(Model model, Principal principal, @PathVariable Long id) 
 	{
 		User user = usersService.getUser( id );
-		List<Post> posts = postService.findPostsFromUser( user );
-		model.addAttribute("user", user);
-		model.addAttribute("postsList", posts);
+		User author = userService.getUserByEmail( principal.getName() );
+		List<User> friends = friendshipRequestService.getFriends( author );
+		if ( friends.contains( user ) ) {
+			List<Post> posts = postService.findPostsFromUser( user );
+			model.addAttribute("user", user);
+			model.addAttribute("postsList", posts);
 
-		return "friendshipRequest/showFriend";
+			return "friendshipRequest/showFriend";
+		}
+		return "redirect:/friendshipRequest/listFriends";
 	}
 	
 	@RequestMapping(value="/sendRequest", method = RequestMethod.POST)
