@@ -206,6 +206,40 @@ public class FacelogTests {
 				"//button[contains(text(), 'Pendiente') "
 				+ "		and contains(@class, 'btn btn-warning')"
 				+ "		 and @disabled]");
+	}
+
+	@Test
+	public void receivedRequestsTest() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "Perfil");
+		// Pinchamos en la opción de menu de Gestionar usuarios:
+		// li[contains(@id, 'users-menu')]/a
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elementos.get(0).click();
+		// Esperamos a aparezca la opción de listar usuarios:
+		// a[contains(@href, '/user/list')]
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'user/list')]");
+		// Comprobamos que entramos en la lista de usuarios.
+		elementos.get(0).click();
+		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes");
+		// Comprobamos que existe el botón de amistad para el usuario2.
+		elementos = PO_View.checkElement(driver, "id", "sendButton2");
+		
+		// Pulsamos el botón para enviar la solicitud.
+		elementos.get(0).click();
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// Recargamos la página
+		driver.navigate().to(driver.getCurrentUrl());
+		SeleniumUtils.esperarSegundos(driver, 1);
+		// Comprobamos que el botón ahora tiene btn-warning representando "Pendiente" y
+		// está deshabilitado
+		elementos = PO_View.checkElement(driver, "free",
+				"//button[contains(text(), 'Pendiente') "
+				+ "		and contains(@class, 'btn btn-warning')"
+				+ "		 and @disabled]");
 		// Cerramos sesión 1@mail.com
 		PO_NavView.clickDesconectar(driver);
 		// Iniciamos sesión con 2@mail.com
@@ -222,7 +256,5 @@ public class FacelogTests {
 		// Comprobamos que ha llegado la petición de amistad
 		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_View.checkElement(driver, "free", "//td[contains(text(), '1@mail.com')]");
-
 	}
-
 }
