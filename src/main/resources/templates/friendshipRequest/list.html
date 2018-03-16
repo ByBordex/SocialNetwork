@@ -40,7 +40,11 @@
 												"#confirmButton[[${request.id}]]")
 												.click(
 														function() {
-															
+															var request = [[${request.id}]];
+															$.post("/acceptRequest", 
+																	{						 
+																	"request" : request
+																	});	
 															
 														}); /*]]>*/
 									</script>

@@ -7,15 +7,15 @@
 		<h2 th:text="#{welcome.message}"></h2>
 		<p
 			th:text="| #{home.registered.message} ${#authentication.getPrincipal().getUsername()} |">
-			Usuario Autenticado como : usuario</p>
+		</p>
 		<p>
 	</div>
 
 	<div class='container'>
-		<h2 th:text='#{home.profile}'>Perfil</h2>
+		<h2 th:text='#{home.profile}'></h2>
 		<div class='row'>
 			<button id="btnSearchUser" class="btn btn-info col-4"
-				th:text='#{home.btnSearchUser}'>Buscar usuarios</button>
+				th:text='#{home.btnSearchUser}'></button>
 
 			<script type="text/javascript">
 				document.getElementById("btnSearchUser").onclick = function() {
@@ -23,8 +23,7 @@
 				};
 			</script>
 			<button id="btnFriendshipRequest" class="btn btn-info col-4"
-				th:text='#{home.btnFriendshipRequest}'>Peticiones de
-				amistad</button>
+				th:text='#{friendshipRequest}'></button>
 
 			<script type="text/javascript">
 				document.getElementById("btnFriendshipRequest").onclick = function() {
@@ -33,11 +32,11 @@
 			</script>
 
 			<button id="btnSearchFriends" class="btn btn-info col-4"
-				th:text='#{home.btnSearchFriends}'>Ver amistades</button>
+				th:text='#{friends}'></button>
 
 			<script type="text/javascript">
 				document.getElementById("btnSearchFriends").onclick = function() {
-					location.href = "/friends/list";
+					location.href = "/friendshipRequest/listFriends";
 				};
 			</script>
 
@@ -46,18 +45,18 @@
 	</div>
 
 	<div class='container'>
-		<h2>Publicaciones</h2>
+		<h2 th:text="#{posts}"></h2>
 		<div class='row'>
-			<button id="btnListPost" class="btn btn-info col-3">Ver mis
-				publicaciones</button>
+			<button id="btnListPost" class="btn btn-info col-3"
+				th:text="#{posts}"></button>
 
 			<script type="text/javascript">
 				document.getElementById("btnListPost").onclick = function() {
 					location.href = "/posts/list";
 				};
 			</script>
-			<button id="btnCreatePost" class="btn btn-info col-3">Crear
-				publicación</button>
+			<button id="btnCreatePost" class="btn btn-info col-3"
+				th:text="#{posts.newone}"></button>
 
 			<script type="text/javascript">
 				document.getElementById("btnCreatePost").onclick = function() {
@@ -65,8 +64,6 @@
 				};
 			</script>
 
-			<button id="btnSearchFriends" class="btn btn-info col-3">Ver
-				amistades</button>		
 		</div>
 	</div>
 

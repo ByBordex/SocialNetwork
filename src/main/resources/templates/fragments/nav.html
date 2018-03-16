@@ -11,17 +11,29 @@
 		</div>
 
 		<div class="collapse navbar-collapse" id="myNavbar">
-			<ul class="nav navbar-nav">
-				<li><a href="/">Home</a></li>
+			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+				<li><a href="/home">Home</a></li>
 				<li id="users-menu" class="dropdown"><a class="dropdown-toggle"
-					data-toggle="dropdown" href="#" th:text='#{users.management}'>
-						Gestión de Usuarios <span class="caret"></span>
-				</a>
+					data-toggle="dropdown" href="#" th:text='#{users.management}'><span
+						class="caret"></span> </a>
 					<ul class="dropdown-menu">
+						<li><a href="/user/list" th:text='#{users.view}'></a></li>
+					</ul></li>
+				<li id="friends-menu" class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#" th:text='#{friends}'><span
+						class="caret"></span> </a>
+					<ul class="dropdown-menu">
+						<li><a href="/friendshipRequest/listFriends"
+							th:text='#{friends.view}'></a></li>
 						<li><a href="/friendshipRequest/list"
-							th:text='#{users.friendshipRequest}'>Peticiones de amistad</a></li>
-						<li><a href="/user/list" th:text='#{users.view}'>Ver
-								Usuarios</a></li>
+							th:text='#{friendshipRequest}'></a></li>
+					</ul></li>
+				<li id="posts-menu" class="dropdown"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#" th:text='#{posts}'><span
+						class="caret"></span> </a>
+					<ul class="dropdown-menu">
+						<li><a href="/posts/list" th:text='#{posts.view}'></a></li>
+						<li><a href="/posts/post" th:text='#{posts.newone}'></a></li>
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
@@ -37,19 +49,25 @@
 						<li><a id="btnEnglish" value="EN"> <img
 								th:src="@{/img/if_uk_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.en}">Inglés</span>
+								th:text="#{language.en}"></span>
 						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.es}">Español</span></a></li>
+								th:text="#{language.es}"></span></a></li>
 					</ul></li>
 
-				<li><a href="/signup" th:text="#{signup.message}"> <span
-						class="glyphicon glyphicon-user"></span> Registrate
+				<li sec:authorize="!isAuthenticated()"><a href="/signup"
+					th:text="#{signup.message}"> <span
+						class="glyphicon glyphicon-user"></span>
 				</a></li>
-				<li><a href="/login" th:text="#{login.message}"> <span
-						class="glyphicon glyphicon-log-in"></span> Identifícate
+				<li sec:authorize="!isAuthenticated()"><a href="/login"
+					th:text="#{login.message}"> <span
+						class="glyphicon glyphicon-log-in"></span>
+				</a></li>
+				<li sec:authorize="isAuthenticated()"><a href="/logout"
+					th:text="#{logout.message}"> <span
+						class="glyphicon glyphicon-log-out"></span>
 				</a></li>
 			</ul>
 		</div>
