@@ -26,8 +26,8 @@
 						<td th:text="${post.date}"></td>
 						<td th:text="${post.title}"></td>
 						<td th:if="${post.hasPhoto()} == true"><img
-								th:src=" '/src/resources/static/img/posts/' + ${post.id} " th:alt="'img' + ${post.id}"
-								style="border: 0; float: left; margin-right: 15px; heigh: 15px; widht: 15px" /></td>
+								th:src=" '/../img/posts/' + ${post.id} " th:alt="'img' + ${post.id}"
+								style="border: 0; float: left; margin-right: 10px; heigh: 10px; widht: 10px" /></td>
 						<td>
 							<button type="button" th:id="${'seeButton' + post.id}"
 								class="btn btn-info" th:text='#{post.list.see}'></button> <script

@@ -1,6 +1,5 @@
 package com.uniovi.entites;
 
-import java.io.File;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
@@ -8,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="TPosts")
@@ -31,20 +29,20 @@ public class Post {
 	public Post() {
 	}
 	
-	public String setCreationStringDate()
+	public void setCreationStringDate()
 	{
 		Calendar calendar = Calendar.getInstance();
 		String aux = String.valueOf(calendar.get( Calendar.DATE )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.MONTH )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.YEAR ));
-		return aux;
+		date = aux;
 	}
 	
 	public Post(String title, String content) {
 		this();
-		
 		this.title = title;
 		this.content = content;
+		setCreationStringDate();
 	}
 
 	public Long getId() { return id; }

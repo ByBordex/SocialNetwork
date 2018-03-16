@@ -55,16 +55,14 @@ public class PostController {
 	}
 
 	@RequestMapping(value="/posts/post", method = RequestMethod.POST)
-	public String sendPost(@ModelAttribute Post post,BindingResult b, Principal principal, @RequestParam(required = false)MultipartFile photo ) 
+	public String sendPost(@ModelAttribute Post post, BindingResult b, Principal principal, @RequestParam(required = false)MultipartFile photo ) 
 	{
 		User author = usersService.getUserByEmail( principal.getName() );
 
 		try {
-			System.out.println("llega aqui");
 			post.setUser( author );
 			post.setCreationStringDate();
 
-			System.out.println(post.hasPhoto());
 			if (photo != null) {
 				File f = new File( "src/resources/static/img/posts/" + post.getId() );
 				f.getParentFile().mkdirs(); 
@@ -75,10 +73,8 @@ public class PostController {
 						StandardCopyOption.REPLACE_EXISTING);
 				post.setPhoto( f.getPath() );
 			}
-			System.out.println(post.hasPhoto());
 		} catch (IOException e) {
 			e.printStackTrace();
-			return "redirect:/posts/list";
 		}
 		
 		postService.addPost( post );
