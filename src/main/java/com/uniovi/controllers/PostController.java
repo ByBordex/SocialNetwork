@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -11,6 +12,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +24,7 @@ import com.uniovi.entites.Post;
 import com.uniovi.entites.User;
 import com.uniovi.services.PostService;
 import com.uniovi.services.UsersService;
+
 
 @Controller
 public class PostController {
@@ -46,31 +49,39 @@ public class PostController {
 	}
 
 	@RequestMapping(value="/posts/post", method = RequestMethod.GET)
-	public String sendPost() {
+	public String sendPost(Model model) {
+		model.addAttribute("post", new Post() );
 		return "post/add";
 	}
 
 	@RequestMapping(value="/posts/post", method = RequestMethod.POST)
-	public String sendPost(@ModelAttribute Post post, Principal principal, @RequestParam(value="photo", required=false) MultipartFile photo) 
+	public String sendPost(@ModelAttribute Post post,BindingResult b, Principal principal, @RequestParam(required = false)MultipartFile photo ) 
 	{
 		User author = usersService.getUserByEmail( principal.getName() );
 
 		try {
 			System.out.println("llega aqui");
 			post.setUser( author );
-			postService.addPost( post );
+			post.setCreationStringDate();
+
 			System.out.println(post.hasPhoto());
 			if (photo != null) {
+				File f = new File( "src/resources/static/img/posts/" + post.getId() );
+				f.getParentFile().mkdirs(); 
+				f.createNewFile();
+				
 				InputStream is = photo.getInputStream();
-				Files.copy(is, Paths.get("src/main/resources/static/img/posts/" + post.getId()),
+				Files.copy(is, Paths.get(f.getPath() ),
 						StandardCopyOption.REPLACE_EXISTING);
-				post.setPhoto( "src/main/resources/static/img/posts/" + post.getId() );
+				post.setPhoto( f.getPath() );
 			}
 			System.out.println(post.hasPhoto());
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "redirect:/posts/list";
 		}
+		
+		postService.addPost( post );
 		return "redirect:/posts/list";
 	}
 

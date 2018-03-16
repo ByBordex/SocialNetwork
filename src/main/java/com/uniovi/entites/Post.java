@@ -21,8 +21,6 @@ public class Post {
 	private String title;
 	private String content;
 	
-	@Transient
-	private File photo;
 	private String photoPath;
 	
 	private String date;
@@ -31,24 +29,26 @@ public class Post {
 	private User user;
 	
 	public Post() {
+	}
+	
+	public String setCreationStringDate()
+	{
 		Calendar calendar = Calendar.getInstance();
-		this.date = String.valueOf(calendar.get( Calendar.DATE )) 
+		String aux = String.valueOf(calendar.get( Calendar.DATE )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.MONTH )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.YEAR ));
+		return aux;
 	}
 	
 	public Post(String title, String content) {
 		this();
+		
 		this.title = title;
 		this.content = content;
 	}
-	
-	public Post(String title, String content, File photo) {
-		this(title, content);
-		this.photo = photo;
-	}
 
 	public Long getId() { return id; }
+
 	
 	public String getTitle() { return title; }
 	
@@ -58,7 +58,7 @@ public class Post {
 	
 	public void setContent(String content) { this.content = content; }
 	
-	public Boolean hasPhoto() { return photo != null; }
+	public Boolean hasPhoto() { return photoPath != null; }
 	
 	public void setPhoto(String photoPath) { this.photoPath = photoPath; }
 	
