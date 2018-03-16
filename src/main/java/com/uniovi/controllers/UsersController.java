@@ -1,6 +1,5 @@
 package com.uniovi.controllers;
 
-import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
@@ -19,15 +18,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.uniovi.entites.FriendshipRequest;
 import com.uniovi.entites.User;
+import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
 import com.uniovi.validators.SignUpFormValidator;
 
 @Controller
 public class UsersController {
-	
+
 	@Autowired
 	private UsersService usersService;
 
@@ -36,6 +35,9 @@ public class UsersController {
 
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
+
+	@Autowired
+	private RolesService roles;
 
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable,
@@ -52,10 +54,7 @@ public class UsersController {
 			users = usersService.getUsers(pageable);
 		}
 
-		Set<User> usersRequestedFriendship = new HashSet<User>();
-		for (FriendshipRequest fr : activeUser.getRequestSended()) {
-			usersRequestedFriendship.add(fr.getReceiver());
-		}
+		Set<User> usersRequestedFriendship = usersService.getUsersFriendshipRequiredInList(activeUser, users.getContent());
 
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
@@ -63,13 +62,13 @@ public class UsersController {
 
 		return "user/list";
 	}
-	
+
 	@RequestMapping("/user/details/{id}")
 	public String getDetail(Model model, @PathVariable Long id) {
 		model.addAttribute("user", usersService.getUser(id));
 		return "user/details";
 	}
-	
+
 	public String signup() {
 		return "signup";
 	}
@@ -81,6 +80,7 @@ public class UsersController {
 		if (result.hasErrors()) {
 			return "signup";
 		}
+		user.setRole(roles.getRole(0));
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		return "redirect:home";
@@ -95,6 +95,25 @@ public class UsersController {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
 		return "login";
+	}
+
+	@RequestMapping(value = "/admin/login", method = RequestMethod.GET)
+	public String adminLogin(Model model) {
+		return "adminLogin";
+	}
+
+	@RequestMapping(value = "/admin/login", method = RequestMethod.POST)
+	public String adminLoginPost(Model model, @RequestParam String username, @RequestParam String password) {
+
+		User logUser = usersService.getUserByEmail(username);
+		if (logUser != null) {
+			if (!logUser.getRole().equals(roles.getRole(1))) {
+				return "redirect:/admin/login?error=true";
+			}
+		}
+
+		securityService.autoLogin(username, password);
+		return "redirect:/user/list";
 	}
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
