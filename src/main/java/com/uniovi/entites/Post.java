@@ -1,5 +1,6 @@
 package com.uniovi.entites;
 
+import java.io.File;
 import java.util.Calendar;
 
 import javax.persistence.Entity;
@@ -18,24 +19,30 @@ public class Post {
 	
 	private String title;
 	private String content;
-	private boolean photo;
+	private File photo;
+	private String photoPath;
 	
 	private String date;
 	
 	@ManyToOne
 	private User user;
 	
-	public Post() {}
-	
-	public Post(String title, String content) {
-		super();
-		this.title = title;
-		this.content = content;
+	public Post() {
 		Calendar calendar = Calendar.getInstance();
 		this.date = String.valueOf(calendar.get( Calendar.DATE )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.MONTH )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.YEAR ));
-		this.photo = false;
+	}
+	
+	public Post(String title, String content) {
+		this();
+		this.title = title;
+		this.content = content;
+	}
+	
+	public Post(String title, String content, File photo) {
+		this(title, content);
+		this.photo = photo;
 	}
 
 	public Long getId() { return id; }
@@ -48,9 +55,9 @@ public class Post {
 	
 	public void setContent(String content) { this.content = content; }
 	
-	public Boolean getPhoto() { return photo; }
+	public Boolean hasPhoto() { return photo != null; }
 	
-	public void setPhoto(Boolean photo) { this.photo = photo; }
+	public void setPhoto(String photoPath) { this.photoPath = photoPath; }
 	
 	public String getDate() { return date; }
 	

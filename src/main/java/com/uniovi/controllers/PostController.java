@@ -59,12 +59,14 @@ public class PostController {
 			System.out.println("llega aqui");
 			post.setUser( author );
 			postService.addPost( post );
+			System.out.println(post.hasPhoto());
 			if (photo != null) {
 				InputStream is = photo.getInputStream();
 				Files.copy(is, Paths.get("src/main/resources/static/img/posts/" + post.getId()),
 						StandardCopyOption.REPLACE_EXISTING);
-				post.setPhoto( true );
+				post.setPhoto( "src/main/resources/static/img/posts/" + post.getId() );
 			}
+			System.out.println(post.hasPhoto());
 		} catch (IOException e) {
 			e.printStackTrace();
 			return "redirect:/posts/list";
