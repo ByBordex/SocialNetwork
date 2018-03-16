@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="TPosts")
@@ -19,6 +20,8 @@ public class Post {
 	
 	private String title;
 	private String content;
+	
+	@Transient
 	private File photo;
 	private String photoPath;
 	
