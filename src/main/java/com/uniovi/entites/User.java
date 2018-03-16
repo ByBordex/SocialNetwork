@@ -74,5 +74,10 @@ public class User {
 		return "User [id=" + id + ", email=" + email + ", name=" + name + ", role=" + role + ", password=" + password
 				+ "]";
 	}
+
+	public void setRole(String role) {
+		this.role = role;
+		
+	}
 	
 }

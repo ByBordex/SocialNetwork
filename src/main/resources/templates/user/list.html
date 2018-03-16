@@ -56,7 +56,14 @@
 															$.post("/sendRequest", 
 																	{						 
 																	"receiver" : receiver
+																	}, 
+																	function(){
+																		$("#sendButton[[${user.id}]]").attr('disabled', true);
+																		$("#sendButton[[${user.id}]]").removeClass("btn-info");
+																		$("#sendButton[[${user.id}]]").addClass("btn-warning");
+																		$("#sendButton[[${user.id}]]").text( [[#{users.list.requestFriendship.pending}]] );
 																	});
+															
 														}); /*]]>*/
 									</script>
 							</div>
