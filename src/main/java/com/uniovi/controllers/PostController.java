@@ -51,6 +51,8 @@ public class PostController {
 	@RequestMapping(value="/posts/post", method = RequestMethod.GET)
 	public String sendPost(Model model) {
 		model.addAttribute("post", new Post() );
+		int postID = postService.getLast();
+		model.addAttribute("postID", postID);
 		return "post/add";
 	}
 
@@ -58,15 +60,18 @@ public class PostController {
 	public String sendPost(@ModelAttribute Post post, BindingResult b, Principal principal, @RequestParam(required = false)MultipartFile photo ) 
 	{
 		User author = usersService.getUserByEmail( principal.getName() );
-
+		
 		try {
 			post.setUser( author );
 			post.setCreationStringDate();
 
-			if (photo != null) {
-				File f = new File( "src/resources/static/img/posts/" + post.getId() );
+			if (photo != null && !photo.isEmpty()) {
+				int valor = postService.countPostsFromUser( author );
+				File f = new File( "src/main/resources/static/img/posts/" + author.getId() + "/" + valor );
 				f.getParentFile().mkdirs(); 
 				f.createNewFile();
+				
+				post.setPhoto( "/img/posts/" + author.getId() + "/" + valor );
 				
 				InputStream is = photo.getInputStream();
 				Files.copy(is, Paths.get(f.getPath() ),

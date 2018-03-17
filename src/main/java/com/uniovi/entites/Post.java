@@ -58,6 +58,8 @@ public class Post {
 	
 	public Boolean hasPhoto() { return photoPath != null; }
 	
+	public String getPhoto() { return photoPath; }
+	
 	public void setPhoto(String photoPath) { this.photoPath = photoPath; }
 	
 	public String getDate() { return date; }
