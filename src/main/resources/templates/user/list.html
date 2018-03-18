@@ -37,17 +37,22 @@
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.name}"></td>
 						<td>
-							<div
-								th:if='${#bools.isTrue(#lists.contains(sendedRequest, user))} '>
+							<div th:if='${#bools.isTrue(#lists.contains(friendList, user))} '>
 								<button disabled type="button" th:id="${'sendButton' + user.id}"
-									class="btn btn-warning"
-									th:text='#{users.list.requestFriendship.pending}'></button>
+									class="btn btn-success"
+									th:text='#{users.list.requestFriendship.friend}'></button>
 							</div>
 							<div
-								th:if='${#bools.isFalse(#lists.contains(sendedRequest, user))} '>
-								<button type="button" th:id="${'sendButton' + user.id}"
-									class="btn btn-info" th:text='#{users.list.requestFriendship}'></button>
-								<script th:inline="javascript">
+								th:unless='${#bools.isTrue(#lists.contains(friendList, user))} '>
+								<div th:if='${#bools.isTrue(#lists.contains(pending, user))}'>
+									<button disabled type="button"
+										th:id="${'sendButton' + user.id}" class="btn btn-warning"
+										th:text='#{users.list.requestFriendship.pending}'></button>
+								</div>
+								<div th:if='${#bools.isFalse(#lists.contains(pending, user))} '>
+									<button type="button" th:id="${'sendButton' + user.id}"
+										class="btn btn-info" th:text='#{users.list.requestFriendship}'></button>
+									<script th:inline="javascript">
 										/*<![CDATA[*/$(
 												"#sendButton[[${user.id}]]")
 												.click(
@@ -66,6 +71,7 @@
 															
 														}); /*]]>*/
 									</script>
+								</div>
 							</div>
 						</td>
 					</tr>

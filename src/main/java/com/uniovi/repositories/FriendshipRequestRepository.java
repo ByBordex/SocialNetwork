@@ -16,7 +16,11 @@ public interface FriendshipRequestRepository extends CrudRepository<FriendshipRe
 
 	@Query("SELECT r FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = false ORDER BY r.id ASC")
 	Page<FriendshipRequest> findPendingRequestToUser(Pageable pageable, User receiver);
-
+	
+	@Query("SELECT r FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = false ORDER BY r.id ASC")
+	List<FriendshipRequest> findPendingRequestToUser(User receiver);
+	
+	
 	@Query("SELECT r FROM FriendshipRequest r WHERE r.sender = ?1 AND r.accepted = false ORDER BY r.id ASC")
 	List<FriendshipRequest> findPendingRequestFromUser(User sender);
 	

@@ -35,6 +35,13 @@
 						<li><a href="/posts/list" th:text='#{posts.view}'></a></li>
 						<li><a href="/posts/post" th:text='#{posts.newone}'></a></li>
 					</ul></li>
+					
+				<li id="admin-menu" class="dropdown" sec:authorize="hasRole('ROLE_ADMIN')"  ><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#" th:text='#{admin.menu}'><span
+						class="caret"></span> </a>
+					<ul class="dropdown-menu">
+						<li><a href="/admin/user/list" th:text='#{admin.listUser}'></a></li>
+					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 

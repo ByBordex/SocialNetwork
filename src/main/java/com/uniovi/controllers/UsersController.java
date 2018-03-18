@@ -1,6 +1,8 @@
 package com.uniovi.controllers;
 
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entites.User;
+import com.uniovi.services.FriendshipRequestService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -35,6 +38,9 @@ public class UsersController {
 
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
+	
+	@Autowired
+	FriendshipRequestService friendshipRequestService;
 
 	@Autowired
 	private RolesService roles;
@@ -55,10 +61,17 @@ public class UsersController {
 		}
 
 		Set<User> usersRequestedFriendship = usersService.getUsersFriendshipRequiredInList(activeUser, users.getContent());
-
+		Set<User> usersReceivedRequest = friendshipRequestService.getUserSendedRequesToUser(activeUser,users.getContent());
+		Set<User> friendsInPage = friendshipRequestService.getFriendsInList(activeUser, users.getContent()) ;
+		
+		Set<User> pending = new HashSet<User>();
+		usersRequestedFriendship.forEach(pending::add);
+		usersReceivedRequest.forEach(pending::add);
+		
+		model.addAttribute("friendList", friendsInPage);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
-		model.addAttribute("sendedRequest", usersRequestedFriendship);
+		model.addAttribute("pending", pending);
 
 		return "user/list";
 	}
@@ -119,6 +132,20 @@ public class UsersController {
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
 	public String home(Model model) {
 		return "home";
+	}
+	
+	@RequestMapping(value = { "/admin/user/list" }, method = RequestMethod.GET)
+	public String adminUserList(Model model) {
+		List<User> users = usersService.getUsers();
+		model.addAttribute( "usersList", users );
+		return "user/adminList";
+	}
+	
+	@RequestMapping(value = { "/admin/removeUser" }, method = RequestMethod.POST)
+	public String removeUser(Model model, @RequestParam Long removedUser) {
+		User user = usersService.getUser(removedUser);
+		usersService.removeUser(user);
+		return "redirect:/admin/user/list";
 	}
 
 }
