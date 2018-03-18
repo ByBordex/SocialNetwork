@@ -29,7 +29,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="request : ${requestList}">
+					<tr th:id=" 'tr'+${request.id}" th:each="request : ${requestList}">
 						<td th:text="${request.sender.email}">Mail</td>
 						<td th:text="${request.sender.name}">Nombre</td>
 						<td>
@@ -44,6 +44,10 @@
 															$.post("/acceptRequest", 
 																	{						 
 																	"request" : request
+																	}, 
+																	function()
+																	{
+																		$("#tr[[${request.id}]]").remove();
 																	});	
 															
 														}); /*]]>*/
