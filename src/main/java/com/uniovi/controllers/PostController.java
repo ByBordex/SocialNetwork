@@ -67,16 +67,15 @@ public class PostController {
 
 			if (photo != null && !photo.isEmpty()) {
 				int valor = postService.countPostsFromUser( author );
-				File f = new File( "src/main/resources/static/img/posts/" + author.getId() + "/" + valor );
+				File f = new File( "src/main/resources/static/img/posts/" + author.getId() + "/" + valor + ".png" );
 				f.getParentFile().mkdirs(); 
 				f.createNewFile();
 				
-				post.setPhoto( "/img/posts/" + author.getId() + "/" + valor );
+				post.setPhoto( "img/posts/" + author.getId() + "/" + valor + ".png");
 				
 				InputStream is = photo.getInputStream();
 				Files.copy(is, Paths.get(f.getPath() ),
 						StandardCopyOption.REPLACE_EXISTING);
-				post.setPhoto( f.getPath() );
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
