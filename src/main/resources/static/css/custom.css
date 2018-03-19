@@ -37,6 +37,13 @@ footer .container{
 .container{
 	background-color: rgba(255, 255, 255, 0.7);
 }
+.active a{
+	border-color: #5bc0de !important;
+	background-color: #5bc0de !important;
+}
+.pagination li:not(.active) a{
+	color: #5bc0de !important;
+}
 /* Border styles-------------------------------------------------- */
 body div:first-of-type{
 	border-radius: 20px 20px 0px 0px;
@@ -50,3 +57,12 @@ body div:only-of-type{
 .form-group{
 	margin: 10px;
 }
+
+.container{
+	margin: 10px, 20px;
+}
+.row{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
