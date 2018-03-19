@@ -16,9 +16,37 @@ footer {
   bottom: 0;
   width: 100%;
   height: 60px;
-  background-color: #101010;
   text-align:center;
   line-height:60px
 }
 
 /* Sticky footer styles-------------------------------------------------- */
+
+/* Color styles-------------------------------------------------- */
+footer, .navbar {
+	background-color:#003333;
+}
+body{
+	background-image: url(/img/bg.jpg);
+}
+
+footer .container{
+	background-color:#003333;
+}
+
+.container{
+	background-color: rgba(255, 255, 255, 0.7);
+}
+/* Border styles-------------------------------------------------- */
+body div:first-of-type{
+	border-radius: 20px 20px 0px 0px;
+}
+body div:last-of-type{
+	border-radius: 0px 0px 20px 20px;
+}
+body div:only-of-type{
+	border-radius: 20px 20px 20px 20px;
+}
+.form-group{
+	margin: 10px;
+}
