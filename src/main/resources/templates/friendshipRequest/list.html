@@ -5,8 +5,10 @@
 	<!-- Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 	<div class="container">
-		<h2 th:text='#{friendshipRequest.list.title}'>Peticiones de amistad</h2>
-		<p th:text='#{friendshipRequest.list.subtitle}'>Las peticiones de amistad que has recibido son las siguiente:</p>
+		<h2 th:text='#{friendshipRequest.list.title}'>Peticiones de
+			amistad</h2>
+		<p th:text='#{friendshipRequest.list.subtitle}'>Las peticiones de
+			amistad que has recibido son las siguiente:</p>
 		<script th:inline="javascript">
 			/*<![CDATA[*/
 			$( "#updateButton" ).click(function() { 
@@ -33,9 +35,10 @@
 						<td th:text="${request.sender.email}">Mail</td>
 						<td th:text="${request.sender.name}">Nombre</td>
 						<td>
-						<button type="button" th:id="${'confirmButton' + request.id}"
-									class="btn btn-info" th:text='#{users.list.requestFriendship.accept}'>Aceptar</button>
-								<script th:inline="javascript">
+							<button type="button" th:id="${'confirmButton' + request.id}"
+								class="btn btn-info"
+								th:text='#{users.list.requestFriendship.accept}'>Aceptar</button>
+							<script th:inline="javascript">
 										/*<![CDATA[*/$(
 												"#confirmButton[[${request.id}]]")
 												.click(
