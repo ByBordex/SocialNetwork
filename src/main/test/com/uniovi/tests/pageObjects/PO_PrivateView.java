@@ -1,14 +1,21 @@
-package com.uniovi.tests.pageObjects;
+package main.test.com.uniovi.tests.pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 
-public class PO_PrivateView extends PO_NavView {
-	static public void fillFormAddMark(WebDriver driver, int userOrder, String descriptionp, String scorep) {
+import main.test.com.uniovi.tests.utils.SeleniumUtils;
+
+public class PO_PrivateView extends PO_NavView{
+	
+	static public void fillFormAddMark(WebDriver driver, int userOrder, String descriptionp,
+			String scorep)
+	{
+		//Esperamos 5 segundo a que carge el DOM porque en algunos equipos falla
+		SeleniumUtils.esperarSegundos(driver, 5);
 		//Seleccionamos el alumnos userOrder
-		new Select(driver.findElement(By.id("user"))).selectByIndex(userOrder);
+		new Select (driver.findElement(By.id("user"))).selectByIndex(userOrder);
 		//Rellenemos el campo de descripción
 		WebElement description = driver.findElement(By.name("description"));
 		description.clear();
@@ -20,4 +27,5 @@ public class PO_PrivateView extends PO_NavView {
 		By boton = By.className("btn");
 		driver.findElement(boton).click();
 	}
+	
 }

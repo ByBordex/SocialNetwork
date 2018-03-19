@@ -1,6 +1,4 @@
-package com.uniovi.tests;
-
-import static org.junit.Assert.assertTrue;
+package main.test.com.uniovi;
 
 import java.util.List;
 
@@ -11,19 +9,17 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import com.uniovi.tests.pageObjects.PO_HomeView;
-import com.uniovi.tests.pageObjects.PO_LoginView;
-import com.uniovi.tests.pageObjects.PO_NavView;
-import com.uniovi.tests.pageObjects.PO_PrivateView;
-import com.uniovi.tests.pageObjects.PO_Properties;
-import com.uniovi.tests.pageObjects.PO_RegisterView;
-import com.uniovi.tests.pageObjects.PO_View;
-import com.uniovi.tests.utils.SeleniumUtils;
+import main.test.com.uniovi.tests.pageObjects.PO_HomeView;
+import main.test.com.uniovi.tests.pageObjects.PO_LoginView;
+import main.test.com.uniovi.tests.pageObjects.PO_NavView;
+import main.test.com.uniovi.tests.pageObjects.PO_Properties;
+import main.test.com.uniovi.tests.pageObjects.PO_RegisterView;
+import main.test.com.uniovi.tests.pageObjects.PO_View;
+import main.test.com.uniovi.tests.utils.SeleniumUtils;
 
 //Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
@@ -63,7 +59,6 @@ public class FacelogTests {
 	}
 
 	// PR01. Acceder a la página principal
-
 	@Test
 	public void mainPageTest() {
 		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
@@ -71,7 +66,6 @@ public class FacelogTests {
 
 	// PR02. OPción de navegación. Pinchar en el enlace Registro en la página
 	// home
-
 	@Test
 	public void navToRegisterTest() {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
@@ -79,7 +73,6 @@ public class FacelogTests {
 
 	// PR03. OPción de navegación. Pinchar en el enlace Identificate en la página
 	// home
-
 	@Test
 	public void navToLoginTest() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
@@ -87,7 +80,6 @@ public class FacelogTests {
 
 	// PR04. OPción de navegación. Cambio de idioma de Español a Ingles y vuelta
 	// Español
-
 	@Test
 	public void changeLanguageTest() {
 		PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
@@ -96,7 +88,6 @@ public class FacelogTests {
 	}
 
 	// PR05. Prueba del formulario de registro. registro con datos correctos
-
 	@Test
 	public void registerValidData() { // Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary"); //
@@ -130,10 +121,9 @@ public class FacelogTests {
 		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
 	}
 
-	// PRN. Loguearse con exito desde el ROl de Usuario, 1@mail.com, 123456
-
+	// PR_H_01. Loguearse con exito desde el ROl de Usuario, 1@mail.com, 123456
 	@Test
-	public void loginValiTestd() { // Vamos al formulario de logueo.
+	public void loginValiTest() { // Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
@@ -141,7 +131,7 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "Perfil");
 	}
 
-	// Comprobamos login erroneo
+	// PR_H_01. Comprobamos login erroneo
 	@Test
 	public void loginErrorTest() {
 		// Vamos al formulario de logueo.
@@ -152,13 +142,10 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "La combinacion usuario/password no coincide");
 	}
 
+	// PR_H_02. Listar usuarios
 	@Test
 	public void listUsersTest() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		// Rellenamos el formulario
-		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
-		// COmprobamos que entramos en la pagina privada de Alumno
-		PO_View.checkElement(driver, "text", "Perfil");
+		loginValidTest();
 		// Pinchamos en la opción de menu de Gestionar usuarios:
 		// li[contains(@id, 'users-menu')]/a
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");

@@ -1,4 +1,4 @@
-package com.uniovi.tests.utils;
+package main.test.com.uniovi.tests.utils;
 
 
 import static org.junit.Assert.assertTrue;
