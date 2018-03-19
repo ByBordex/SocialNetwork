@@ -38,6 +38,7 @@
 						<td th:if="${post.hasPhoto()} == true"><img
 							th:src=" '/../' + ${post.getPhoto()}"
 							th:alt="${post.getPhoto()}"/></td>
+						<td th:unless="${post.hasPhoto()} == true"  class="col-md-1"></td>
 						<td>
 							<button type="button" th:id="${'seeButton' + post.id}"
 								class="btn btn-info" th:text='#{post.list.see}'></button> <script
@@ -50,6 +51,7 @@
 														}); /*]]>*/
 									</script>
 						</td>
+						
 
 					</tr>
 				</tbody>
