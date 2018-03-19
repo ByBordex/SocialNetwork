@@ -1,5 +1,6 @@
 package com.uniovi.services;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
@@ -30,6 +31,11 @@ public class UsersService {
 
 	public Page<User> getUsers(Pageable pageable) {
 		return usersRepository.findAll(pageable);
+	}
+	public List<User> getUsers() {
+		List<User> list = new ArrayList<User>();
+		usersRepository.findAll().forEach(list::add);
+		return list;
 	}
 
 	public User getUser(Long id) {
@@ -74,6 +80,10 @@ public class UsersService {
 		searchText = "%" + searchText + "%";
 		users = usersRepository.searchByNameOrEmail(pageable, searchText);
 		return users;
+	}
+
+	public void removeUser(User user) {
+		usersRepository.delete(user);
 	}
 
 }
