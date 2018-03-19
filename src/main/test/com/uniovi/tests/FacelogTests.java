@@ -23,7 +23,7 @@ import main.test.com.uniovi.tests.utils.SeleniumUtils;
 //Ordenamos las pruebas por el nombre del método
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FacelogTests {
-	static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
+	static String PathFirefox = "C:\\Users\\Soondra\\Documents\\Uni\\3º\\2do_trimestre\\SDI\\Firefox46.win\\FirefoxPortable.exe";
 
 	static WebDriver driver = getDriver(PathFirefox);
 	static String URL = "http://localhost:8090";
@@ -138,20 +138,20 @@ public class FacelogTests {
 	// desde un usuario en sesión. Debe producirse un acceso no permitido a vistas privadas.
 	@Test
 	public void H3_ListUsrInVal() {
-		
+		//TODO
 	}
 	
 	// 4.1 [BusUsrVal] Realizar una búsqueda valida en el listado de usuarios desde un usuario en sesión.
 	@Test 
 	public void H4_BusUsrVal() {
-		
+		//TODO
 	}
 	
 	// 4.2 [BusUsrInVal] Intento de acceso con URL a la búsqueda de usuarios desde un usuario no
 	// identificado. Debe producirse un acceso no permitido a vistas privadas.
 	@Test
 	public void H4_BusUsrInVal() {
-		
+		//TODO
 	}
 	
 	// 5.1 [InvVal] Enviar una invitación de amistad a un usuario de forma valida.
@@ -237,94 +237,85 @@ public class FacelogTests {
 	// 7.1 [AcepInvVal] Aceptar una invitación recibida.
 	@Test
 	public void H7_AcepInvVal() {
-		
+		//TODO
 	}
 	
 	// 8.1 [ListAmiVal] Listar los amigos de un usuario, realizar la comprobación con una lista que al menos
 	// tenga un amigo.
 	@Test 
 	public void H8_ListAmiVal() {
-		
+		//TODO
 	}
 	
 	// 9.1 [PubVal] Crear una publicación con datos válidos.
 	@Test
 	public void H9_PubVal() {
-		
+		//TODO
 	}
 	
 	// 10.1 [LisPubVal] Acceso al listado de publicaciones desde un usuario en sesión.
 	@Test
 	public void H10_ListPubVal() {
-		
+		//TODO
 	}
 	
 	// 11.1 [LisPubAmiVal] Listar las publicaciones de un usuario amigo
 	@Test 
 	public void H11_ListPubAmiVal() {
-		
+		//TODO
 	}
 	
 	// 11.2 [LisPubAmiInVal] Utilizando un acceso vía URL tratar de listar las publicaciones de un usuario que
 	// no sea amigo del usuario identificado en sesión.
 	@Test
 	public void H11_LisPubAmiInVal() {
-		
+		//TODO
 	}
 	
 	// 12.1 [PubFot1Val] Crear una publicación con datos válidos y una foto adjunta.
 	@Test
 	public void H12_PubFot1Val() {
-		
+		//TODO
 	}
 	
 	// 12.1 [PubFot2Val] Crear una publicación con datos válidos y sin una foto adjunta.
 	@Test
 	public void H12_PubFot2Val() {
-		
+		//TODO
 	}
 	
 	// 13.1 [AdInVal] Inicio de sesión como administrador con datos válidos.
 	@Test
 	public void H13_AdInVal() {
-		
+		//TODO
 	}
 	
 	// 13.2 [AdInInVal] Inicio de sesión como administrador con datos inválidos (usar los datos de un usuario
 	// que no tenga perfil administrador).
 	@Test
 	public void H13_AdInInVal() {
-		
+		//TODO
 	}
 	
 	// 14.1 [AdLisUsrVal] Desde un usuario identificado en sesión como administrador listar a todos los
 	// usuarios de la aplicación.
 	@Test
 	public void H14_AdListUsrVal() {
-		
+		//TODO
 	}
 	
 	// 15.1 [AdBorUsrVal] Desde un usuario identificado en sesión como administrador eliminar un usuario
 	// existente en la aplicación.
 	@Test
 	public void H15_AdBorUsrVal() {
-		
+		//TODO
 	}
 	
 	// 15.2 [AdBorUsrInVal] Intento de acceso vía URL al borrado de un usuario existente en la aplicación.
 	// Debe utilizarse un usuario identificado en sesión pero que no tenga perfil de administrador.
 	@Test
 	public void H15_AdBorUsrInVal() {
-		
+		//TODO
 	}
 	
-	@Test
-	public void sendRequestTest() {
-		
-	}
-
-	@Test
-	public void receivedRequestsTest() {
-		
-	}
 }
