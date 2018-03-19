@@ -58,6 +58,14 @@ public class PO_NavView extends PO_View {
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", textLanguage, getTimeout());
 		elementos.get(0).click();
 	}
+
+	public static void clickConectarCon(WebDriver driver, String usuario) 
+	{
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, usuario + "@mail.com", "123456");
+	}
 	
 	public static void clickDesconectar(WebDriver driver)
 	{

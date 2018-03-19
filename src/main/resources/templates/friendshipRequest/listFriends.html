@@ -12,7 +12,7 @@
 				<input name="searchText" type="text" class="form-control" size="50"
 					placeholder="Buscar por email o nombre de amigo">
 			</div>
-			<button type="submit" class="btn btn-default">Buscar</button>
+			<button id="searchBtn" type="submit" class="btn btn-default" th:text="#{users.list.search}"></button>
 		</form>
 
 		<table class="table table-hover" th:fragment="tableMarks"
@@ -26,8 +26,8 @@
 			</thead>
 			<tbody>
 				<tr th:each="friend : ${friendsList}">
-					<td th:text="${friend.email}">Mail</td>
-					<td th:text="${friend.name}">Nombre</td>
+					<td th:text="${friend.email}"></td>
+					<td th:text="${friend.name}"></td>
 				</tr>
 			</tbody>
 
