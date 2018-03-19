@@ -67,7 +67,7 @@ public class PostController {
 
 			if (photo != null && !photo.isEmpty()) {
 				int valor = postService.countPostsFromUser( author );
-				File f = new File( "src/main/resources/static/img/posts/" + author.getId() + "/" + valor + ".png" );
+				File f = new File( "resources/static/img/posts/" + author.getId() + "/" + valor + ".png" );
 				f.getParentFile().mkdirs(); 
 				f.createNewFile();
 				
