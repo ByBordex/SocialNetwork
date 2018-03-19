@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head th:replace="fragments/head" />
 <body>
 	<!-- Barra de Navegación superior -->
@@ -7,7 +8,16 @@
 	<div class="container">
 
 		<h2 th:text="#{post.list.tittle}"></h2>
-
+		<button type="button" th:id="${'newButton'}"
+			class="btn btn-info" th:text='#{posts.newone}'></button>
+		<script th:inline="javascript">
+										/*<![CDATA[*/$(
+												"#newButton")
+												.click(
+														function() {
+															location.href = '/posts/post';
+														}); /*]]>*/
+									</script>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
@@ -15,6 +25,7 @@
 
 						<th th:text="#{post.list.date}"></th>
 						<th th:text="#{post.list.title2}"></th>
+						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 
 					</tr>
@@ -24,6 +35,9 @@
 
 						<td th:text="${post.date}"></td>
 						<td th:text="${post.title}"></td>
+						<td th:if="${post.hasPhoto()} == true"><img
+							th:src=" '/../' + ${post.getPhoto()}"
+							th:alt="${post.getPhoto()}"/></td>
 						<td>
 							<button type="button" th:id="${'seeButton' + post.id}"
 								class="btn btn-info" th:text='#{post.list.see}'></button> <script

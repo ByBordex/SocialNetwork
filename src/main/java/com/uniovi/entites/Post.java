@@ -19,24 +19,34 @@ public class Post {
 	private String title;
 	private String content;
 	
+	private String photoPath;
+	
 	private String date;
 	
 	@ManyToOne
 	private User user;
 	
-	public Post() {}
+	public Post() {
+	}
 	
-	public Post(String title, String content) {
-		super();
-		this.title = title;
-		this.content = content;
+	public void setCreationStringDate()
+	{
 		Calendar calendar = Calendar.getInstance();
-		this.date = String.valueOf(calendar.get( Calendar.DATE )) 
+		String aux = String.valueOf(calendar.get( Calendar.DATE )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.MONTH )) 
 				+ "/" + String.valueOf(calendar.get( Calendar.YEAR ));
+		date = aux;
+	}
+	
+	public Post(String title, String content) {
+		this();
+		this.title = title;
+		this.content = content;
+		setCreationStringDate();
 	}
 
 	public Long getId() { return id; }
+
 	
 	public String getTitle() { return title; }
 	
@@ -45,6 +55,12 @@ public class Post {
 	public String getContent() { return content; }
 	
 	public void setContent(String content) { this.content = content; }
+	
+	public Boolean hasPhoto() { return photoPath != null; }
+	
+	public String getPhoto() { return photoPath; }
+	
+	public void setPhoto(String photoPath) { this.photoPath = photoPath; }
 	
 	public String getDate() { return date; }
 	
