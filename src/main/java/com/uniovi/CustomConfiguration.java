@@ -52,7 +52,6 @@ public class CustomConfiguration extends WebMvcConfigurerAdapter {
 		String pathFotossubidas = "file:///"+pathProyecto+"/src/main/resources/static/img/posts/";
 
 		registry.addResourceHandler("/posts/**").addResourceLocations(pathFotossubidas);
-
 	}
 
 
