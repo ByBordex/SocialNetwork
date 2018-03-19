@@ -70,7 +70,6 @@ public class InsertSampleDataService {
 		usersService.addUser(user14);
 		usersService.addUser(user15);
 		
-		friendshipRequestService.sendRequest(user2, user1.getId());
 		friendshipRequestService.sendRequest(user3, user1.getId());
 		friendshipRequestService.sendRequest(user4, user1.getId());
 		friendshipRequestService.sendRequest(user5, user1.getId());

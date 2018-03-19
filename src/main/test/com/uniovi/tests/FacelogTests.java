@@ -1,4 +1,4 @@
-package main.test.com.uniovi;
+package main.test.com.uniovi.tests;
 
 import java.util.List;
 
@@ -15,7 +15,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import main.test.com.uniovi.tests.pageObjects.PO_HomeView;
 import main.test.com.uniovi.tests.pageObjects.PO_LoginView;
-import main.test.com.uniovi.tests.pageObjects.PO_NavView;
 import main.test.com.uniovi.tests.pageObjects.PO_Properties;
 import main.test.com.uniovi.tests.pageObjects.PO_RegisterView;
 import main.test.com.uniovi.tests.pageObjects.PO_View;
@@ -58,38 +57,9 @@ public class FacelogTests {
 		driver.quit();
 	}
 
-	// PR01. Acceder a la página principal
+	// 1.1 [RegVal] Registro de Usuario con datos válidos.
 	@Test
-	public void mainPageTest() {
-		PO_HomeView.checkWelcome(driver, PO_Properties.getSPANISH());
-	}
-
-	// PR02. OPción de navegación. Pinchar en el enlace Registro en la página
-	// home
-	@Test
-	public void navToRegisterTest() {
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
-	}
-
-	// PR03. OPción de navegación. Pinchar en el enlace Identificate en la página
-	// home
-	@Test
-	public void navToLoginTest() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-	}
-
-	// PR04. OPción de navegación. Cambio de idioma de Español a Ingles y vuelta
-	// Español
-	@Test
-	public void changeLanguageTest() {
-		PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
-				PO_Properties.getENGLISH());
-		SeleniumUtils.esperarSegundos(driver, 2);
-	}
-
-	// PR05. Prueba del formulario de registro. registro con datos correctos
-	@Test
-	public void registerValidData() { // Vamos al formulario de registro
+	public void H1_RegVal() { // Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary"); //
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "prueba3@mail.com", "Josefo Perez", "77777", "77777");
@@ -97,10 +67,9 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "Perfil");
 	}
 
-	// PR06. Prueba del formulario de registro. DNI repetido en la BD, Nombre corto,
-	// .... pagination
+	// 1.2 [RegInval] Registro de Usuario con datos inválidos (repetición de contraseña invalida)
 	@Test
-	public void registerInvalidDataTest() { // Vamos al formulario de registro
+	public void H1_RegInval() { // Vamos al formulario de registro
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "1@mail.com", "Josefo Perez", "77777", "77777");
@@ -121,9 +90,9 @@ public class FacelogTests {
 		PO_RegisterView.checkKey(driver, "Error.signup.passwordConfirm.coincidence", PO_Properties.getSPANISH());
 	}
 
-	// PR_H_01. Loguearse con exito desde el ROl de Usuario, 1@mail.com, 123456
+	// 2.1 [InVal] Inicio de sesión con datos válidos desde el ROl de Usuario, 1@mail.com, 123456
 	@Test
-	public void loginValiTest() { // Vamos al formulario de logueo.
+	public void H2_InVal() { // Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
@@ -131,9 +100,9 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "Perfil");
 	}
 
-	// PR_H_01. Comprobamos login erroneo
+	// 2.2 [InInVal] Inicio de sesión con datos inválidos (usuario no existente en la aplicación)
 	@Test
-	public void loginErrorTest() {
+	public void H2_InInVal() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
@@ -142,10 +111,14 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "La combinacion usuario/password no coincide");
 	}
 
-	// PR_H_02. Listar usuarios
+	// 3.1 [LisUsrVal] Acceso al listado de usuarios desde un usuario en sesión.
 	@Test
-	public void listUsersTest() {
-		loginValidTest();
+	public void H3_LisUsrVal() {
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "Perfil");
 		// Pinchamos en la opción de menu de Gestionar usuarios:
 		// li[contains(@id, 'users-menu')]/a
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
@@ -161,42 +134,29 @@ public class FacelogTests {
 		elementos = PO_View.checkElement(driver, "free", "//td[contains(text(), '@')]");
 	}
 
+	// 3.2 [LisUsrInVal] Intento de acceso con URL desde un usuario no identificado al listado de usuarios
+	// desde un usuario en sesión. Debe producirse un acceso no permitido a vistas privadas.
 	@Test
-	public void sendRequestTest() {
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		// Rellenamos el formulario
-		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
-		// COmprobamos que entramos en la pagina privada de Alumno
-		PO_View.checkElement(driver, "text", "Perfil");
-		// Pinchamos en la opción de menu de Gestionar usuarios:
-		// li[contains(@id, 'users-menu')]/a
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
-		elementos.get(0).click();
-		// Esperamos a aparezca la opción de listar usuarios:
-		// a[contains(@href, '/user/list')]
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'user/list')]");
-		// Comprobamos que entramos en la lista de usuarios.
-		elementos.get(0).click();
-		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes");
-		// Comprobamos que existe el botón de amistad para el usuario2.
-		elementos = PO_View.checkElement(driver, "id", "sendButton2");
+	public void H3_ListUsrInVal() {
 		
-		// Pulsamos el botón para enviar la solicitud.
-		elementos.get(0).click();
-		SeleniumUtils.esperarSegundos(driver, 1);
-		// Recargamos la página
-		driver.navigate().to(driver.getCurrentUrl());
-		SeleniumUtils.esperarSegundos(driver, 1);
-		// Comprobamos que el botón ahora tiene btn-warning representando "Pendiente" y
-		// está deshabilitado
-		elementos = PO_View.checkElement(driver, "free",
-				"//button[contains(text(), 'Pendiente') "
-				+ "		and contains(@class, 'btn btn-warning')"
-				+ "		 and @disabled]");
 	}
-
+	
+	// 4.1 [BusUsrVal] Realizar una búsqueda valida en el listado de usuarios desde un usuario en sesión.
+	@Test 
+	public void H4_BusUsrVal() {
+		
+	}
+	
+	// 4.2 [BusUsrInVal] Intento de acceso con URL a la búsqueda de usuarios desde un usuario no
+	// identificado. Debe producirse un acceso no permitido a vistas privadas.
 	@Test
-	public void receivedRequestsTest() {
+	public void H4_BusUsrInVal() {
+		
+	}
+	
+	// 5.1 [InvVal] Enviar una invitación de amistad a un usuario de forma valida.
+	@Test
+	public void H4_InvVal() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
@@ -221,20 +181,49 @@ public class FacelogTests {
 		// Recargamos la página
 		driver.navigate().to(driver.getCurrentUrl());
 		SeleniumUtils.esperarSegundos(driver, 1);
-		// Comprobamos que el botón ahora tiene btn-warning representando "Pendiente" y
-		// está deshabilitado
-		elementos = PO_View.checkElement(driver, "free",
-				"//button[contains(text(), 'Pendiente') "
-				+ "		and contains(@class, 'btn btn-warning')"
-				+ "		 and @disabled]");
-		// Cerramos sesión 1@mail.com
-		PO_NavView.clickDesconectar(driver);
-		// Iniciamos sesión con 2@mail.com
+	}
+	
+	// 5.2 [InvInVal] Enviar una invitación de amistad a un usuario al que ya le habíamos invitado la invitación
+	// previamente. No debería dejarnos enviar la invitación, se podría ocultar el botón de enviar invitación o
+	// notificar que ya había sido enviada previamente.
+	@Test
+	public void H5_InvInVal() {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		PO_LoginView.fillForm(driver, "2@mail.com", "123456");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
+		// COmprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "Perfil");
+		// Pinchamos en la opción de menu de Gestionar usuarios:
+		// li[contains(@id, 'users-menu')]/a
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
+		elementos.get(0).click();
+		// Esperamos a aparezca la opción de listar usuarios:
+		// a[contains(@href, '/user/list')]
+		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'user/list')]");
+		// Comprobamos que entramos en la lista de usuarios.
+		elementos.get(0).click();
+		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes");
+		// Comprobamos que existe el botón de amistad para el usuario2.
+		elementos = PO_View.checkElement(driver, "id", "sendButton2");
+		
+		// Comprobamos que el botón ahora tiene btn-warning representando "Pendiente" y
+				// está deshabilitado
+				elementos = PO_View.checkElement(driver, "free",
+						"//button[contains(text(), 'Pendiente') "
+						+ "		and contains(@class, 'btn btn-warning')"
+						+ "		 and @disabled]");
+	}
+	
+	// 6.1 [LisInvVal] Listar las invitaciones recibidas por un usuario, realizar la comprobación con una lista
+	// que al menos tenga una invitación recibida.
+	@Test
+	public void H6_LisInvVal() {
+		// Iniciamos sesión con 1@mail.com
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
 		// Pinchamos en la opción de menu de Amigos - Peticiones de amistad:
 		// li[contains(@id, 'users-menu')]/a
-		elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'friends-menu')]/a");
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'friends-menu')]/a");
 		elementos.get(0).click();
 		elementos = PO_View.checkElement(driver, "free", "//a[contains( text(), 'Peticiones de amistad')]");
 		elementos.get(0).click();
@@ -243,5 +232,99 @@ public class FacelogTests {
 		// Comprobamos que ha llegado la petición de amistad
 		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_View.checkElement(driver, "free", "//td[contains(text(), '1@mail.com')]");
+	}
+	
+	// 7.1 [AcepInvVal] Aceptar una invitación recibida.
+	@Test
+	public void H7_AcepInvVal() {
+		
+	}
+	
+	// 8.1 [ListAmiVal] Listar los amigos de un usuario, realizar la comprobación con una lista que al menos
+	// tenga un amigo.
+	@Test 
+	public void H8_ListAmiVal() {
+		
+	}
+	
+	// 9.1 [PubVal] Crear una publicación con datos válidos.
+	@Test
+	public void H9_PubVal() {
+		
+	}
+	
+	// 10.1 [LisPubVal] Acceso al listado de publicaciones desde un usuario en sesión.
+	@Test
+	public void H10_ListPubVal() {
+		
+	}
+	
+	// 11.1 [LisPubAmiVal] Listar las publicaciones de un usuario amigo
+	@Test 
+	public void H11_ListPubAmiVal() {
+		
+	}
+	
+	// 11.2 [LisPubAmiInVal] Utilizando un acceso vía URL tratar de listar las publicaciones de un usuario que
+	// no sea amigo del usuario identificado en sesión.
+	@Test
+	public void H11_LisPubAmiInVal() {
+		
+	}
+	
+	// 12.1 [PubFot1Val] Crear una publicación con datos válidos y una foto adjunta.
+	@Test
+	public void H12_PubFot1Val() {
+		
+	}
+	
+	// 12.1 [PubFot2Val] Crear una publicación con datos válidos y sin una foto adjunta.
+	@Test
+	public void H12_PubFot2Val() {
+		
+	}
+	
+	// 13.1 [AdInVal] Inicio de sesión como administrador con datos válidos.
+	@Test
+	public void H13_AdInVal() {
+		
+	}
+	
+	// 13.2 [AdInInVal] Inicio de sesión como administrador con datos inválidos (usar los datos de un usuario
+	// que no tenga perfil administrador).
+	@Test
+	public void H13_AdInInVal() {
+		
+	}
+	
+	// 14.1 [AdLisUsrVal] Desde un usuario identificado en sesión como administrador listar a todos los
+	// usuarios de la aplicación.
+	@Test
+	public void H14_AdListUsrVal() {
+		
+	}
+	
+	// 15.1 [AdBorUsrVal] Desde un usuario identificado en sesión como administrador eliminar un usuario
+	// existente en la aplicación.
+	@Test
+	public void H15_AdBorUsrVal() {
+		
+	}
+	
+	// 15.2 [AdBorUsrInVal] Intento de acceso vía URL al borrado de un usuario existente en la aplicación.
+	// Debe utilizarse un usuario identificado en sesión pero que no tenga perfil de administrador.
+	@Test
+	public void H15_AdBorUsrInVal() {
+		
+	}
+	
+	@Test
+	public void sendRequestTest() {
+		
+	}
+
+	@Test
+	public void receivedRequestsTest() {
+		
 	}
 }
