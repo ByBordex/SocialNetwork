@@ -36,7 +36,7 @@ public class PostController {
 
 	@Autowired
 	private UsersService usersService;
-	
+
 	@Autowired
 	private PhotoValidator photoValidator;
 
@@ -77,17 +77,17 @@ public class PostController {
 				File f = new File( "src/main/resources/static/img/posts/" + author.getId() + "/" + valor + ".png" );
 				f.getParentFile().mkdirs(); 
 				f.createNewFile();
-				
+
 				InputStream is = photo.getInputStream();
 				Files.copy(is, Paths.get(f.getPath() ),
 						StandardCopyOption.REPLACE_EXISTING);
-				
+
 				f = new File( "resources/static/img/posts/" + author.getId() + "/" + valor + ".png" );
 				f.getParentFile().mkdirs(); 
 				f.createNewFile();
-				
+
 				post.setPhoto( "img/posts/" + author.getId() + "/" + valor + ".png");
-				
+
 				is = photo.getInputStream();
 				Files.copy(is, Paths.get(f.getPath() ),
 						StandardCopyOption.REPLACE_EXISTING);
@@ -95,7 +95,7 @@ public class PostController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		postService.addPost( post );
 		return "redirect:/posts/list";
 	}

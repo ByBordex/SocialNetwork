@@ -1,11 +1,13 @@
 package com.uniovi.validators;
 
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.uniovi.entites.User;
 
+@Component
 public class PhotoValidator implements Validator {
 
 	@Override

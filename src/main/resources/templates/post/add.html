@@ -7,7 +7,7 @@
 	<div class="container">
 		<h2 th:text='#{posts.newone}'></h2>
 		<form class="form-horizontal" method="post" action="/posts/post"
-			enctype="multipart/form-data">
+			enctype="multipart/form-data" th:object="${post}">
 
 			<div class="form-group">
 				<label class="control-label col-sm-2" for="title"
@@ -34,9 +34,10 @@
 					th:text="#{post.photo}"></label>
 				<div class="col-sm-10">
 					<input type="file" name="photo" accept=".png,.jpg,.jpeg" />
-				</div>
-				<span class="text-danger" th:if="${#fields.hasErrors('photo')}"
+					<span class="text-danger" th:if="${#fields.hasErrors('photo')}"
 						th:errors="*{photo}" />
+				</div>
+				
 			</div>
 
 			<div class="form-group">
