@@ -62,7 +62,7 @@ public class PO_NavView extends PO_View {
 	public static void clickConectarCon(WebDriver driver, String usuario) 
 	{
 		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_HomeView.clickOption(driver, "Identificate", "class", "glyphicon glyphicon-log-int");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, usuario + "@mail.com", "123456");
 	}
