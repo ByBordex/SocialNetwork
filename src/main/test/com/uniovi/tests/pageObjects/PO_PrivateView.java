@@ -5,31 +5,11 @@ import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import main.test.com.uniovi.tests.utils.SeleniumUtils;
 
 public class PO_PrivateView extends PO_NavView{
-
-	static public void fillFormAddMark(WebDriver driver, int userOrder, String descriptionp,
-			String scorep)
-	{
-		//Esperamos 5 segundo a que carge el DOM porque en algunos equipos falla
-		SeleniumUtils.esperarSegundos(driver, 5);
-		//Seleccionamos el alumnos userOrder
-		new Select (driver.findElement(By.id("user"))).selectByIndex(userOrder);
-		//Rellenemos el campo de descripción
-		WebElement description = driver.findElement(By.name("description"));
-		description.clear();
-		description.sendKeys(descriptionp);
-		WebElement score = driver.findElement(By.name("score"));
-		score.click();
-		score.clear();
-		score.sendKeys(scorep);
-		By boton = By.className("btn");
-		driver.findElement(boton).click();
-	}
-
+	
 	static public void searchUser(WebDriver driver, String user) {
 		SeleniumUtils.esperarSegundos(driver, 5);
 		WebElement text = driver.findElement(By.name("searchText"));
@@ -47,7 +27,69 @@ public class PO_PrivateView extends PO_NavView{
 		elementos.get(0).click();
 		// Esperamos a aparezca la opción de listar usuarios:
 		// a[contains(@href, '/user/list')]
-		elementos = PO_View.checkElement(driver, "free", "//a[contains(@href, 'user/list')]");
+		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'user/list' )]");
+		elementos.get(0).click();
+	}
+
+	static public void listFriendshipRequests(WebDriver driver) {
+		// Pinchamos en la opción de menu de Amigos - Peticiones de amistad:
+		// li[contains(@id, 'friends-menu')]/a
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'friends-menu')]/a");
+		elementos.get(0).click();
+		// Esperamos a aparezca la opción de listar peticiones de amistad:
+		// a[contains(@href, 'friendshipRequest/list')]
+		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'friendshipRequest/list' )]");
+		elementos.get(1).click();
+	}
+
+	static public void listFriends(WebDriver driver) {
+		// Pinchamos en la opción de menu de Amigos - Ver mis amigos:
+		// li[contains(@id, 'friends-menu')]/a
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'friends-menu')]/a");
+		elementos.get(0).click();
+		// Esperamos a aparezca la opción de listar amigos:
+		// a[contains(@href, 'friendshipRequest/listFriends')]
+		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'friendshipRequest/listFriends' )]");
+		elementos.get(0).click();
+	}
+
+	static public void createPost(WebDriver driver) {
+		// Pinchamos en la opción de menu de Publicaicones - Crear publicacion:
+		// li[contains(@id, 'posts-menu')]/a
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'posts-menu')]/a");
+		elementos.get(0).click();
+		// Esperamos a aparezca la opción de crear publicacion:
+		// a[contains(@href, 'posts/post')]
+		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'posts/post' )]");
+		elementos.get(1).click();
+	}
+	
+	static public void fillFormAddPost(WebDriver driver, String titulop,
+			String contenidop)
+	{
+		// Esperamos 5 segundo a que carge el DOM 
+		SeleniumUtils.esperarSegundos(driver, 5);
+		// Rellenemos el campo de descripción
+		WebElement titulo = driver.findElement(By.name("title"));
+		titulo.clear();
+		titulo.sendKeys(titulop);
+		WebElement contenido = driver.findElement(By.name("content"));
+		contenido.click();
+		contenido.clear();
+		contenido.sendKeys(contenidop);
+		// Le damos al botón de enviar
+		By boton = By.className("btn btn-primary");
+		driver.findElement(boton).click();
+	}
+
+	static public void listPosts(WebDriver driver) {
+		// Pinchamos en la opción de menu de Publicaicones - Ver mis publicaciones:
+		// li[contains(@id, 'posts-menu')]/a
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'posts-menu')]/a");
+		elementos.get(0).click();
+		// Esperamos a aparezca la opción de lista mis publicaciones:
+		// a[contains(@href, 'posts/post')]
+		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'posts/list' )]");
 		elementos.get(0).click();
 	}
 
