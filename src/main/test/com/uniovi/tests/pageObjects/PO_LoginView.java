@@ -1,4 +1,4 @@
-package main.test.com.uniovi.tests.pageObjects;
+package com.uniovi.tests.pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;

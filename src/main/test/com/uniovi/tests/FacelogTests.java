@@ -1,4 +1,4 @@
-package main.test.com.uniovi.tests;
+package com.uniovi.tests;
 
 import java.util.Calendar;
 import java.util.List;
@@ -14,19 +14,19 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import main.test.com.uniovi.tests.pageObjects.PO_HomeView;
-import main.test.com.uniovi.tests.pageObjects.PO_LoginView;
-import main.test.com.uniovi.tests.pageObjects.PO_NavView;
-import main.test.com.uniovi.tests.pageObjects.PO_PrivateView;
-import main.test.com.uniovi.tests.pageObjects.PO_Properties;
-import main.test.com.uniovi.tests.pageObjects.PO_RegisterView;
-import main.test.com.uniovi.tests.pageObjects.PO_View;
-import main.test.com.uniovi.tests.utils.SeleniumUtils;
+import com.uniovi.tests.pageObjects.PO_HomeView;
+import com.uniovi.tests.pageObjects.PO_LoginView;
+import com.uniovi.tests.pageObjects.PO_NavView;
+import com.uniovi.tests.pageObjects.PO_PrivateView;
+import com.uniovi.tests.pageObjects.PO_Properties;
+import com.uniovi.tests.pageObjects.PO_RegisterView;
+import com.uniovi.tests.pageObjects.PO_View;
+import com.uniovi.tests.utils.SeleniumUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FacelogTests {
-	static String PathFirefox = "C:\\Users\\Soondra\\Documents\\Uni\\3º\\2do_trimestre\\SDI\\Firefox46.win\\FirefoxPortable.exe";
-
+	//static String PathFirefox = "C:\\Users\\Soondra\\Documents\\Uni\\3º\\2do_trimestre\\SDI\\Firefox46.win\\FirefoxPortable.exe";
+	static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
 	static WebDriver driver = getDriver(PathFirefox);
 	static String URL = "http://localhost:8090";
 
@@ -59,7 +59,7 @@ public class FacelogTests {
 	@Test
 	public void H01_RegVal() { 
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary"); 
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-info"); 
 		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "prueba3@mail.com", "Josefo Perez", "77777", "77777");
@@ -72,7 +72,7 @@ public class FacelogTests {
 	@Test
 	public void H01_RegInval() { 
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-info");
 		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "1@mail.com", "Josefo Perez", "77777", "77777");
@@ -108,7 +108,7 @@ public class FacelogTests {
 	@Test
 	public void H02_InInVal() {
 		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-info");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "noexiste@mail.com", "123456");
 		// Comprobamos que entramos en la pagina privada de profesor
@@ -306,7 +306,8 @@ public class FacelogTests {
 		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_View.checkElement(driver, "free", "//td[contains( text(), '1@mail.com' )]");
 		// Aceptamos la petición de amistad
-		PO_PrivateView.clickOption(driver, "Aceptar", "class", "btn btn-primary");
+		PO_PrivateView.acceptRequest(driver, "1@mail.com");
+		SeleniumUtils.textoPresentePagina(driver, "Aceptar");
 	}
 
 	// 8.1 [ListAmiVal] Listar los amigos de un usuario, realizar la comprobación con una lista que al menos

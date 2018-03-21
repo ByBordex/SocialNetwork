@@ -1,4 +1,4 @@
-package main.test.com.uniovi.tests.pageObjects;
+package com.uniovi.tests.pageObjects;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import main.test.com.uniovi.tests.utils.SeleniumUtils;
+import com.uniovi.tests.utils.SeleniumUtils;
 
 public class PO_PrivateView extends PO_NavView{
 	
@@ -18,6 +18,13 @@ public class PO_PrivateView extends PO_NavView{
 		text.sendKeys(user);
 		By boton = By.id("searchBtn");
 		driver.findElement(boton).click();
+	}
+	
+	static public void acceptRequest(WebDriver driver, String username)
+	{
+		SeleniumUtils.esperarSegundos(driver, 5);
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tr[td[contains(text(), '"+username+"')]]/td/button");
+		elementos.get(0).click();
 	}
 
 	static public void listUsers(WebDriver driver) {

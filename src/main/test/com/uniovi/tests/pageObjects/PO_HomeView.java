@@ -1,8 +1,8 @@
-package main.test.com.uniovi.tests.pageObjects;
+package com.uniovi.tests.pageObjects;
 
 import org.openqa.selenium.WebDriver;
 
-import main.test.com.uniovi.tests.utils.SeleniumUtils;
+import com.uniovi.tests.utils.SeleniumUtils;
 
 public class PO_HomeView extends PO_NavView {
 

@@ -1,4 +1,4 @@
-package main.test.com.uniovi.tests.pageObjects;
+package com.uniovi.tests.pageObjects;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import main.test.com.uniovi.tests.utils.SeleniumUtils;
+import com.uniovi.tests.utils.SeleniumUtils;
 
 public class PO_NavView extends PO_View {
 	/**
@@ -62,7 +62,7 @@ public class PO_NavView extends PO_View {
 	public static void clickConectarCon(WebDriver driver, String usuario) 
 	{
 		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-info");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, usuario + "@mail.com", "123456");
 	}
