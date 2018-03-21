@@ -59,7 +59,7 @@ public class FacelogTests {
 	@Test
 	public void H01_RegVal() { 
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "glyphicon glyphicon-users"); 
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary"); 
 		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "prueba3@mail.com", "Josefo Perez", "77777", "77777");
@@ -72,7 +72,7 @@ public class FacelogTests {
 	@Test
 	public void H01_RegInval() { 
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "glyphicon glyphicon-user");
+		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-primary");
 		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "1@mail.com", "Josefo Perez", "77777", "77777");
@@ -108,7 +108,7 @@ public class FacelogTests {
 	@Test
 	public void H02_InInVal() {
 		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "glyphicon glyphicon-user");
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "noexiste@mail.com", "123456");
 		// Comprobamos que entramos en la pagina privada de profesor
