@@ -12,8 +12,10 @@
 			<div class="form-group">
 				<input name="searchText" type="text" class="form-control" size="50"
 					placeholder="Buscar por nombre o email de usuario">
+				<button type="submit" class="btn btn-default"
+					th:text="#{users.list.search}"></button>
 			</div>
-			<button id="searchBtn" type="submit" class="btn btn-default" th:text="#{users.list.search}"></button>
+
 		</form>
 
 		<p th:text="#{users.list.subtitle}"></p>
@@ -36,18 +38,29 @@
 
 						<td th:text="${user.email}"></td>
 						<td th:text="${user.name}"></td>
+						<td class="col-md-1"></td>
+						<td class="col-md-1"></td>
+
+
 						<td>
-							<div
-								th:if='${#bools.isTrue(#lists.contains(sendedRequest, user))} '>
+							<div th:if='${#bools.isTrue(#lists.contains(friendList, user))} '>
 								<button disabled type="button" th:id="${'sendButton' + user.id}"
-									class="btn btn-warning"
-									th:text='#{users.list.requestFriendship.pending}'></button>
+									class="btn btn-success btn-block"
+									th:text='#{users.list.requestFriendship.friend}'></button>
 							</div>
 							<div
-								th:if='${#bools.isFalse(#lists.contains(sendedRequest, user))} '>
-								<button type="button" th:id="${'sendButton' + user.id}"
-									class="btn btn-info" th:text='#{users.list.requestFriendship}'></button>
-								<script th:inline="javascript">
+								th:unless='${#bools.isTrue(#lists.contains(friendList, user))} '>
+								<div th:if='${#bools.isTrue(#lists.contains(pending, user))}'>
+									<button disabled type="button"
+										th:id="${'sendButton' + user.id}"
+										class="btn btn-warning btn-block"
+										th:text='#{users.list.requestFriendship.pending}'></button>
+								</div>
+								<div th:if='${#bools.isFalse(#lists.contains(pending, user))} '>
+									<button type="button" th:id="${'sendButton' + user.id}"
+										class="btn btn-info btn-block"
+										th:text='#{users.list.requestFriendship}'></button>
+									<script th:inline="javascript">
 										/*<![CDATA[*/$(
 												"#sendButton[[${user.id}]]")
 												.click(
@@ -56,11 +69,21 @@
 															$.post("/sendRequest", 
 																	{						 
 																	"receiver" : receiver
+																	}, 
+																	function(){
+																		$("#sendButton[[${user.id}]]").attr('disabled', true);
+																		$("#sendButton[[${user.id}]]").removeClass("btn-info");
+																		$("#sendButton[[${user.id}]]").addClass("btn-warning");
+																		$("#sendButton[[${user.id}]]").text( [[#{users.list.requestFriendship.pending}]] );
 																	});
+															
 														}); /*]]>*/
 									</script>
+								</div>
 							</div>
 						</td>
+						<td class="col-md-1"></td>
+						<td class="col-md-1"></td>
 					</tr>
 				</tbody>
 			</table>

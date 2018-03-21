@@ -27,7 +27,15 @@ public class PostService {
 		postRepository.delete(id);
 	}
 	
-	public List<Post> findPostsFromUser(User author){
-		return postRepository.findPostsFromUser(author);
+	public List<Post> findPostsFromUser(User author) {
+		return postRepository.findPostsFromUser( author );
+	}
+	
+	public int countPostsFromUser(User author) {
+		return postRepository.countPostsFromUser( author );
+	}
+	
+	public int getLast() {
+		return (int) postRepository.count();
 	}
 }

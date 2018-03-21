@@ -16,7 +16,11 @@ public interface FriendshipRequestRepository extends CrudRepository<FriendshipRe
 
 	@Query("SELECT r FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = false ORDER BY r.id ASC")
 	Page<FriendshipRequest> findPendingRequestToUser(Pageable pageable, User receiver);
-
+	
+	@Query("SELECT r FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = false ORDER BY r.id ASC")
+	List<FriendshipRequest> findPendingRequestToUser(User receiver);
+	
+	
 	@Query("SELECT r FROM FriendshipRequest r WHERE r.sender = ?1 AND r.accepted = false ORDER BY r.id ASC")
 	List<FriendshipRequest> findPendingRequestFromUser(User sender);
 	
@@ -30,6 +34,12 @@ public interface FriendshipRequestRepository extends CrudRepository<FriendshipRe
 			+ " OR u IN"
 			+ " (SELECT DISTINCT r.receiver FROM FriendshipRequest r WHERE r.sender = ?1 AND r.accepted = true)")
 	Page<User> getFriends(Pageable pageable, User user);
+	
+	@Query("SELECT DISTINCT u FROM User u WHERE u IN "
+			+ "	(SELECT DISTINCT r.sender FROM FriendshipRequest r WHERE r.receiver = ?1 AND r.accepted = true)"
+			+ " OR u IN"
+			+ " (SELECT DISTINCT r.receiver FROM FriendshipRequest r WHERE r.sender = ?1 AND r.accepted = true)")
+	List<User> getFriends(User user);
 	
 	@Query("SELECT DISTINCT u FROM User u WHERE (LOWER(u.name) LIKE LOWER(?2) OR" 
 			+ " LOWER(u.email) LIKE LOWER(?2))"

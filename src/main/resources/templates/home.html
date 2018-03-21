@@ -12,9 +12,9 @@
 	</div>
 
 	<div class='container'>
-		<h2 th:text='#{home.profile}'></h2>
+		<h2 class='col-sm-offset-1' th:text='#{home.profile}'></h2>
 		<div class='row'>
-			<button id="btnSearchUser" class="btn btn-info col-4"
+			<button id="btnSearchUser" class="btn btn-info col-4 col-sm-offset-1"
 				th:text='#{home.btnSearchUser}'></button>
 
 			<script type="text/javascript">
@@ -23,7 +23,7 @@
 				};
 			</script>
 			<button id="btnFriendshipRequest" class="btn btn-info col-4"
-				th:text='#{home.friendshipRequest}'></button>
+				th:text='#{friendshipRequest}'></button>
 
 			<script type="text/javascript">
 				document.getElementById("btnFriendshipRequest").onclick = function() {
@@ -45,9 +45,10 @@
 	</div>
 
 	<div class='container'>
-		<h2 th:text="#{posts}"></h2>
+		<h2 class="col-sm-offset-1" th:text="#{posts}"></h2>
 		<div class='row'>
-			<button id="btnListPost" class="btn btn-info col-3"
+		
+			<button id="btnListPost" class="btn btn-info col-3 col-sm-offset-1"
 				th:text="#{posts}"></button>
 
 			<script type="text/javascript">
