@@ -24,9 +24,6 @@ public class UsersService {
 	private UsersRepository usersRepository;
 
 	@Autowired
-	private FriendshipRequestService friendsRequest;
-
-	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
 
 	public Page<User> getUsers(Pageable pageable) {

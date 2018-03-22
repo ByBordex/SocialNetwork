@@ -1,4 +1,4 @@
-package com.uniovi.tests.pageObjects;
+package main.test.com.uniovi.tests.pageObjects;
 
 import java.util.List;
 
@@ -6,10 +6,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.uniovi.tests.utils.SeleniumUtils;
+import main.test.com.uniovi.tests.utils.SeleniumUtils;
 
 public class PO_PrivateView extends PO_NavView{
-	
+
 	static public void searchUser(WebDriver driver, String user) {
 		SeleniumUtils.esperarSegundos(driver, 5);
 		WebElement text = driver.findElement(By.name("searchText"));
@@ -19,11 +19,12 @@ public class PO_PrivateView extends PO_NavView{
 		By boton = By.id("searchBtn");
 		driver.findElement(boton).click();
 	}
-	
+
 	static public void acceptRequest(WebDriver driver, String username)
 	{
 		SeleniumUtils.esperarSegundos(driver, 5);
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tr[td[contains(text(), '"+username+"')]]/td/button");
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tr[td[contains(text(), '"+username+"')]]"
+				+ "/td/button");
 		elementos.get(0).click();
 	}
 
@@ -70,23 +71,44 @@ public class PO_PrivateView extends PO_NavView{
 		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'posts/post' )]");
 		elementos.get(1).click();
 	}
-	
+
 	static public void fillFormAddPost(WebDriver driver, String titulop,
 			String contenidop)
 	{
 		// Esperamos 5 segundo a que carge el DOM 
 		SeleniumUtils.esperarSegundos(driver, 5);
 		// Rellenemos el campo de descripción
-		WebElement titulo = driver.findElement(By.name("title"));
+		WebElement titulo = driver.findElement( By.name( "title" ) );
 		titulo.clear();
-		titulo.sendKeys(titulop);
-		WebElement contenido = driver.findElement(By.name("content"));
+		titulo.sendKeys( titulop );
+		WebElement contenido = driver.findElement( By.name( "content" ) );
 		contenido.click();
 		contenido.clear();
-		contenido.sendKeys(contenidop);
+		contenido.sendKeys( contenidop );
 		// Le damos al botón de enviar
-		By boton = By.className("btn btn-primary");
-		driver.findElement(boton).click();
+		By boton = By.className( "btn btn-primary" );
+		driver.findElement( boton ).click();
+	}
+	
+	static public void fillFormAddPost(WebDriver driver, String titulop,
+			String contenidop, String imagep)
+	{
+		// Esperamos 5 segundo a que carge el DOM 
+		SeleniumUtils.esperarSegundos(driver, 5);
+		// Rellenemos el campo de descripción
+		WebElement titulo = driver.findElement( By.name( "title" ) );
+		titulo.clear();
+		titulo.sendKeys( titulop );
+		WebElement contenido = driver.findElement( By.name( "content" ) );
+		contenido.click();
+		contenido.clear();
+		contenido.sendKeys( contenidop );
+		String path = System.getProperty( "user.dir" ) + "/src/resources/static/img/posts/" + imagep;
+		WebElement photo = driver.findElement( By.name("photo") );
+		photo.sendKeys( path );
+		// Le damos al botón de enviar
+		By boton = By.className( "btn btn-primary" );
+		driver.findElement( boton ).click();
 	}
 
 	static public void listPosts(WebDriver driver) {
@@ -97,6 +119,17 @@ public class PO_PrivateView extends PO_NavView{
 		// Esperamos a aparezca la opción de lista mis publicaciones:
 		// a[contains(@href, 'posts/post')]
 		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'posts/list' )]");
+		elementos.get(0).click();
+	}
+
+	static public void listUsersAdmin(WebDriver driver) {
+		// Pinchamos en la opción de menu de Panel de administrador - Gestion de usuarios:
+		// li[contains(@id, 'admin-menu')]/a
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'admin-menu')]/a");
+		elementos.get(0).click();
+		// Esperamos a aparezca la opción de lista los usuarios:
+		// a[contains(@href, 'admin/user/list')]
+		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'admin/user/list' )]");
 		elementos.get(0).click();
 	}
 

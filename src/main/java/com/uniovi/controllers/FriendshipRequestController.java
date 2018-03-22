@@ -98,7 +98,8 @@ public class FriendshipRequestController {
 	public String acceptRequest(Model model, Principal principal, @RequestParam Long request)
 	{
 		User receiver = userService.getUserByEmail( principal.getName() );
-		//We give the receiver user to avoid accepting frinedship request of other users (ex: Intercept post and modify body)
+		// We give the receiver user to avoid accepting frinedship request of other users (ex: Intercept post 
+		// and modify body)
 		friendshipRequestService.acceptRequest(request, receiver);	
 		return "redirect:/friendshipRequest/list";
 	}

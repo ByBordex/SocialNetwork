@@ -1,4 +1,4 @@
-package com.uniovi.tests.pageObjects;
+package main.test.com.uniovi.tests.pageObjects;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -22,12 +22,5 @@ public class PO_LoginView extends PO_NavView {
 		boton.click();
 
 	}
-
-	// TODO
-//	public static void checkRoleProfesor(WebDriver driver) {
-//		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'marks-menu')]/a");
-//		elementos.get(0).click();
-//		PO_View.checkElement(driver, "free", "//a[contains(@href, 'mark/add')]");
-//	}
 
 }

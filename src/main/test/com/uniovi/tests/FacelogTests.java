@@ -1,4 +1,4 @@
-package com.uniovi.tests;
+package main.test.com.uniovi.tests;
 
 import java.util.Calendar;
 import java.util.List;
@@ -14,19 +14,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import com.uniovi.tests.pageObjects.PO_HomeView;
-import com.uniovi.tests.pageObjects.PO_LoginView;
-import com.uniovi.tests.pageObjects.PO_NavView;
-import com.uniovi.tests.pageObjects.PO_PrivateView;
-import com.uniovi.tests.pageObjects.PO_Properties;
-import com.uniovi.tests.pageObjects.PO_RegisterView;
-import com.uniovi.tests.pageObjects.PO_View;
-import com.uniovi.tests.utils.SeleniumUtils;
+import main.test.com.uniovi.tests.pageObjects.PO_HomeView;
+import main.test.com.uniovi.tests.pageObjects.PO_LoginView;
+import main.test.com.uniovi.tests.pageObjects.PO_NavView;
+import main.test.com.uniovi.tests.pageObjects.PO_PrivateView;
+import main.test.com.uniovi.tests.pageObjects.PO_Properties;
+import main.test.com.uniovi.tests.pageObjects.PO_RegisterView;
+import main.test.com.uniovi.tests.pageObjects.PO_View;
+import main.test.com.uniovi.tests.utils.SeleniumUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FacelogTests {
-	//static String PathFirefox = "C:\\Users\\Soondra\\Documents\\Uni\\3º\\2do_trimestre\\SDI\\Firefox46.win\\FirefoxPortable.exe";
-	static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
+	static String PathFirefox = "C:\\Users\\Soondra\\Documents\\Uni\\3º\\2do_trimestre\\SDI\\Firefox46.win\\"
+			+ "FirefoxPortable.exe";
+	// static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
 	static WebDriver driver = getDriver(PathFirefox);
 	static String URL = "http://localhost:8090";
 
@@ -62,10 +63,11 @@ public class FacelogTests {
 		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-info"); 
 		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Rellenamos el formulario.
-		PO_RegisterView.fillForm(driver, "prueba3@mail.com", "Josefo Perez", "77777", "77777");
+		PO_RegisterView.fillForm(driver, "prueba@mail.com", "Josefo Perez", "77777", "77777");
 		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la sección privada
 		PO_View.checkElement(driver, "text", "Perfil");
+		PO_View.checkElement(driver, "text", "prueba@mail.com");
 	}
 
 	// 1.2 [RegInval] Registro de Usuario con datos inválidos (repetición de contraseña invalida)
@@ -414,13 +416,46 @@ public class FacelogTests {
 	// 12.1 [PubFot1Val] Crear una publicación con datos válidos y una foto adjunta.
 	@Test
 	public void H12_PubFot1Val() {
-		//TODO
+		// Iniciamos sesion
+		PO_NavView.clickConectarCon(driver, "1");
+		SeleniumUtils.esperarSegundos(driver, 2); 
+		// Comprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "Perfil");
+		PO_View.checkElement(driver, "text", "1@mail.com");
+		// Seleccionamos la opción de crear post
+		PO_PrivateView.createPost( driver );
+		SeleniumUtils.esperarSegundos(driver, 2); 
+		// Comprobamos que estamos en el creador de posts
+		PO_View.checkElement(driver, "text", "Crear publicacion");
+		// Creamos una publicación con título "Test" y contenido "Esto es parte del test"
+		PO_PrivateView.fillFormAddPost(driver, "Test", "Esto es parte del test de imagen", "0.png");
+		SeleniumUtils.esperarSegundos(driver, 2); 
+		// Comprobamos que nos redericciona a las publicaciones y aparece la que hemos creado
+		PO_View.checkElement(driver, "text", "Mis publicaciones");
+		PO_View.checkElement(driver, "text", "Test");
+		PO_View.checkElement(driver, "text", "Esto es parte del test de imagen");
 	}
 
 	// 12.1 [PubFot2Val] Crear una publicación con datos válidos y sin una foto adjunta.
 	@Test
 	public void H12_PubFot2Val() {
-		//TODO
+		// Iniciamos sesion
+		PO_NavView.clickConectarCon(driver, "1");
+		SeleniumUtils.esperarSegundos(driver, 2); 
+		// Comprobamos que entramos en la pagina privada de Alumno
+		PO_View.checkElement(driver, "text", "Perfil");
+		PO_View.checkElement(driver, "text", "1@mail.com");
+		// Seleccionamos la opción de crear post
+		PO_PrivateView.createPost( driver );
+		SeleniumUtils.esperarSegundos(driver, 2); 
+		// Comprobamos que estamos en el creador de posts
+		PO_View.checkElement(driver, "text", "Crear publicacion");
+		// Creamos una publicación con título "Test" y contenido "Esto es parte del test"
+		PO_PrivateView.fillFormAddPost(driver, "Test", "Esto es parte del test");
+		SeleniumUtils.esperarSegundos(driver, 2); 
+		// Comprobamos que nos redericciona a las publicaciones y aparece la que hemos creado
+		PO_View.checkElement(driver, "text", "Mis publicaciones");
+		PO_View.checkElement(driver, "text", "Test");
 	}
 
 	// 13.1 [AdInVal] Inicio de sesión como administrador con datos válidos.
@@ -439,7 +474,7 @@ public class FacelogTests {
 	@Test
 	public void H13_AdInInVal() {
 		// Vamos al formulario de logueo por URL
-		String URLinvalid = URL + "admin/login";
+		String URLinvalid = URL + "/admin/login";
 		driver.navigate().to( URLinvalid );
 		// Rellenamos el formulario con datos válidos de un usuario no admin
 		PO_LoginView.fillForm(driver, "1@mail.com", "123456");
@@ -457,7 +492,14 @@ public class FacelogTests {
 		// Comprobamos que entramos en la pagina privada 
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "admin@mail.com");
-		//TODO
+		// Vamos a la gestión de usuarios
+		PO_PrivateView.listUsersAdmin( driver );
+		// Comprobamos que estamos en la lista de usuarios
+		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes:");
+		PO_View.checkElement(driver, "text", "Eliminar");
+		PO_View.checkElement(driver, "text", "1@mail.com");
+		PO_View.checkElement(driver, "text", "15@mail.com");
+		PO_View.checkElement(driver, "text", "prueba@mail.com");
 	}
 
 	// 15.1 [AdBorUsrVal] Desde un usuario identificado en sesión como administrador eliminar un usuario
@@ -470,7 +512,18 @@ public class FacelogTests {
 		// Comprobamos que entramos en la pagina privada 
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "admin@mail.com");
-		//TODO
+		// Vamos a la gestión de usuarios
+		PO_PrivateView.listUsersAdmin( driver );
+		SeleniumUtils.esperarSegundos(driver, 2); 
+		// Comprobamos que estamos en la lista de usuarios
+		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes:");
+		PO_View.checkElement(driver, "text", "Eliminar");
+		PO_View.checkElement(driver, "text", "prueba@mail.com");
+		// Eliminamos el usuario prueba@mail.com
+		PO_HomeView.clickOption(driver, "Eliminar", "id", "removeButton16");
+		SeleniumUtils.esperarSegundos(driver, 2); 
+		// Comprobamos que el usuario ya no esta en la lista
+		SeleniumUtils.textoNoPresentePagina(driver, "prueba@mail.com");
 	}
 
 	// 15.2 [AdBorUsrInVal] Intento de acceso vía URL al borrado de un usuario existente en la aplicación.
@@ -484,7 +537,7 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Modificamos la URL a mano para ir a la lista de borrado de usuarios
-		String URLinvalid = URL + "admin/user/list";
+		String URLinvalid = URL + "/admin/user/list";
 		driver.navigate().to( URLinvalid );
 		// Comprobamos que nos redirecciona a nuestra página de inicio
 		//TODO

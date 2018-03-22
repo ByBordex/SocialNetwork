@@ -1,4 +1,4 @@
-package com.uniovi.tests.pageObjects;
+package main.test.com.uniovi.tests.pageObjects;
 
 import static org.junit.Assert.assertTrue;
 
@@ -7,7 +7,7 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import com.uniovi.tests.utils.SeleniumUtils;
+import main.test.com.uniovi.tests.utils.SeleniumUtils;
 
 public class PO_NavView extends PO_View {
 	/**
@@ -69,7 +69,8 @@ public class PO_NavView extends PO_View {
 	
 	public static void clickDesconectar(WebDriver driver)
 	{
-		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//a[contains(@href, '/logout' )]", getTimeout());
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//a[contains(@href, '/logout' )]"
+				, getTimeout());
 		elementos.get(0).click();
 	}
 

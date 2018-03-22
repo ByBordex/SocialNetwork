@@ -62,7 +62,8 @@ public class PostController {
 	}
 
 	@RequestMapping(value="/posts/post", method = RequestMethod.POST)
-	public String sendPost(@ModelAttribute Post post, BindingResult results, Principal principal, @Validated@RequestParam(required = false)MultipartFile photo ) 
+	public String sendPost(@ModelAttribute Post post, BindingResult results, Principal principal, 
+			@Validated@RequestParam(required = false)MultipartFile photo ) 
 	{
 		User author = usersService.getUserByEmail( principal.getName() );
 		photoValidator.validate(photo, results);
