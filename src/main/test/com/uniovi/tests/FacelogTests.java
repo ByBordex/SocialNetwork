@@ -28,7 +28,8 @@ import main.test.com.uniovi.tests.utils.SeleniumUtils;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FacelogTests {
-	static String PathFirefox = "C:\\Users\\Soondra\\Documents\\Uni\\3º\\2do_trimestre\\SDI\\Firefox46.win\\"
+	
+	static String PathFirefox = "C:\\Users\\Soondra\\Documents\\Uni\\3º\\2do_trimestre\\SDI\\SpringBoot\\SocialNetwork\\Firefox46.win\\"
 			+ "FirefoxPortable.exe";
 	// static String PathFirefox = "/Applications/Firefox.app/Contents/MacOS/firefox-bin";
 	static WebDriver driver = getDriver(PathFirefox);
@@ -61,13 +62,11 @@ public class FacelogTests {
 
 	// 1.1 [RegVal] Registro de Usuario con datos válidos.
 	@Test
-	public void H01_RegVal() { 
+	public void H01_1_RegVal() { 
 		// Vamos al formulario de registro
 		driver.findElement( By.id( "btnSignup" ) ).click();
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "prueba@mail.com", "Josefo Perez", "77777", "77777");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la sección privada
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "prueba@mail.com");
@@ -75,10 +74,10 @@ public class FacelogTests {
 
 	// 1.2 [RegInval] Registro de Usuario con datos inválidos (repetición de contraseña invalida)
 	@Test
-	public void H01_RegInval() { 
+	public void H01_2_RegInval() { 
 		// Vamos al formulario de registro
 		driver.findElement( By.id( "btnSignup" ) ).click();
-		SeleniumUtils.esperarSegundos(driver, 2);
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/signup" ) );
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "1@mail.com", "Josefo Perez", "77777", "77777");
 		PO_View.getP();
@@ -100,10 +99,9 @@ public class FacelogTests {
 
 	// 2.1 [InVal] Inicio de sesión con datos válidos desde el ROl de Usuario, 1@mail.com, 123456
 	@Test
-	public void H02_InVal() { 
+	public void H02_1_InVal() { 
 		// Iniciamos sesión
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
@@ -111,29 +109,27 @@ public class FacelogTests {
 
 	// 2.2 [InInVal] Inicio de sesión con datos inválidos (usuario no existente en la aplicación)
 	@Test
-	public void H02_InInVal() {
+	public void H02_2_InInVal() {
 		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-info");
+		driver.findElements( By.id( "btnLogin" ) ).get(0).click();
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, "noexiste@mail.com", "123456");
-		// Comprobamos que entramos en la pagina privada de profesor
+		// Comprobamos que seguimos en la página de login
 		PO_View.checkElement(driver, "text", "La combinacion usuario/password no coincide");
 	}
 
 	// 3.1 [LisUsrVal] Acceso al listado de usuarios desde un usuario en sesión.
 	@Test
-	public void H03_LisUsrVal() {
+	public void H03_1_LisUsrVal() {
 		// Iniciamos sesión
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de listar usuarios
 		PO_PrivateView.listUsers( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la lista de usuarios
-		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes");
+		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes:");
 		// Comprobar que se nos muestran usuarios
 		PO_View.checkElement(driver, "free", "//td[contains(text(), '@')]");
 	}
@@ -141,27 +137,24 @@ public class FacelogTests {
 	// 3.2 [LisUsrInVal] Intento de acceso con URL desde un usuario no identificado al listado de usuarios
 	// desde un usuario en sesión. Debe producirse un acceso no permitido a vistas privadas.
 	@Test
-	public void H03_ListUsrInVal() {
+	public void H03_2_ListUsrInVal() {
 		// Modificamos la URL a mano para ir a la lista de usuarios
 		String URLinvalid = URL + "/user/list";
 		driver.navigate().to( URLinvalid );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que nos redirige en la página de login
 		PO_View.checkElement(driver, "text", "Identificate");
 	}
 
 	// 4.1 [BusUsrVal] Realizar una búsqueda valida en el listado de usuarios desde un usuario en sesión.
 	@Test 
-	public void H04_BusUsrVal() {
+	public void H04_1_BusUsrVal() {
 		// Iniciamos sesión
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de listar usuarios
 		PO_PrivateView.listUsers( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 
 		// Buscamos los usuarios que contengan la cadena 'mar'
 		PO_PrivateView.searchUser(driver, "mar");
@@ -217,7 +210,7 @@ public class FacelogTests {
 	// 4.2 [BusUsrInVal] Intento de acceso con URL a la búsqueda de usuarios desde un usuario no
 	// identificado. Debe producirse un acceso no permitido a vistas privadas.
 	@Test
-	public void H04_BusUsrInVal() {
+	public void H04_2_BusUsrInVal() {
 		// Modificamos la URL a mano para ir a la lista de usuarios
 		String URLinvalid = URL + "/user/list";
 		driver.navigate().to( URLinvalid );
@@ -227,37 +220,38 @@ public class FacelogTests {
 
 	// 5.1 [InvVal] Enviar una invitación de amistad a un usuario de forma valida.
 	@Test
-	public void H04_InvVal() {
+	public void H05_1_InvVal() {
 		// Iniciamos sesión
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de listar usuarios
 		PO_PrivateView.listUsers( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la lista de usuarios.
 		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes");
 		// Comprobamos que existe el botón de amistad para el usuario2 y lo clicamos
-		driver.findElement( By.id("sendButton2") ).click();
-		// Comprobar que 
+		PO_View.checkElement(driver, "id", "sendButton2").get( 0 ).click();
+		// Comrpobamos que ya no podemos darle click
+		PO_View.checkElement(driver, "free",
+				"//button[contains(text(), 'Pendiente') "
+						+ "		and contains(@class, 'btn btn-warning')"
+						+ "		 and @disabled]");
+		
 	}
 
 	// 5.2 [InvInVal] Enviar una invitación de amistad a un usuario al que ya le habíamos invitado la invitación
 	// previamente. No debería dejarnos enviar la invitación, se podría ocultar el botón de enviar invitación o
 	// notificar que ya había sido enviada previamente.
 	@Test
-	public void H05_InvInVal() {
+	public void H05_2_InvInVal() {
 		// Iniciamos sesión
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de listar usuarios
 		PO_PrivateView.listUsers( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la lista de usuarios.
 		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes");
 		// Comprobamos que existe el botón de amistad para el usuario2.
@@ -274,40 +268,34 @@ public class FacelogTests {
 	// 6.1 [LisInvVal] Listar las invitaciones recibidas por un usuario, realizar la comprobación con una lista
 	// que al menos tenga una invitación recibida.
 	@Test
-	public void H06_LisInvVal() {
+	public void H06_1_LisInvVal() {
 		// Iniciamos sesión
 		PO_NavView.clickConectarCon(driver, "2");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "2@mail.com");
 		// Seleccionamos la opción de listar peticiones de amistad
 		PO_PrivateView.listFriendshipRequests( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que estamos en la pantalla de solicitudes de amistad
 		PO_View.checkElement(driver, "text", "Los siguientes usuarios te han pedido ser amigos:");
 		// Comprobamos que ha llegado la petición de amistad
-		SeleniumUtils.esperarSegundos(driver, 1);
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//td//tr");
-		assertTrue( elementos.size() == 1 );
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tr//td");
+		assertTrue( elementos.size() == 3 );
 	}
 
 	// 7.1 [AcepInvVal] Aceptar una invitación recibida.
 	@Test
-	public void H07_AcepInvVal() {
+	public void H07_1_AcepInvVal() {
 		// Iniciamos sesión
 		PO_NavView.clickConectarCon(driver, "2");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "2@mail.com");
 		// Seleccionamos la opción de listar peticiones de amistad
 		PO_PrivateView.listFriendshipRequests( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que estamos en la pantalla de solicitudes de amistad
 		PO_View.checkElement(driver, "text", "Los siguientes usuarios te han pedido ser amigos:");
 		// Comprobamos que ha llegado la petición de amistad
-		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_View.checkElement(driver, "free", "//td[contains( text(), '1@mail.com' )]");
 		// Aceptamos la petición de amistad
 		PO_PrivateView.acceptRequest(driver, "1@mail.com");
@@ -317,16 +305,14 @@ public class FacelogTests {
 	// 8.1 [ListAmiVal] Listar los amigos de un usuario, realizar la comprobación con una lista que al menos
 	// tenga un amigo.
 	@Test 
-	public void H08_ListAmiVal() {
+	public void H08_1_ListAmiVal() {
 		// Iniciamos sesión
 		PO_NavView.clickConectarCon(driver, "2");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "2@mail.com");
 		// Seleccionamos la opción de listar amigos
 		PO_PrivateView.listFriends( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la lista de amigos
 		PO_View.checkElement(driver, "text", "Amigos");
 		// Comprobamos que el usuario 1@mail.com es amigo nuestro
@@ -339,38 +325,32 @@ public class FacelogTests {
 
 	// 9.1 [PubVal] Crear una publicación con datos válidos.
 	@Test
-	public void H09_PubVal() {
+	public void H09_1_PubVal() {
 		// Iniciamos sesion
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de crear post
 		PO_PrivateView.createPost( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que estamos en el creador de posts
 		PO_View.checkElement(driver, "text", "Crear publicacion");
 		// Creamos una publicación con título "Test" y contenido "Esto es parte del test"
 		PO_PrivateView.fillFormAddPost(driver, "Test", "Esto es parte del test");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que nos redericciona a las publicaciones y aparece la que hemos creado
 		PO_View.checkElement(driver, "text", "Mis publicaciones");
-		PO_View.checkElement(driver, "text", "Test");
 	}
 
 	// 10.1 [LisPubVal] Acceso al listado de publicaciones desde un usuario en sesión.
 	@Test
-	public void H10_ListPubVal() {
+	public void H10_1_ListPubVal() {
 		// Iniciamos sesion
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada 
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de listar mis posts
 		PO_PrivateView.listPosts( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que accedimos a las publicaciones
 		PO_View.checkElement(driver, "text", "Mis publicaciones");
 		Calendar calendar = Calendar.getInstance();
@@ -382,21 +362,18 @@ public class FacelogTests {
 
 	// 11.1 [LisPubAmiVal] Listar las publicaciones de un usuario amigo
 	@Test 
-	public void H11_ListPubAmiVal() {
+	public void H11_1_ListPubAmiVal() {
 		// Iniciamos sesion
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada 
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de listar amigos
 		PO_PrivateView.listFriends( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la lista de amigos
 		PO_View.checkElement(driver, "text", "Amigos");
 		// Pinchamos en 'Ver perfil'
 		PO_HomeView.clickOption(driver, "Ver perfil", "id", "postButton3");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que estamos en el perfil de nuestro amigo
 		PO_View.checkElement(driver, "text", "Perfil de");
 		PO_View.checkElement(driver, "text", "Lucas Nuñez");
@@ -405,7 +382,7 @@ public class FacelogTests {
 	// 11.2 [LisPubAmiInVal] Utilizando un acceso vía URL tratar de listar las publicaciones de un usuario que
 	// no sea amigo del usuario identificado en sesión.
 	@Test
-	public void H11_LisPubAmiInVal() {
+	public void H11_2_LisPubAmiInVal() {
 		// Modificamos la URL a mano para ir a la lista de usuarios
 		String URLinvalid = URL + "/friendshipRequest/listFriends/3";
 		driver.navigate().to( URLinvalid );
@@ -417,21 +394,18 @@ public class FacelogTests {
 
 	// 12.1 [PubFot1Val] Crear una publicación con datos válidos y una foto adjunta.
 	@Test
-	public void H12_PubFot1Val() {
+	public void H12_1_PubFot1Val() {
 		// Iniciamos sesion
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de crear post
 		PO_PrivateView.createPost( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que estamos en el creador de posts
 		PO_View.checkElement(driver, "text", "Crear publicacion");
 		// Creamos una publicación con título "Test" y contenido "Esto es parte del test"
 		PO_PrivateView.fillFormAddPost(driver, "Test", "Esto es parte del test de imagen", "0.png");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que nos redericciona a las publicaciones y aparece la que hemos creado
 		PO_View.checkElement(driver, "text", "Mis publicaciones");
 		PO_View.checkElement(driver, "text", "Test");
@@ -440,21 +414,18 @@ public class FacelogTests {
 
 	// 12.1 [PubFot2Val] Crear una publicación con datos válidos y sin una foto adjunta.
 	@Test
-	public void H12_PubFot2Val() {
+	public void H12_1_PubFot2Val() {
 		// Iniciamos sesion
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada de Alumno
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de crear post
 		PO_PrivateView.createPost( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que estamos en el creador de posts
 		PO_View.checkElement(driver, "text", "Crear publicacion");
 		// Creamos una publicación con título "Test" y contenido "Esto es parte del test"
 		PO_PrivateView.fillFormAddPost(driver, "Test", "Esto es parte del test");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que nos redericciona a las publicaciones y aparece la que hemos creado
 		PO_View.checkElement(driver, "text", "Mis publicaciones");
 		PO_View.checkElement(driver, "text", "Test");
@@ -462,10 +433,9 @@ public class FacelogTests {
 
 	// 13.1 [AdInVal] Inicio de sesión como administrador con datos válidos.
 	@Test
-	public void H13_AdInVal() {
+	public void H13_1_AdInVal() {
 		// Iniciamos sesion
 		PO_NavView.clickConectarCon(driver, "admin");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada 
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "admin@mail.com");
@@ -474,7 +444,7 @@ public class FacelogTests {
 	// 13.2 [AdInInVal] Inicio de sesión como administrador con datos inválidos (usar los datos de un usuario
 	// que no tenga perfil administrador).
 	@Test
-	public void H13_AdInInVal() {
+	public void H13_2_AdInInVal() {
 		// Vamos al formulario de logueo por URL
 		String URLinvalid = URL + "/admin/login";
 		driver.navigate().to( URLinvalid );
@@ -487,10 +457,9 @@ public class FacelogTests {
 	// 14.1 [AdLisUsrVal] Desde un usuario identificado en sesión como administrador listar a todos los
 	// usuarios de la aplicación.
 	@Test
-	public void H14_AdListUsrVal() {
+	public void H14_1_AdListUsrVal() {
 		// Iniciamos sesion
 		PO_NavView.clickConectarCon(driver, "admin");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada 
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "admin@mail.com");
@@ -507,23 +476,20 @@ public class FacelogTests {
 	// 15.1 [AdBorUsrVal] Desde un usuario identificado en sesión como administrador eliminar un usuario
 	// existente en la aplicación.
 	@Test
-	public void H15_AdBorUsrVal() {
+	public void H15_1_AdBorUsrVal() {
 		// Iniciamos sesion
 		PO_NavView.clickConectarCon(driver, "admin");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada 
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "admin@mail.com");
 		// Vamos a la gestión de usuarios
 		PO_PrivateView.listUsersAdmin( driver );
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que estamos en la lista de usuarios
 		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes:");
 		PO_View.checkElement(driver, "text", "Eliminar");
 		PO_View.checkElement(driver, "text", "prueba@mail.com");
 		// Eliminamos el usuario prueba@mail.com
 		PO_HomeView.clickOption(driver, "Eliminar", "id", "removeButton16");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que el usuario ya no esta en la lista
 		SeleniumUtils.textoNoPresentePagina(driver, "prueba@mail.com");
 	}
@@ -531,10 +497,9 @@ public class FacelogTests {
 	// 15.2 [AdBorUsrInVal] Intento de acceso vía URL al borrado de un usuario existente en la aplicación.
 	// Debe utilizarse un usuario identificado en sesión pero que no tenga perfil de administrador.
 	@Test
-	public void H15_AdBorUsrInVal() {
+	public void H15_2_AdBorUsrInVal() {
 		// Iniciamos sesion
 		PO_NavView.clickConectarCon(driver, "1");
-		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la pagina privada 
 		PO_View.checkElement(driver, "text", "Perfil");
 		PO_View.checkElement(driver, "text", "1@mail.com");
@@ -542,7 +507,7 @@ public class FacelogTests {
 		String URLinvalid = URL + "/admin/user/list";
 		driver.navigate().to( URLinvalid );
 		// Comprobamos que nos redirecciona a nuestra página de inicio
-		//TODO
+		//TODO Access is denied
 	}
 
 }

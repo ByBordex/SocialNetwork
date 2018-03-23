@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -62,9 +63,11 @@ public class PO_NavView extends PO_View {
 	public static void clickConectarCon(WebDriver driver, String usuario) 
 	{
 		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-info");
+		driver.findElements( By.id( "btnLogin" ) ).get(0).click();
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, usuario + "@mail.com", "123456");
+		// Comrpobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/home" ) );
 	}
 	
 	public static void clickDesconectar(WebDriver driver)

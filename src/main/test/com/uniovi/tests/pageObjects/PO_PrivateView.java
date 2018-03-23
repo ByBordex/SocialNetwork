@@ -1,5 +1,7 @@
 package main.test.com.uniovi.tests.pageObjects;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -11,65 +13,67 @@ import main.test.com.uniovi.tests.utils.SeleniumUtils;
 public class PO_PrivateView extends PO_NavView{
 
 	static public void searchUser(WebDriver driver, String user) {
-		SeleniumUtils.esperarSegundos(driver, 5);
-		WebElement text = driver.findElement(By.name("searchText"));
+		WebElement text = driver.findElement( By.name( "searchText" ) );
 		text.click();
 		text.clear();
 		text.sendKeys(user);
 		By boton = By.id("searchBtn");
 		driver.findElement(boton).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/user/list?searchText=" + user ) );
 	}
 
 	static public void acceptRequest(WebDriver driver, String username)
 	{
-		SeleniumUtils.esperarSegundos(driver, 5);
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tr[td[contains(text(), '"+username+"')]]"
 				+ "/td/button");
 		elementos.get(0).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/friendshipRequest/list" ) );
 	}
 
 	static public void listUsers(WebDriver driver) {
 		// Pinchamos en la opción de menu de Gestionar usuarios:
 		// li[contains(@id, 'users-menu')]/a
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'users-menu')]/a");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//li[contains(@id, 'users-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de listar usuarios:
 		// a[contains(@href, '/user/list')]
-		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'user/list' )]");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//a[contains( @href, '/user/list' )]" )).get(0).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/user/list" ) );
 	}
 
 	static public void listFriendshipRequests(WebDriver driver) {
 		// Pinchamos en la opción de menu de Amigos - Peticiones de amistad:
 		// li[contains(@id, 'friends-menu')]/a
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'friends-menu')]/a");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//li[contains(@id, 'friends-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de listar peticiones de amistad:
 		// a[contains(@href, 'friendshipRequest/list')]
-		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'friendshipRequest/list' )]");
-		elementos.get(1).click();
+		driver.findElements( By.xpath( "//a[contains( @href, '/friendshipRequest/list' )]" )).get(0).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/friendshipRequest/list" ) );
 	}
 
 	static public void listFriends(WebDriver driver) {
 		// Pinchamos en la opción de menu de Amigos - Ver mis amigos:
 		// li[contains(@id, 'friends-menu')]/a
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'friends-menu')]/a");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//li[contains(@id, 'friends-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de listar amigos:
 		// a[contains(@href, 'friendshipRequest/listFriends')]
-		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'friendshipRequest/listFriends' )]");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//a[contains( @href, '/friendshipRequest/listFriends' )]" )).get(0).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/friendshipRequest/listFriends" ) );
 	}
 
 	static public void createPost(WebDriver driver) {
 		// Pinchamos en la opción de menu de Publicaicones - Crear publicacion:
 		// li[contains(@id, 'posts-menu')]/a
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'posts-menu')]/a");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//li[contains(@id, 'posts-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de crear publicacion:
 		// a[contains(@href, 'posts/post')]
-		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'posts/post' )]");
-		elementos.get(1).click();
+		driver.findElements( By.xpath( "//li[contains( @href, '/posts/post' )]" )).get(0).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/posts/post" ) );
 	}
 
 	static public void fillFormAddPost(WebDriver driver, String titulop,
@@ -86,8 +90,9 @@ public class PO_PrivateView extends PO_NavView{
 		contenido.clear();
 		contenido.sendKeys( contenidop );
 		// Le damos al botón de enviar
-		By boton = By.className( "btn btn-primary" );
-		driver.findElement( boton ).click();
+		PO_View.checkElement(driver, "id", "submit").get( 0 ).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/posts/list" ) );
 	}
 	
 	static public void fillFormAddPost(WebDriver driver, String titulop,
@@ -107,30 +112,31 @@ public class PO_PrivateView extends PO_NavView{
 		WebElement photo = driver.findElement( By.name("photo") );
 		photo.sendKeys( path );
 		// Le damos al botón de enviar
-		By boton = By.className( "btn btn-primary" );
-		driver.findElement( boton ).click();
+		driver.findElement( By.id( "submit" ) ).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/posts/list" ) );
 	}
 
 	static public void listPosts(WebDriver driver) {
 		// Pinchamos en la opción de menu de Publicaicones - Ver mis publicaciones:
 		// li[contains(@id, 'posts-menu')]/a
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'posts-menu')]/a");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//li[contains(@id, 'posts-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de lista mis publicaciones:
 		// a[contains(@href, 'posts/post')]
-		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'posts/list' )]");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//li[contains( @href, '/posts/list' )]/a" )).get(0).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8091/posts/list" ) );
 	}
 
 	static public void listUsersAdmin(WebDriver driver) {
 		// Pinchamos en la opción de menu de Panel de administrador - Gestion de usuarios:
 		// li[contains(@id, 'admin-menu')]/a
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//li[contains(@id, 'admin-menu')]/a");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//li[contains(@id, 'admin-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de lista los usuarios:
 		// a[contains(@href, 'admin/user/list')]
-		elementos = PO_View.checkElement(driver, "free", "//a[contains( @href, 'admin/user/list' )]");
-		elementos.get(0).click();
+		driver.findElements( By.xpath( "//li[contains( @href, '/admin/user/list' )]/a" )).get(0).click();
+		// Comprobamos que entramos a la página correcta
+		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/admin/user/list" ) );
 	}
 
 }
