@@ -1,5 +1,7 @@
 package main.test.com.uniovi.tests;
 
+import static org.junit.Assert.assertTrue;
+
 import java.util.Calendar;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -60,7 +63,7 @@ public class FacelogTests {
 	@Test
 	public void H01_RegVal() { 
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-info"); 
+		driver.findElement( By.id( "btnSignup" ) ).click();
 		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "prueba@mail.com", "Josefo Perez", "77777", "77777");
@@ -74,8 +77,8 @@ public class FacelogTests {
 	@Test
 	public void H01_RegInval() { 
 		// Vamos al formulario de registro
-		PO_HomeView.clickOption(driver, "signup", "class", "btn btn-info");
-		SeleniumUtils.esperarSegundos(driver, 2); 
+		driver.findElement( By.id( "btnSignup" ) ).click();
+		SeleniumUtils.esperarSegundos(driver, 2);
 		// Rellenamos el formulario.
 		PO_RegisterView.fillForm(driver, "1@mail.com", "Josefo Perez", "77777", "77777");
 		PO_View.getP();
@@ -87,7 +90,7 @@ public class FacelogTests {
 		PO_RegisterView.checkKey(driver, "Error.signup.name.length", PO_Properties.getSPANISH());
 		// Rellenamos el formurio
 		PO_RegisterView.fillForm(driver, "99999990B", "Josefo Perez", "77", "77");
-		// Comprobamos que la contraseña es corto
+		// Comprobamos que la contraseña es corta
 		PO_RegisterView.checkKey(driver, "Error.signup.password.length", PO_Properties.getSPANISH());
 		// Rellenamos el formulario
 		PO_RegisterView.fillForm(driver, "99999990B", "Josefo Perez", "7777777", "1111111");
@@ -236,11 +239,9 @@ public class FacelogTests {
 		SeleniumUtils.esperarSegundos(driver, 2); 
 		// Comprobamos que entramos en la lista de usuarios.
 		PO_View.checkElement(driver, "text", "Los usuarios que actualmente figuran en el sistema son los siguientes");
-		// Comprobamos que existe el botón de amistad para el usuario2.
-		List<WebElement> elementos = PO_View.checkElement(driver, "id", "sendButton2");
-
-		// Pulsamos el botón para enviar la solicitud.
-		elementos.get(0).click();
+		// Comprobamos que existe el botón de amistad para el usuario2 y lo clicamos
+		driver.findElement( By.id("sendButton2") ).click();
+		// Comprobar que 
 	}
 
 	// 5.2 [InvInVal] Enviar una invitación de amistad a un usuario al que ya le habíamos invitado la invitación
@@ -287,7 +288,8 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "Los siguientes usuarios te han pedido ser amigos:");
 		// Comprobamos que ha llegado la petición de amistad
 		SeleniumUtils.esperarSegundos(driver, 1);
-		PO_View.checkElement(driver, "free", "//td[contains(text(), '1@mail.com')]");
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//td//tr");
+		assertTrue( elementos.size() == 1 );
 	}
 
 	// 7.1 [AcepInvVal] Aceptar una invitación recibida.
