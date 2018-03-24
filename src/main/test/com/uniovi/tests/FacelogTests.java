@@ -17,6 +17,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
+import com.thoughtworks.selenium.Selenium;
 import com.uniovi.tests.pageObjects.PO_HomeView;
 import com.uniovi.tests.pageObjects.PO_LoginView;
 import com.uniovi.tests.pageObjects.PO_NavView;
@@ -349,16 +350,18 @@ public class FacelogTests {
 		// Comprobamos que entramos en la lista de amigos
 		PO_View.checkElement(driver, "text", "Amigos");
 		// Pinchamos en 'Ver perfil'
-		PO_HomeView.clickOption(driver, "Ver perfil", "id", "postButton3");
+		PO_View.checkElement(driver, "id", "postButton2").get(0).click();
 		// Comprobamos que estamos en el perfil de nuestro amigo
 		PO_View.checkElement(driver, "text", "Perfil de");
-		PO_View.checkElement(driver, "text", "Lucas Nuñez");
+		PO_View.checkElement(driver, "text", "Lucas");
 	}
 
 	// 11.2 [LisPubAmiInVal] Utilizando un acceso vía URL tratar de listar las publicaciones de un usuario que
 	// no sea amigo del usuario identificado en sesión.
 	@Test
 	public void H11_2_LisPubAmiInVal() {
+		// Iniciamos sesion
+		PO_NavView.clickConectarCon(driver, "1");
 		// Modificamos la URL a mano para ir a la lista de usuarios
 		String URLinvalid = URL + "/friendshipRequest/listFriends/3";
 		driver.navigate().to( URLinvalid );
@@ -378,14 +381,11 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de crear post
 		PO_PrivateView.createPost( driver );
-		// Comprobamos que estamos en el creador de posts
-		PO_View.checkElement(driver, "text", "Crear publicacion");
 		// Creamos una publicación con título "Test" y contenido "Esto es parte del test"
 		PO_PrivateView.fillFormAddPost(driver, "Test", "Esto es parte del test de imagen", "0.png");
 		// Comprobamos que nos redericciona a las publicaciones y aparece la que hemos creado
 		PO_View.checkElement(driver, "text", "Mis publicaciones");
 		PO_View.checkElement(driver, "text", "Test");
-		PO_View.checkElement(driver, "text", "Esto es parte del test de imagen");
 	}
 
 	// 12.1 [PubFot2Val] Crear una publicación con datos válidos y sin una foto adjunta.
@@ -398,13 +398,11 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "1@mail.com");
 		// Seleccionamos la opción de crear post
 		PO_PrivateView.createPost( driver );
-		// Comprobamos que estamos en el creador de posts
-		PO_View.checkElement(driver, "text", "Crear publicacion");
 		// Creamos una publicación con título "Test" y contenido "Esto es parte del test"
-		PO_PrivateView.fillFormAddPost(driver, "Test", "Esto es parte del test");
+		PO_PrivateView.fillFormAddPost(driver, "NoImagen", "Esto es parte del test");
 		// Comprobamos que nos redericciona a las publicaciones y aparece la que hemos creado
 		PO_View.checkElement(driver, "text", "Mis publicaciones");
-		PO_View.checkElement(driver, "text", "Test");
+		PO_View.checkElement(driver, "text", "NoImagen");
 	}
 
 	// 13.1 [AdInVal] Inicio de sesión como administrador con datos válidos.
@@ -465,7 +463,7 @@ public class FacelogTests {
 		PO_View.checkElement(driver, "text", "Eliminar");
 		PO_View.checkElement(driver, "text", "prueba@mail.com");
 		// Eliminamos el usuario prueba@mail.com
-		PO_HomeView.clickOption(driver, "Eliminar", "id", "removeButton16");
+		PO_View.checkElement(driver, "id", "removeButton17").get(0).click();
 		// Comprobamos que el usuario ya no esta en la lista
 		SeleniumUtils.textoNoPresentePagina(driver, "prueba@mail.com");
 	}
@@ -482,8 +480,7 @@ public class FacelogTests {
 		// Modificamos la URL a mano para ir a la lista de borrado de usuarios
 		String URLinvalid = URL + "/admin/user/list";
 		driver.navigate().to( URLinvalid );
-		// Comprobamos que nos redirecciona a nuestra página de inicio
-		//TODO Access is denied
+		PO_View.checkElement(driver, "text", "Access is denied");
 	}
 
 }

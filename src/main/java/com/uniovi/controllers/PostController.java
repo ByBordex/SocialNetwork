@@ -24,6 +24,7 @@ import com.uniovi.entites.Post;
 import com.uniovi.entites.User;
 import com.uniovi.services.PostService;
 import com.uniovi.services.UsersService;
+import com.uniovi.validators.PhotoValidator;
 
 
 @Controller
@@ -34,6 +35,9 @@ public class PostController {
 
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private PhotoValidator photoValidator;
 
 	@RequestMapping("/posts/list")
 	public String getList(Model model, Principal principal) {
@@ -61,8 +65,13 @@ public class PostController {
 			@RequestParam(required = false)MultipartFile photo ) 
 	{
 		User author = usersService.getUserByEmail( principal.getName() );
-		if (results.hasErrors()) {
-			return "redirect:/posts/post";
+		
+		if(!photo.isEmpty())
+		{
+			photoValidator.validate(photo, results);
+			if (!results.hasErrors()) {
+				return "redirect:/posts/post";
+			}
 		}
 		try {
 			post.setUser( author );

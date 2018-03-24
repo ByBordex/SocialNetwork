@@ -124,9 +124,9 @@ public class PO_PrivateView extends PO_NavView{
 		driver.findElements( By.xpath( "//li[contains(@id, 'posts-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de lista mis publicaciones:
 		// a[contains(@href, 'posts/post')]
-		driver.findElements( By.xpath( "//li/a[contains( @href, '/posts/list' )]/a" )).get(0).click();
+		driver.findElements( By.xpath( "//li/a[contains( @href, '/posts/list' )]" )).get(0).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8091/posts/list" ) );
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/posts/list" ) );
 	}
 
 	static public void listUsersAdmin(WebDriver driver) {
@@ -135,7 +135,7 @@ public class PO_PrivateView extends PO_NavView{
 		driver.findElements( By.xpath( "//li[contains(@id, 'admin-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de lista los usuarios:
 		// a[contains(@href, 'admin/user/list')]
-		driver.findElements( By.xpath( "//li[contains( @href, '/admin/user/list' )]/a" )).get(0).click();
+		driver.findElements( By.xpath( "//li/a[contains( @href, '/admin/user/list' )]" )).get(0).click();
 		// Comprobamos que entramos a la página correcta
 		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/admin/user/list" ) );
 	}

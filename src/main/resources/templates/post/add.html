@@ -33,7 +33,9 @@
 				<label class="control-label col-sm-2" for="photo"
 					th:text="#{post.photo}"></label>
 				<div class="col-sm-10">
-					<input type="file" name="photo" accept=".png,.jpg,.jpeg" />
+					<input id="photo" type="file" name="photo" accept=".png,.jpg,.jpeg" />
+					<span class="text-danger" th:if="${#fields.hasErrors('photo')}"
+						th:errors="*{photo}" />
 				</div>
 				
 			</div>
