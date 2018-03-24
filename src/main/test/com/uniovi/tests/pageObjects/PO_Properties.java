@@ -1,4 +1,4 @@
-package main.test.com.uniovi.tests.pageObjects;
+package com.uniovi.tests.pageObjects;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

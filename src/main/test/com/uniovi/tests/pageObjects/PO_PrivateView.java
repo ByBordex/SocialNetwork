@@ -1,4 +1,4 @@
-package main.test.com.uniovi.tests.pageObjects;
+package com.uniovi.tests.pageObjects;
 
 import static org.junit.Assert.assertTrue;
 
@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import main.test.com.uniovi.tests.utils.SeleniumUtils;
+import com.uniovi.tests.utils.SeleniumUtils;
 
 public class PO_PrivateView extends PO_NavView{
 
@@ -20,7 +20,8 @@ public class PO_PrivateView extends PO_NavView{
 		By boton = By.id("searchBtn");
 		driver.findElement(boton).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/user/list?searchText=" + user ) );
+		String expectedUrl = "http://localhost:8090/user/list?searchText=" + user;
+		assertTrue( expectedUrl.equals( driver.getCurrentUrl() ) );
 	}
 
 	static public void acceptRequest(WebDriver driver, String username)
@@ -40,7 +41,7 @@ public class PO_PrivateView extends PO_NavView{
 		// a[contains(@href, '/user/list')]
 		driver.findElements( By.xpath( "//a[contains( @href, '/user/list' )]" )).get(0).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/user/list" ) );
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/user/list" ) );
 	}
 
 	static public void listFriendshipRequests(WebDriver driver) {
@@ -49,9 +50,9 @@ public class PO_PrivateView extends PO_NavView{
 		driver.findElements( By.xpath( "//li[contains(@id, 'friends-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de listar peticiones de amistad:
 		// a[contains(@href, 'friendshipRequest/list')]
-		driver.findElements( By.xpath( "//a[contains( @href, '/friendshipRequest/list' )]" )).get(0).click();
+		driver.findElements( By.xpath( "//a[contains( @href, '/friendshipRequest/list' )]" )).get(1).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/friendshipRequest/list" ) );
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/friendshipRequest/list" ) );
 	}
 
 	static public void listFriends(WebDriver driver) {
@@ -62,7 +63,7 @@ public class PO_PrivateView extends PO_NavView{
 		// a[contains(@href, 'friendshipRequest/listFriends')]
 		driver.findElements( By.xpath( "//a[contains( @href, '/friendshipRequest/listFriends' )]" )).get(0).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/friendshipRequest/listFriends" ) );
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/friendshipRequest/listFriends" ) );
 	}
 
 	static public void createPost(WebDriver driver) {
@@ -71,9 +72,9 @@ public class PO_PrivateView extends PO_NavView{
 		driver.findElements( By.xpath( "//li[contains(@id, 'posts-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de crear publicacion:
 		// a[contains(@href, 'posts/post')]
-		driver.findElements( By.xpath( "//li[contains( @href, '/posts/post' )]" )).get(0).click();
+		driver.findElements( By.xpath( "//li/a[contains( @href, '/posts/post' )]" )).get(0).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/posts/post" ) );
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/posts/post" ) );
 	}
 
 	static public void fillFormAddPost(WebDriver driver, String titulop,
@@ -92,7 +93,7 @@ public class PO_PrivateView extends PO_NavView{
 		// Le damos al botón de enviar
 		PO_View.checkElement(driver, "id", "submit").get( 0 ).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/posts/list" ) );
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/posts/list" ) );
 	}
 	
 	static public void fillFormAddPost(WebDriver driver, String titulop,
@@ -114,7 +115,7 @@ public class PO_PrivateView extends PO_NavView{
 		// Le damos al botón de enviar
 		driver.findElement( By.id( "submit" ) ).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/posts/list" ) );
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/posts/list" ) );
 	}
 
 	static public void listPosts(WebDriver driver) {
@@ -123,9 +124,9 @@ public class PO_PrivateView extends PO_NavView{
 		driver.findElements( By.xpath( "//li[contains(@id, 'posts-menu')]/a" )).get(0).click();
 		// Esperamos a aparezca la opción de lista mis publicaciones:
 		// a[contains(@href, 'posts/post')]
-		driver.findElements( By.xpath( "//li[contains( @href, '/posts/list' )]/a" )).get(0).click();
+		driver.findElements( By.xpath( "//li/a[contains( @href, '/posts/list' )]/a" )).get(0).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "localhost:8091/posts/list" ) );
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8091/posts/list" ) );
 	}
 
 	static public void listUsersAdmin(WebDriver driver) {
@@ -136,7 +137,7 @@ public class PO_PrivateView extends PO_NavView{
 		// a[contains(@href, 'admin/user/list')]
 		driver.findElements( By.xpath( "//li[contains( @href, '/admin/user/list' )]/a" )).get(0).click();
 		// Comprobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/admin/user/list" ) );
+		assertTrue( driver.getCurrentUrl().equals( "http://localhost:8090/admin/user/list" ) );
 	}
 
 }

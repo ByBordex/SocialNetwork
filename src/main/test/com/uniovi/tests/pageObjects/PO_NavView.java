@@ -1,4 +1,4 @@
-package main.test.com.uniovi.tests.pageObjects;
+package com.uniovi.tests.pageObjects;
 
 import static org.junit.Assert.assertTrue;
 
@@ -8,7 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import main.test.com.uniovi.tests.utils.SeleniumUtils;
+import com.uniovi.tests.utils.SeleniumUtils;
 
 public class PO_NavView extends PO_View {
 	/**
@@ -67,7 +67,7 @@ public class PO_NavView extends PO_View {
 		// Rellenamos el formulario
 		PO_LoginView.fillForm(driver, usuario + "@mail.com", "123456");
 		// Comrpobamos que entramos a la página correcta
-		assertTrue( driver.getCurrentUrl().equals( "localhost:8090/home" ) );
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "btnListPost", getTimeout());
 	}
 	
 	public static void clickDesconectar(WebDriver driver)
