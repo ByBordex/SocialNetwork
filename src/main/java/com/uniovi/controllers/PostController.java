@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +35,7 @@ public class PostController {
 
 	@Autowired
 	private UsersService usersService;
-
+	
 	@Autowired
 	private PhotoValidator photoValidator;
 
@@ -62,12 +61,17 @@ public class PostController {
 	}
 
 	@RequestMapping(value="/posts/post", method = RequestMethod.POST)
-	public String sendPost(@ModelAttribute Post post, BindingResult results, Principal principal, @Validated@RequestParam(required = false)MultipartFile photo ) 
+	public String sendPost(@ModelAttribute Post post, BindingResult results, Principal principal, 
+			@RequestParam(required = false)MultipartFile photo ) 
 	{
 		User author = usersService.getUserByEmail( principal.getName() );
-		photoValidator.validate(photo, results);
-		if (results.hasErrors()) {
-			return "/post/post";
+		
+		if(!photo.isEmpty())
+		{
+			photoValidator.validate(photo, results);
+			if (!results.hasErrors()) {
+				return "redirect:/posts/post";
+			}
 		}
 		try {
 			post.setUser( author );

@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -56,6 +57,23 @@ public class PO_NavView extends PO_View {
 		SeleniumUtils.esperarSegundos(driver, 2);
 		// CLickamos la opción Inglés partiendo de la opción Español
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", textLanguage, getTimeout());
+		elementos.get(0).click();
+	}
+
+	public static void clickConectarCon(WebDriver driver, String usuario) 
+	{
+		// Vamos al formulario de logueo.
+		driver.findElements( By.id( "btnLogin" ) ).get(0).click();
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, usuario + "@mail.com", "123456");
+		// Comrpobamos que entramos a la página correcta
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "id", "btnListPost", getTimeout());
+	}
+	
+	public static void clickDesconectar(WebDriver driver)
+	{
+		List<WebElement> elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//a[contains(@href, '/logout' )]"
+				, getTimeout());
 		elementos.get(0).click();
 	}
 

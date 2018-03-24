@@ -8,14 +8,6 @@
 
 		<h2 th:text="#{users}"></h2>
 
-		<form class="navbar-form" action="/user/list">
-			<div class="form-group">
-				<input name="searchText" type="text" class="form-control" size="50"
-					placeholder="Buscar por nombre o email de usuario">
-			</div>
-			<button type="submit" class="btn btn-default"></button>
-		</form>
-
 		<p th:text="#{users.list.subtitle}"></p>
 		<div class="table-responsive">
 			<table class="table table-hover">
@@ -49,11 +41,8 @@
 															$.post("/admin/removeUser", 
 																	{						 
 																	"removedUser" : removedUser
-																	}, 
-																	function(){
-																		$("#tr[[${user.id}]]").remove();
-																	});
-															
+																	}); 
+															$("#tr[[${user.id}]]").remove();
 														}); /*]]>*/
 									</script>
 

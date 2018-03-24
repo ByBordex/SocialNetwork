@@ -38,7 +38,7 @@ public class UsersController {
 
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
-	
+
 	@Autowired
 	FriendshipRequestService friendshipRequestService;
 
@@ -60,14 +60,16 @@ public class UsersController {
 			users = usersService.getUsers(pageable);
 		}
 
-		Set<User> usersRequestedFriendship = usersService.getUsersFriendshipRequiredInList(activeUser, users.getContent());
-		Set<User> usersReceivedRequest = friendshipRequestService.getUserSendedRequesToUser(activeUser,users.getContent());
+		Set<User> usersRequestedFriendship = usersService.getUsersFriendshipRequiredInList(activeUser, 
+				users.getContent());
+		Set<User> usersReceivedRequest = friendshipRequestService.getUserSendedRequesToUser(activeUser,
+				users.getContent());
 		Set<User> friendsInPage = friendshipRequestService.getFriendsInList(activeUser, users.getContent()) ;
-		
+
 		Set<User> pending = new HashSet<User>();
 		usersRequestedFriendship.forEach(pending::add);
 		usersReceivedRequest.forEach(pending::add);
-		
+
 		model.addAttribute("friendList", friendsInPage);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
@@ -133,14 +135,14 @@ public class UsersController {
 	public String home(Model model) {
 		return "home";
 	}
-	
+
 	@RequestMapping(value = { "/admin/user/list" }, method = RequestMethod.GET)
 	public String adminUserList(Model model) {
 		List<User> users = usersService.getUsers();
 		model.addAttribute( "usersList", users );
 		return "user/adminList";
 	}
-	
+
 	@RequestMapping(value = { "/admin/removeUser" }, method = RequestMethod.POST)
 	public String removeUser(Model model, @RequestParam Long removedUser) {
 		User user = usersService.getUser(removedUser);

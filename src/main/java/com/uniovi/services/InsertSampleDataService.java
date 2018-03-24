@@ -95,7 +95,6 @@ public class InsertSampleDataService {
 		usersService.addUser(user15);
 		usersService.addUser(admin);
 		
-		friendshipRequestService.sendRequest(user2, user1.getId());
 		friendshipRequestService.sendRequest(user3, user1.getId());
 		friendshipRequestService.sendRequest(user4, user1.getId());
 		friendshipRequestService.sendRequest(user5, user1.getId());
