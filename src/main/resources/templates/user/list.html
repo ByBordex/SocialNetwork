@@ -1,4 +1,4 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head th:replace="fragments/head" />
 <body>
@@ -6,16 +6,25 @@
 	<nav th:replace="fragments/nav" />
 	<div class="container">
 
-		<h2 th:text="#{users}">Usuarios</h2>
-		<p th:text="#{users.list.subtitle}">Los usuarios que actualmente figuran en el sistema son los
-			siguientes:</p>
+		<h2 th:text="#{users}"></h2>
+
+		<form class="navbar-form" action="/user/list">
+			<div class="form-group">
+				<input name="searchText" type="text" class="form-control" size="50"
+					placeholder="Buscar por nombre o email de usuario">
+				<button id="searchBtn" type="submit" class="btn btn-default"
+					th:text="#{users.list.search}"></button>
+			</div>
+
+		</form>
+
+		<p th:text="#{users.list.subtitle}"></p>
 		<div class="table-responsive">
 			<table class="table table-hover">
 				<thead>
 					<tr>
-						<th>DNI</th>
-						<th th:text="#{users.list.name}">Nombre</th>
-						<th th:text="#{users.list.surname}">Apellidos</th>
+						<th th:text="#{users.list.email}"></th>
+						<th th:text="#{users.list.name}"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
 						<th class="col-md-1"></th>
@@ -24,17 +33,62 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user : ${usersList}">
-						<td th:text="${user.dni}">71888888X</td>
-						<td th:text="${user.name}">Nombre del alumno</td>
-						<td th:text="${user.lastName}">Apellidos del alumno</td>
-						<td><a th:href="${' L' + user.id}">detalles</a></td>
-						<td><a th:href="${'/user/edit/' + user.id}">modificar</a></td>
-						<td><a th:href="${'/user/delete/' + user.id}">eliminar</a></td>
+					<tr th:each="user : ${usersList}" th:object="${user}"
+						th:if="${user.email} != ${#authentication.getPrincipal().getUsername()}">
+
+						<td th:text="${user.email}"></td>
+						<td th:text="${user.name}"></td>
+						<td class="col-md-1"></td>
+						<td class="col-md-1"></td>
+
+
+						<td>
+							<div th:if='${#bools.isTrue(#lists.contains(friendList, user))} '>
+								<button disabled type="button" th:id="${'sendButton' + user.id}"
+									class="btn btn-success btn-block"
+									th:text='#{users.list.requestFriendship.friend}'></button>
+							</div>
+							<div
+								th:unless='${#bools.isTrue(#lists.contains(friendList, user))} '>
+								<div th:if='${#bools.isTrue(#lists.contains(pending, user))}'>
+									<button disabled type="button"
+										th:id="${'sendButton' + user.id}"
+										class="btn btn-warning btn-block"
+										th:text='#{users.list.requestFriendship.pending}'></button>
+								</div>
+								<div th:if='${#bools.isFalse(#lists.contains(pending, user))} '>
+									<button type="button" th:id="${'sendButton' + user.id}"
+										class="btn btn-info btn-block"
+										th:text='#{users.list.requestFriendship}'></button>
+									<script th:inline="javascript">
+										/*<![CDATA[*/$(
+												"#sendButton[[${user.id}]]")
+												.click(
+														function() {												
+															var receiver = [[${user.id}]];
+															$.post("/sendRequest", 
+																	{						 
+																	"receiver" : receiver
+																	}, 
+																	function(){
+																		$("#sendButton[[${user.id}]]").attr('disabled', true);
+																		$("#sendButton[[${user.id}]]").removeClass("btn-info");
+																		$("#sendButton[[${user.id}]]").addClass("btn-warning");
+																		$("#sendButton[[${user.id}]]").text( [[#{users.list.requestFriendship.pending}]] );
+																	});
+															
+														}); /*]]>*/
+									</script>
+								</div>
+							</div>
+						</td>
+						<td class="col-md-1"></td>
+						<td class="col-md-1"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<footer th:replace="fragments/pagination" />
 	</div>
 	<footer th:replace="fragments/footer" />
 </body>
